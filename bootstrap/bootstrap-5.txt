@@ -1,0 +1,262 @@
+BOOTSTRAP 5
+
+IMPORTANT CLASS
+1.Breakpoints
+2.Navbar push right
+3.Grid
+4.Typography
+5.Accordion
+6.Breadcrumb
+7.Media
+8.Position
+9.Masonry
+
+IMPORTANT CLASS
+
+.m-2
+.mt-2
+.mb-2
+.ms-2
+.me-2
+.mx-2
+.my-2
+.p-2
+.pt-2
+.pb-2
+.ps-2
+.pe-2
+.px-2
+.py-2
+.fixed-top
+.sticky-top
+.float-end => Same as pull-right
+.float-md-end => After arrive end of -md- float becomes start
+.float-none
+.text-center
+.text-end
+.card-body -> give some padding around every side.
+.rounded
+.rounded-circle
+.rounded-top
+.bg-light
+.bg-secondary
+.bg-light .border
+.border
+.border .border-2
+.border .border-primary
+
+ Hiding elements
+.d-none =>  Hidden on all
+.d-none .d-sm-block => Hidden only on xs
+
+.d-block => Visible on all
+.d-block .d-sm-none => Visible only on xs
+
+
+.shadow-sm	
+.shadow
+.shadow-lg
+.mw-100 => max-width: 100%;
+.w-25 => Width 25%
+
+
+
+----------------
+1.Breakpoints
+sm: 540px,
+md: 720px,
+lg: 960px,
+xl: 1140px,
+xxl: 1320px
+
+----------------
+
+2.Navbar push right
+<ul class="navbar-nav ms-md-auto">
+
+----------------
+
+3. Basic Grid
+
+col
+col-md
+col-sm
+col-md col-sm-6
+col-md col-sm-6 col-md-4
+ 
+Application:
+(i)
+<div class="row">
+  <div class="col">
+  </div>
+  <div class="col-6"> <!-- Also can use "col-5" -->
+  </div>
+  <div class="col">
+  </div>
+</div>
+
+(ii)
+<div class="col-md-6 offset-md-3">
+</div>
+
+OR
+
+<div class="row justify-content-md-center">
+   <div class="col-md-auto col-md-8">
+     It is like col-md-offset
+   </div>
+</div>
+
+(iii)
+<div class="container">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4"> <!-- row row-cols-3 -->
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+  </div>
+</div>
+
+(iv) Nesting
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-8 col-sm-6">
+        </div>
+        <div class="col-4 col-sm-6">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+----------------
+
+4.Typography
+
+(i)
+<h3>
+  Fancy display heading
+  <small class="text-muted">With faded secondary text</small>
+</h3>
+
+(ii)
+<p class="lead">
+  This is a lead paragraph. It stands out from regular paragraphs.
+</p>
+
+(iii)
+<p class="text-primary">.text-primary</p>
+
+(iv)
+<p><a href="#" class="text-reset">Test</a></p>
+<p><a href="#" class="text-decoration-none">Test</a></p>
+
+
+.user-select-all
+.user-select-none
+
+.text-lowercase
+.text-uppercase
+.text-capitalize
+
+.lh-1 => line height
+.lh-sm
+.lh-lg
+.lh-base
+.font-monospace => creating space
+.text-muted => 
+
+Note: For More float features see [Content > Images]
+
+-------
+.list-unstyled
+-------
+<ul class="list-inline">
+  <li class="list-inline-item">This is a list item.</li>
+  <li class="list-inline-item">And another one.</li>
+</ul>
+-------
+.lead
+-------
+<mark>
+-------
+<u>
+-------
+<s>
+-------
+<em>
+-------
+Helpers > Text truncation
+
+----------------
+
+5.Accordion
+Components > Accordion
+
+----------------
+
+6.Breadcrumb
+Components > Breadcrumb
+
+----------------
+7.Media
+
+<div class="row g-0">
+<div class="col-md-4">
+  <img src="https://via.placeholder.com/360x360" alt="..." class="w-100">
+</div>
+<div class="col-md-8">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  </div>
+</div>
+</div>
+
+OR
+
+ <div class="d-flex mt-100">
+  <!-- Icon -->
+  <div class="icon text-primary">
+    <img src="https://via.placeholder.com/100x100">
+  </div>
+  <div class="ms-3">
+    <!-- Heading -->
+    <h4>
+      Bootstrap users since the beginning
+    </h4>
+    <!-- Text -->
+    <p class="text-muted">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+  </div>
+</div>
+
+----------------
+
+8.Position
+Utilities > Position
+
+----------------
+9.Masonry
+
+Components > card
+https://getbootstrap.com/docs/5.0/examples/masonry/
+
+

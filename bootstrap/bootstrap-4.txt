@@ -1,0 +1,215 @@
+bootstrap 4
+
+IMPORTANT CLASS
+1.Breakpoints
+2.Grid
+3.Typography
+4.Image
+5.Media
+6.Video Embeds
+7.Page Banner
+8.Navbar push right
+
+----------------
+IMPORTANT CLASS
+.card 
+     .card-body => content under border with border radius.
+.border 
+     .card-body => content under border.
+.m-2
+.mt-2
+.mb-2
+.ml-2
+.mr-2
+.mx-2
+.my-2
+.p-2
+.pt-2
+.pb-2
+.pl-2
+.pr-2
+.px-2
+.py-2
+.card-body
+.border
+.border-top
+.border-top-0
+.text-center
+.text-right
+.lead
+.text-muted
+.rounded
+.rounded-sm
+.rounded-lg
+.rounded-circle
+.rounded-top
+.float-left
+.float-right
+.float-sm-right => Keep float right upto sm
+.float-sm-right .text-center => Keep float right upto sm after this center
+.img-thumbnail
+.shadow
+.shadow-sm
+.shadow-lg
+.w-100 => Width 100%
+.min-vh-100 => Min-height 100vh
+.vh-100 => Height 100vh
+
+
+ Hiding elements
+.d-none =>  Hidden on all
+.d-none .d-sm-block => Hidden only on xs
+
+.d-block => Visible on all
+.d-block .d-sm-none => Visible only on xs
+
+
+----------------
+1.Breakpoints
+sm -> 575
+md -> 767
+lg -> 991
+xl -> 1199
+
+----------------
+2.Grid
+
+[Kindly see grid system]
+
+col
+col-md
+col-sm
+col-md col-sm-6
+
+(i)
+<div class="row">
+  <div class="col-md col-sm-6">
+    Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <br><br><br>
+  </div>
+  <div class="col-md col-sm-6">
+    Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <br><br><br>
+  </div>
+  <div class="col-md col-sm-6">
+    Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <br><br><br>
+  </div>
+  <div class="col-md col-sm-6">
+    Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <br><br><br>
+  </div>
+</div>
+
+(ii)
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. </p>
+  </div>
+</div>
+
+(iii)
+<div class="row mx-md-n5">
+  <div class="col px-md-5"><div class="p-3 border bg-light">Custom column padding</div></div>
+  <div class="col px-md-5"><div class="p-3 border bg-light">Custom column padding</div></div>
+</div>
+
+----------------
+
+3.Typography
+
+.text-uppercase
+.text-capitalize
+.text-decoration-none
+
+(i)
+<h3>
+  Fancy display heading
+  <small class="text-muted">With faded secondary text</small>
+</h3>
+
+(ii)
+<p class="lead">
+  This is a lead paragraph. It stands out from regular paragraphs.
+</p>
+
+(iii)
+<ul class="list-unstyled">
+  <li>This is a list.</li>
+  <li>It appears completely unstyled.</li>
+</ul>
+
+(iv)
+.list-unstyled
+
+<ul class="list-unstyled">
+  <li>This is a list.</li>
+  <li>It appears completely unstyled.</li>
+</ul>
+
+(v)
+<ul class="list-inline">
+  <li class="list-inline-item">This is a list item.</li>
+  <li class="list-inline-item">And another one.</li>
+  <li class="list-inline-item">But they're displayed inline.</li>
+</ul>
+
+(vi)
+Text selection
+<p class="user-select-none">This paragraph will not be selectable when clicked by the user.</p>
+
+--------
+.text-center
+--------
+.text-right
+--------
+<code>
+--------
+
+----------------
+
+4.Image
+
+.rounded
+.float-left
+.float-right
+.img-thumbnail
+
+(i)
+<img src="https://via.placeholder.com/200x200" class="mx-auto d-block" alt="...">
+
+(ii)
+<div class="text-center">
+  <img src="..." class="rounded" alt="...">
+</div>
+
+----------------
+
+5.Media
+Components > Media
+
+----------------
+
+6.Video Embeds
+Components > Embeds
+
+----------------
+
+7.Page Banner
+Components > Jumbotron
+
+----------------
+
+8.Navbar push right
+
+collapse navbar-collapse => collapse navbar-collapse justify-content-end
+navbar-nav mr-auto => navbar-nav
+
+----------------
+
+
