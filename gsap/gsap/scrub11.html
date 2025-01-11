@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>gsap</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="section"></div>
+    <div class="half-cricle">
+    	<div class="child"></div>
+    </div>
+    <div class="section"></div>
+    
+    <style type="text/css">
+      .section {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        height: 100vh;
+      }
+      .half-cricle{
+        height: 15vw;
+        background-color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .half-cricle .child{
+        width: 150vw;
+        height: 150vw;
+        background-color: #252525;
+        border-radius: 50%;
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+      
+    </style>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.js"></script>
+    <script>
+      var halfCircle_tl = gsap.timeline({paused: true});
+      
+      halfCircle_tl.to(".child", { duration: 5, ease: "none", width: 800+"vw", height: 800+"vw"});
+      halfCircle_tl.play();
+       ScrollTrigger.create({
+        trigger: ".half-cricle",
+        scrub: true, //1 for smooth animation
+        //pin: true,
+        start: "50% 100%",
+        end:"bottom top", //default value "bottom top"
+        markers: true,
+        //scroller: ".scroll-container",
+        animation: halfCircle_tl
+      });
+     
+    </script>
+    
+  </body>
+</html>

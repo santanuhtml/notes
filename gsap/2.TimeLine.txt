@@ -1,0 +1,83 @@
+-----------------
+timeline():
+(i)When we want to maintain any sequence before we have to control
+our delay option but after introuduce timeline() we can eassyliy control it.
+(ii)after using timeline() option we can remove delay option.
+-----------------
+html
+---------
+<div class="container" style="margin-top:300px">
+<div class="box"></div>
+ <div class="circle first"></div>
+ <div class="circle second"></div>
+ <div class="circle third"></div>
+<div class="circle forth"></div>
+</div>
+<style>
+.box{
+width: 100px;
+height: 100px;
+background: #ddd;
+margin-bottom: 300px;
+position: relative;
+float: left;
+margin-right: 50px;}
+.circle{
+background: #ddd;
+width: 100px;
+height: 100px;
+border-radius: 50px;
+float: left;
+margin-right: 10px;
+}
+</style>
+---------
+gsap code 1
+---------
+var tl = gsap.timeline();
+tl.from(".box",{
+opacity:0,
+duration:1,
+scale:0,
+});
+tl.to(".box",{
+backgroundColor:"#f00",
+scale:1.5,
+rotation:360,
+duration:2
+});
+tl.from(".circle",{
+opacity:0,
+duration:1.5,
+//delay:1,
+stagger:0.25,
+y:200
+})
+
+---------
+gsap code 2
+2 second after using "+=2"
+---------
+var tl = gsap.timeline();
+tl.from(".box",{
+opacity:0,
+duration:1,
+scale:0,
+});
+tl.to(".box",{
+backgroundColor:"#f00",
+scale:1.5,
+rotation:360,
+duration:2
+});
+tl.from(".circle",{
+opacity:0,
+duration:1.5,
+stagger:0.25,
+y:200
+},"+=1")
+
+---------
+
+
+

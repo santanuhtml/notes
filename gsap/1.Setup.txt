@@ -1,0 +1,175 @@
+Gsap Basic
+Source: https://greensock.com/get-started/
+
+1.Setup
+2.Easing
+3.stagger
+-----------------
+1.Setup
+
+Setup url:
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+-----------------
+Example1:
+-----------------
+html
+---------
+<div class="box a">a</div>
+<style>
+  .box{
+  width: 100px;
+  height: 100px;
+  background: #ddd;
+  margin-bottom: 300px;
+  position: relative;
+}
+</style>
+
+---------
+gsap code 1
+---------
+gsap.to(".a",{
+x:400,
+rotation:360,
+duration:3
+});
+
+---------
+gsap code 2
+---------
+gsap.to(".a",{
+x:400,
+rotation:360,
+duration:3,
+backgroundColor:"#0f0",
+padding:"15px",
+borderRadius:"20%"
+});
+
+---------
+gsap code 3
+2.Easing
+---------
+gsap.to(".a",{
+x:400,
+rotation:360,
+duration:3,
+backgroundColor:"#0f0",
+padding:"15px",
+borderRadius:"20%",
+ease:"bounce"
+});
+
+---------
+gsap code 4
+gsap.from()
+---------
+gsap.from(".a",{
+x:400,
+rotation:360,
+duration:3,
+backgroundColor:"#0f0",
+padding:"15px",
+borderRadius:"20%",
+ease:"bounce"
+});
+
+
+-----------------
+Example2:
+-----------------
+html
+---------
+<div class="container" style="margin-top:300px;">
+  <div class="circle first"></div>
+  <div class="circle second"></div>
+  <div class="circle third"></div>
+  <div class="circle forth"></div>
+</div>
+<style>
+ .circle{
+    background: #ddd;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    float: left;
+    margin-right: 10px;
+   }
+ </style>
+
+---------
+gsap code 1
+---------
+gsap.to(".circle",{
+y:-100,
+duration:2
+})
+
+---------
+gsap code 2
+3.stagger
+---------
+gsap.to(".circle",{
+y:-300,
+stagger:0.25,
+duration:3
+})
+
+---------
+gsap code 3
+random
+---------
+gsap.to(".circle",{
+y:"random(300,-300)",
+stagger:0.25,
+duration:3
+})
+
+-----------------
+Example3:
+-----------------
+html
+---------
+<div class="container" style="margin-top:300px">
+<div class="box"></div>
+  <div class="circle first"></div>
+  <div class="circle second"></div>
+  <div class="circle third"></div>
+  <div class="circle forth"></div>
+</div>
+<style>
+  .box{
+    width: 100px;
+height: 100px;
+background: #ddd;
+margin-bottom: 300px;
+position: relative;
+float: left;
+margin-right: 30px;
+}
+.circle{
+background: #ddd;
+width: 100px;
+height: 100px;
+border-radius: 50px;
+float: left;
+margin-right: 10px;
+}
+</style>
+---------
+gsap code 1
+---------
+gsap.from(".box",{
+opacity:0,
+duration:1,
+scale:0,
+});
+gsap.from(".circle",{
+opacity:0,
+duration:1.5,
+delay:1,
+stagger:0.25,
+y:200
+})
+
+

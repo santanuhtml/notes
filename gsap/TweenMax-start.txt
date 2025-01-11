@@ -1,0 +1,219 @@
+                                                     Start TweenMax 
+
+================
+Basic setup
+================
+add this link
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+
+================
+Basic Structure
+================
+TweenMax.to() => Animation start form
+TweenMax.from() => Opposite Animation
+
+----------------
+Elements and Parameters:
+----------------
+TweenMax.to('target-element', animation-duration, {parameter-for-animation});
+----------
+With Data:
+----------
+TweenMax.to('.box', 1, {left:100, opacity:1});
+================
+Example:
+================
+html
+----------------
+<div class="box"></div>
+----------------
+css
+----------------
+.box{
+ width:50px;
+ height:50px;
+ background-color:#252525;
+ border-radius: 10px;
+
+ position: relative;
+ opacity: 0;
+ 
+}
+----------------
+js
+----------------
+<script type="text/javascript">
+  TweenMax.to('.box',1, {
+    left:100,
+    opacity:1
+  })
+</script>
+
+================
+Example with TweenMax.to()
+================
+html
+----------------
+<div class="overlay">
+ <h1>Reindeer</h1>
+ <span>snow life</span>
+</div>
+----------------
+css
+----------------
+<style type="text/css">
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: #FFEB00;
+    top: 0%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay h1 {
+    font-size: 100px;
+    letter-spacing: 20px;
+  }
+  .overlay span {
+    font-size: 30px;
+    letter-spacing: 3px;
+  }
+  </style>
+
+----------------
+js
+----------------
+<script type="text/javascript">
+  TweenMax.to(".overlay h1", 2, {
+    opacity: 0,
+    y: -60,
+    ease: Expo.easeInOut
+  })
+  TweenMax.to(".overlay span", 2, {
+    delay: .3,
+    opacity: 0,
+    y: -60,
+    ease: Expo.easeInOut
+  })
+  TweenMax.to(".overlay", 2, {
+    delay: 1,
+    top: "-100%",
+    ease: Expo.easeInOut
+  })
+</script>
+
+================
+Example with TweenMax.from()
+================
+html
+----------------
+<div class="nav">
+  <div class="logo">
+    <h1>
+      <span>rein <br> deer</span>
+      <br>
+      snow life
+    </h1>
+  </div>
+  <div class="menu-links">
+    <ul>
+      <li>home.</li>
+      <li>snow life.</li>
+      <li>contact.</li>
+    </ul>
+  </div>
+</div>
+<div class="watchnow">
+  <i class="fa fa-play"></i>
+  <a href="#">watch now!</a>
+</div>
+
+----------------
+css
+----------------
+
+.menu-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    padding-top: 50px;
+  }
+  .menu-links ul {
+    width: 100%;
+  }
+  .menu-links ul li {
+    padding: 10px;
+    color: #494949;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .menu-links ul li:hover {
+    background: #494949;
+    color: #fff;
+  }
+  body {
+    width: 100%;
+    height: 100vh;
+    font-family: 'agency fb';
+    background-position: 50%;
+    background-size: cover;
+    overflow: hidden;
+  }
+  .watchnow {
+    position: absolute;
+    top: 60%;
+    right: 0;
+    transform: translateY(-50%);
+    background: #FFEB00;
+    padding: 30px 180px 30px 30px;
+  }
+  .watchnow a {
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 3px solid #000;
+    padding-bottom: 5px;
+  }
+  .fa-play {
+    color: #fff;
+    font-size: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+----------------
+js
+----------------
+
+TweenMax.from(".logo", 1, {
+  delay: 3,
+  opacity: 0,
+  y: -100,
+  ease: Expo.easeInOut
+})
+
+TweenMax.staggerFrom(".menu-links ul li", 1, {
+  delay: 3.2,
+  opacity: 0,
+  x: -100,
+  ease: Expo.easeInOut
+}, 0.08)
+
+TweenMax.from(".watchnow", 1, {
+  delay: 3.4,
+  opacity: 0,
+  x: 200,
+  ease: Expo.easeInOut
+})    
+
+
+

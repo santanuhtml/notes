@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>gsap</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="section" style="height: 100vh;"></div>
+    <div class="parent">
+      <div class="child child1"></div>
+      <div class="child child2"></div>
+      <div class="child child3"></div>
+    </div>
+    <div class="section" style="height: 100vh;"></div>
+    <style>
+      .parent{
+        position: relative;
+        height: 100vh;
+        /*overflow: hidden;*/
+        background-color: #fff;
+      }
+      .child{
+        width: 0vw;
+        height: 0vw;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .child1{
+        background-color: #f00;
+      }
+      .child2{
+        background-color: #000;
+      }
+      .child3{
+        background-color: #fff;
+      }
+    </style>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.js"></script>
+
+    <script>
+      var circle_tl = gsap.timeline({paused: true});
+
+          circle_tl.to(".child1", { duration: 5, width:120+"vw", height:120+"vw"})
+                   .to(".child2", { duration: 5, width:120+"vw", height:120+"vw"}, "-=3")
+                   .to(".child3", { duration: 5, width:122+"vw", height:122+"vw"}, "-=2");
+          //circle_tl.play();
+          ScrollTrigger.create({
+          trigger: ".parent",
+          scrub: 1, //1 for smooth animation
+          pin: true,
+          start: "50% 50%",
+          end:"bottom top", //default value "bottom top"
+          markers: true,
+          //scroller: ".scroll-container",
+          animation: circle_tl
+        });
+      
+    </script>
+
+  </body>
+</html>

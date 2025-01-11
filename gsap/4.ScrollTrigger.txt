@@ -1,0 +1,112 @@
+Scroll Trigger
+
+1.introduce ScrollTrigger
+2.Toggle actions
+3.Start & End & Scrub
+4.toggleClass
+------------------
+html
+---------
+<div class="box a"></div>
+<div class="box b"></div>
+<div class="box c"></div>
+<style>
+.box{
+width: 100px;
+height: 100px;
+background: #ddd;
+margin-bottom: 300px;
+position: relative;
+}
+</style>
+
+---------
+gsap code 1
+---------
+gsap.to(".c",{
+x:600,
+rotate:360,
+ease:"none",
+duration:3
+});
+
+---------
+Here we did not see the effect, To see this effect we have to 
+1.introduce ScrollTrigger
+---------
+gsap.registerPlugin(ScrollTrigger);
+gsap.to(".c",{
+scrollTrigger: ".c",
+x:400,
+rotate:360,
+ease:"none",
+duration:3
+});
+
+---------
+2.Toggle actions
+---------
+gsap.registerPlugin(ScrollTrigger);
+gsap.to(".c",{
+scrollTrigger:{
+    trigger:".c",
+    toggleActions:"restart pause reverse pause"
+ },
+x:400,
+ease:"none",
+rotation:360,
+duration:3
+});
+
+---------
+Note:
+play
+pause
+resume
+reverse
+restart
+reset
+complete
+none
+
+---------
+3.Start & End & Scrub
+---------
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.to(".c",{
+scrollTrigger:{
+	trigger:".c",
+	start:"top bottom",
+	//start:"50px 80%",
+	bottom:"top bottom",
+	//bottom:"50px 80%",
+	markers:true,
+	scrub:1, //true & 1 use to bring element with scroll
+	toggleActions:"restart pause reverse pause"
+},
+x:200,
+ease:"none",
+rotation:360,
+duration:3
+});
+
+
+---------
+4.toggleClass
+---------
+gsap.registerPlugin(ScrollTrigger);
+gsap.to(".c",{
+scrollTrigger:{
+  trigger:".c",
+  toggleActions:"restart pause reverse pause"
+},
+x:200,
+ease:"none",
+rotation:360,
+toggleClass: "active",
+duration:3
+});
+
+
+

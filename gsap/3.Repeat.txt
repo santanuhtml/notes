@@ -1,0 +1,11 @@
+1.repeat
+2.yoyo 
+-------------
+1.repeat
+var tl = gsap.timeline({repeat:2});
+
+-------------
+2.yoyo 
+var tl = gsap.timeline({repeat:2,yoyo:true});
+
+//Note: yoyo use for reverse animation
