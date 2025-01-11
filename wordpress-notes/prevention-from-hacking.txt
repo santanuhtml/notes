@@ -1,0 +1,269 @@
+1. Hide WordPress Version
+2. Disable File Editing
+3. Delete Unused Plugins or Themes
+4. Change Default WordPress Prefix For Database
+5. Move your wp-config.php file to another location
+6. htaccess file
+7. Change your WP-login URL
+8. Limit Login Attempts
+9. Scan for SQL Injection Vulnerabilities
+10. Others
+
+Details:
+
+I. SQL Injection
+II. Cross Site Scripting (XSS)
+
+------------------------------
+1. Hide WordPress Version
+------------------------------
+Add this line in functions.php
+CODE:
+---------------
+remove_action( 'wp_head', 'wp_generator' );
+--------------
+
+------------------------------
+2. Disable File Editing
+------------------------------
+Add this following code in your wp-config.php file.
+CODE:
+--------------
+define( 'DISALLOW_FILE_EDIT', true );
+--------------
+
+------------------------------
+4. Change Default WordPress Prefix For Database
+------------------------------
+Change Default WordPress Prefix For Database
+names that start with the prefix “wp_”. so change Default WordPress 
+Prefix For Database
+       
+source:
+https://help.one.com/hc/en-us/articles/360002107438-Change-the-table-prefix-for-WordPress-#step-2
+--------------
+Step 1 - Change the table prefix in wp-config.php
+--------------
+$table_prefix = 'wp_';
+to
+$table_prefix = 'ind_';
+	
+--------------
+Step 2 - Change the table prefix in the database
+--------------
+
+I.  Select all tables that start with wp_ 
+II. i.  Click With selected to open the drop-down menu 
+       	and select "Replace table prefix"
+    ii. Type in wp_ in the From-field, and the new name in the To-field, 
+        in this example, ind_.
+
+--------------
+Step 3 - Replace all references to the old prefix
+--------------
+i.  Click on the SQL tab in the menu at the top of the screen.
+ii. Copy and paste in the following commands:     
+--------------
+	
+update NEWPREFIX_usermeta set meta_key = 'NEWPREFIX_capabilities' where meta_key = 'OLDPREFIX_capabilities';
+update NEWPREFIX_usermeta set meta_key = 'NEWPREFIX_user_level' where meta_key = 'OLDPREFIX_user_level';
+update NEWPREFIX_usermeta set meta_key = 'NEWPREFIX_autosave_draft_ids' where meta_key = 'OLDPREFIX_autosave_draft_ids';
+update NEWPREFIX_options set option_name = 'NEWPREFIX_user_roles' where option_name = 'OLDPREFIX_user_roles';
+	     
+--------------
+Replace OLDPREFIX and NEWPREFIX, with your own old and new prefix. Like in the example below, where we replace wp_ with david_:
+
+------------------------------
+5. Move your wp-config.php file to another location
+------------------------------
+i.  Move wp-config.php file outsite the root folder
+    'public_html' and keep new created folder example []newSequreFolder
+
+ii. create a new 'wp-config.php' file under the root folder 'public_html'
+    and keep this code on it
+    CODE:
+--------------
+
+<?php
+
+/** Absolute path to the WordPress directory. */
+if ( !defined('ABSPATH') )
+    define('ABSPATH', dirname(__FILE__) . '/');
+
+/** Location of your WordPress configuration. */
+require_once(ABSPATH . '../newSequreFolder/wp-config.php');
+
+--------------
+
+------------------------------
+6. htaccess file
+------------------------------
+view the page 'all about htaccess file.txt'
+
+------------------------------
+9. Scan for SQL Injection Vulnerabilities
+------------------------------
+https://sitecheck.sucuri.net/
+
+------------------------------
+10. Others
+------------------------------
+ I.   Update:
+       4. Update WordPress core, and plugins.
+
+ II.  PHP Versions:
+       Use The latest version of PHP is 7.4
+       Check which hosting provider give PHP 7.4 
+
+ III. Use Trusted Form Plugins
+       Note: We can use Contact Form 7 but don't use
+       Advanced Contact form 7 DB is prone to an SQL injection vulnerability
+       If we need to use then update to the latest 1.6.1 release.
+
+
+------------------------------
+I. SQL Injection
+Source:
+https://www.cloudways.com/blog/wordpress-security-issues-and-fixes/
+https://www.cloudways.com/blog/wordpress-sql-injection-protection/
+------------------------------
+
+SQL Injections:
+  SQL injections are type of SQL commands which embed various areas of the websites
+  like comment box and text areas...
+  These commands can compromise the SQL database 
+
+URL Hacking:
+  Modifying theURL by adding PHP statements is another potential 
+  threat to WordPress security in which the attackers can trigger 
+  attacks on the database and other website components.
+
+Entry Points for SQL Injection Attacks
+  Sign up forms
+  Login forms
+  Contact forms
+  Site searches
+  Feedback fields
+  Shopping carts
+
+Ways to Prevent SQL Injection in WordPress
+  there is no way to completely get rid of hacking attempts. 
+  However, one can minimize the risk of getting hacked. 
+
+  I.  To reduce the incidences of SQL injections and URL hacking, 
+      add the following code to the .htaccess
+      [view the page 'all about htaccess file.txt'] 
+
+  II. Deny Access To Sensitive Files in WordPress:
+      A WordPress installation contains several sensitive files, 
+      such as the wp-config.php, install.php, and readme.html files. 
+      These files must be kept hidden from all outside access.
+      [view the page 'all about htaccess file.txt'] 
+
+
+------------------------------
+II. Cross Site Scripting (XSS)
+   1.1 Types of XSS attacks:
+   1.2 How to prevent Cross Site Scripting (XSS)
+------------------------------
+
+1.1 Types of XSS attacks:
+  I.   Reflected XSS (Non-Persistent)
+  II.  Stored XSS (Presistent)
+  III. DOM (Document Object Model) XSS
+  
+  
+I. Reflected XSS (Non-Persistent):
+     In this case script excuted on the website and 
+     it is not stored on the server.
+
+
+   Checking Vulnerable input of a site
+   --------------
+   i.   <script>alert("Hello")</script>
+   --------------
+   ii.  <scr<script>ipt>alert("Hello")</script>
+   --------------
+        We can prevent i. & ii. script tag by using:
+        $name = preg_replace('', '', $_GET[$...])
+
+   --------------
+   iii. <img src=x onMouseOver=alert("Hello")>
+   --------------
+   iv.  <script>alert(document.cookie)</script>
+
+      Using this Reflected XSS Hacker can get Session ID and using
+      this Session ID hacker can login to a differnt account even if
+      the hacker don't know the username and password for that account.
+   --------------
+      
+  
+II. Stored XSS (Presistent)
+    Script is stored and executed on the server so when
+    any user visite to the site, that data will executing
+    the malicious code.
+  
+    Checking Vulnerable input of our comment | contact etc
+    --------------
+    i. <script>alert("Hello")</script>
+    --------------
+    ii.  <scr<script>ipt>alert("Hello")</script>
+    --------------
+	We can prevent i. & ii. script tag by using:
+        $name = preg_replace('', '', $_GET[$...])
+
+    --------------
+    iii. <img src=x onMouseOver=alert("Hellow")>
+    --------------
+
+
+III.  DOM (Document Object Model) XSS
+      It is a client-side attack, in this case script is not
+      sent to the server or it is not stored on the server. It
+      is stays on the client-side. 
+      In this case when user select any option [like dropdown] then the 
+      script executed
+
+      Checking Vulnerable URL
+      Example:
+      <select>
+       <option value="volvo">Volvo</option>
+       <option value="saab">Saab</option>
+       <option value="mercedes">Mercedes</option>
+       <option value="audi">Audi</option>
+      </select>
+      -----------------------
+      On select any option from dropdown url may be
+      ......../?default=Volvo
+
+      --------------
+      i.  we may add our script in place of Volvo 
+          ......../?default=<script>alert("Hello")</script>
+      --------------
+      ii. ......../?default=Volvo</option></select><body onload=alert("Hello")>
+      --------------
+      iii. ......../?default=Volvo#<script>alert("Hello")</script>
+      --------------
+      if this script executed the popup display. using this we can 
+      manupulat for low lavel sequrity website.
+
+
+1.2 How to prevent Cross Site Scripting (XSS)
+    
+    I. Escaping User input
+       Remove the symbol used in tags or in malicious script like
+       <, >, % etc
+
+    II. Consider all input as a threat:
+        Assub that every input is a thread and sanitize and handel
+        every input with care 
+
+    III. Data Validation
+         For example Login page have a user email, so validate input 
+         should be a email address with @ symbol
+
+    IV. Encode output
+ 
+     V. Content Security Policy to avoide cross site scripting
+
+------------------------------

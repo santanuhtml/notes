@@ -1,0 +1,88 @@
+<?php get_header(); 
+
+$fields = CFS()->get( 'gift' );
+foreach ( $fields as $field ) {
+    echo $field['name'];
+    echo $field['image'];
+    echo $field['discription'];
+    echo $field['link'];
+    // nest loop
+	foreach ($field['lists'] as $aaa)  {
+	   echo $aaa['list'];
+        }
+    // end nest loop
+     ?>
+     <br><br>
+    <?php
+}
+ 
+ get_footer(); ?>
+ 
+ 
+------------------
+True/False example:
+If Check then it returns 1
+------------------
+$activeOverviewResult	= CFS()->get( 'active_overview' );
+  if ($activeOverviewResult ==1) {
+        echo CFS()->get( 'location');
+  	echo CFS()->get( 'about_the_project');
+  }
+  else{
+  echo "Section Hide";
+  }
+  ?>
+
+
+-------------------
+True/False 
+Loop
+Select Option
+-------------------
+<!--  Amenities -->
+<?php 
+$activeAmenitiesResult  = CFS()->get( 'active_amenities' );
+if ($activeAmenitiesResult ==1) {
+  // Amenities Loop
+  $fields = CFS()->get( 'add_amenities' );
+    foreach ( $fields as $field ) {
+    
+    //$values = CFS()->get( 'select_amenities' );
+    foreach ( $field['select_amenities'] as $key => $label ) {
+      // Lobby
+      if ('Exclusive lobby' == $label) {
+        echo "Exclusive lobby"; ?> <br> <?php
+      }
+      //School
+      if ('100% power backup' == $label) {
+        echo "100% power backup"; ?> <br> <?php
+      }
+      //School
+      if ('Lifts' == $label) {
+        echo "Lifts"; ?> <br> <?php
+      }
+      //School
+      if ('Security Cabin' == $label) {
+        echo "Security Cabin"; ?> <br> <?php
+      }
+    }
+  }
+  // Amenities Loop End
+}
+?>
+<!-- /  Amenities -->
+
+
+-------------------
+Image size
+source: 
+https://michaelsoriano.com/how-to-display-worpdress-automatically-resized-images-using-only-one-custom-field-value/
+-------------------
+<?php
+$varimgs = CFS()->get( 'image');
+echo $mediumimg = str_replace('.jpg', '-300x200.jpg' , $varimgs);
+$thumbimg = str_replace('.jpg', '-150x150.jpg' , $varimgs);
+?>
+<img src="<?php echo $varimgs; ?> " />
+<img src="<?php echo $mediumimg; ?> " />
+<img src="<?php echo $thumbimg; ?> " />

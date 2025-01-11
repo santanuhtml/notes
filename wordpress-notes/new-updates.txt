@@ -1,0 +1,740 @@
+                 *** WORDPRESS NOTES III  ***
+                 			    NEW UPDATES
+
+DATE TIME
+WP BOOTSTRAP NAVWALKER
+CLICKABLE DROPDOWN 
+DISPLAY CUSTOM POST CATEGORY
+SIGNLE POST PAGINATION
+INCREASE MAXIMUM FILE UPLOAD SIZE IN WORDPRESS
+ADD SVG IMAGES
+WORDPRESS DEMO PROJECT TO LIVE
+THEME CUSTOMIZE
+SEARCH OPTION WITH ICON
+SEARCH OPTION WITH ANIMATION
+NEXT AND PRIVIOUS OPTION ON SINGLE PAGE BASE ON CATEGORY
+Breadcrumb section
+Single Page Comment section
+Stop Hackers fron Script Injection
+Remove "Updates" link from Wordpress Admin Dashboard
+disable form first dropdown option
+Post-Processing of the Image Failed Likely Because the Server is Busy…
+Allow Editor Role To See Contact Form 7 Database
+Increase XAMPP Database upload size
+Advance Search Option
+					    
+********************************
+DATE TIME
+********************************
+<?php
+date_default_timezone_set("Asia/Kolkata");
+echo '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' . date("h:i:sa") .'&nbsp;&nbsp;'; 
+echo '<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> ' . date("d-m-Y");
+?>
+
+
+********************************
+WP BOOTSTRAP NAVWALKER
+********************************
+1.linke this on functions.php page.
+---------------------------------
+
+require_once('wp-bootstrap-navwalker.php');
+
+---------------------------------
+2. add this in header.php page
+---------------------------------
+
+<?php wp_nav_menu(array(
+  'theme_location' => 'header_menu',
+  'fallback_cb' => 'growthmates_fallback_menu',
+  'container' => '',
+  'menu_class' => 'nav navbar-nav navbar-right',
+
+  /* -------------- add this ---------------- */
+  
+  'depth'             => 4,
+  'container_class'   => 'collapse navbar-collapse',
+  'container_id'      => 'bs-example-navbar-collapse-1',
+  'walker'            => new WP_Bootstrap_Navwalker(),
+
+  /* -------------- add this ---------------- */
+
+)); ?>
+
+---------------------------------
+3. add this css also
+---------------------------------
+
+.dropdown .menu-item .dropdown-menu {
+    left: 240px !important;
+    top: 0px;
+    min-width: 200px;
+}
+
+************************************************
+CLICKABLE DROPDOWN 
+************************************************
+LINK:
+https://medium.com/@oscarmwana/make-parent-link-clickable-in-bootstrap-wordpress-navigation-walker-61213063a1a0
+
+--------------------------
+To make clickable dropdown we have to change 
+2 lines of code in the wp_bootstrap_navwalker.php file.
+
+befor
+---------------
+On line 85:
+$atts['href'] = '#';
+On line 87:
+$atts['data-toggle'] = 'dropdown';
+
+After
+--------------
+On line 85:
+$atts['href'] = ! empty( $item->url ) ? $item->url : '';
+On line 87:
+$atts['data-hover'] = 'dropdown';
+
+
+************************************************
+Display custom post category
+************************************************
+-------------------
+TYPE:1
+-------------------
+<ul class="location-list">
+<?php
+$args = array(
+'taxonomy' => 'map_location',
+'orderby' => 'name',
+'order'   => 'ASC'
+);
+$cats = get_categories($args);
+foreach($cats as $cat){
+?>
+<li>
+  <a href="<?php echo get_category_link( $cat->term_id ) ?>">
+     <?php echo $cat->name; ?>
+  </a>
+</li>
+<?php
+}
+?>
+</ul>
+
+-------------------
+TYPE:2
+-------------------
+$categories = get_the_category();
+if ( ! empty( $categories ) ) {
+    echo esc_html( $categories[0]->name );   
+}
+// $categories[0]->name => Web Designer
+// $categories[0]->slug => web-designer
+
+
+---------------
+For Custom Post
+step1: call it inside the loop
+------------------------------------------------
+<?php
+	if (have_posts()) {
+		while ( have_posts() ) {
+		the_post();	
+		$rescat = get_the_terms(get_the_ID(), 'recepe-category');
+    $firstCategory = $rescat[0]->name;
+?>
+
+Note: here 'recepe-category' is the ID of register_taxonomy();
+------------------------------------------------
+step2:display
+------------------------------------------------
+
+<li class="active"> <?php echo $firstCategory; ?>
+
+------------------------------------------------
+
+************************************************
+SIGNLE POST PAGINATION
+************************************************
+
+<div class="next-prev-post">
+  <nav aria-label="...">
+    <ul class="pager">
+      <li class="previous">
+      <?php previous_post_link( '%link', 'Previous Recipes' ); ?>
+     <!-- <a href="#"><span aria-hidden="true">&larr;</span> Older</a> -->
+      </li>
+      <li class="next">
+      <?php next_post_link( '%link', 'Next Recipes' ); ?>
+      <!-- <a href="#">Newer <span aria-hidden="true">&rarr;</span></a> -->
+      </li>
+    </ul>
+  </nav>
+</div>  
+
+************************************************
+INCREASE MAXIMUM FILE UPLOAD SIZE IN WORDPRESS
+************************************************
+step1:
+Once you located .htaccess file, select it and click on Edit button and add this code
+-----------------
+
+php_value upload_max_filesize 128M
+php_value post_max_size 128M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+-----------------
+after added .htaccess will be
+-----------------
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+php_value upload_max_filesize 128M
+php_value post_max_size 128M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# END WordPress
+
+
+************************************************
+ADD SVG IMAGES
+************************************************
+Add this code on function.php:
+------------------------------------------------
+
+function add_file_types_to_uploads($file_types){
+$new_filetypes = array();
+$new_filetypes['svg'] = 'image/svg+xml';
+$file_types = array_merge($file_types, $new_filetypes );
+return $file_types;
+}
+add_action('upload_mimes', 'add_file_types_to_uploads');
+
+
+************************************************
+WORDPRESS DEMO PROJECT TO LIVE
+************************************************
+STEP:1
+Page:wp-config.php
+Add this code after all define:
+-----------------------------------------------
+
+define('WP_SITEURL', 'https://yourdomain.com/');
+
+define('WP_HOME', 'https://yourdomain.com/');
+
+
+-----------------------------------------------
+STEP:2
+phpMyAdmin -> Data Base Name -> In 'option_value' change 
+in to the current domain 'https://yourdomain.com/'
+-----------------------------------------------
+STEP:3
+Visit Dashbord -> settings -> Permalinks -> SAVE IT
+-----------------------------------------------
+STEP:4
+Visit Dashbord -> General Settings -> 
+WordPress Address (URL) & Site Address (URL) -> 
+Fill with current web address. 
+Example:https://www.webmaddy.com/
+
+
+
+************************************************
+THEME CUSTOMIZE
+************************************************
+STEP1:
+Add this code
+-----------------------
+
+/* ------------ customize_register ------------ */
+function mytheme_customize_register( $wp_customize ) {
+   //All our sections, settings, and controls will be added here
+}
+add_action( 'customize_register', 'mytheme_customize_register' );
+
+-----------------------
+
+Notes:
+Theme customize has three part:
+I.control(UI):
+					adding this a we can get input form,color picker ect.
+II.settings(DATABASE):
+					using this we may save user choice in DATABASE.
+III.section(GROUP):
+					it may provide group of option
+
+------------------------
+STEP2:
+new keep this code insige the function:
+------------------------
+
+	//All our sections, settings, and controls will be added here
+  $wp_customize->add_section( 'mytheme_new_section_name' , array(
+    'title'      => __( 'Visible Section Name', 'mytheme' ),
+    'priority'   => 30,
+  ) );
+
+  $wp_customize->add_setting( 'header_textcolor' , array(
+    'default'   => '#f00',
+    'transport' => 'refresh',
+  ) );
+
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'link_color', array(
+  'label'      => __( 'Header Color', 'mytheme' ),
+  'section'    => 'mytheme_new_section_name',
+  'settings'   => 'header_textcolor',
+  ) ) );
+
+--------------------------
+UPDATED CODE:
+--------------------------
+
+/* ------------ customize_register ------------ */
+function mytheme_customize_register( $wp_customize ) {
+
+	//All our sections, settings, and controls will be added here
+  $wp_customize->add_section( 'mytheme_new_section_name' , array(
+    'title'      => __( 'Visible Section Name', 'mytheme' ),
+    'priority'   => 30,
+  ) );
+   
+  $wp_customize->add_setting( 'header_textcolor' , array(
+    'default'   => '#f00',
+    'transport' => 'refresh',
+  ) );
+
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'link_color', array(
+  'label'      => __( 'Header Color', 'mytheme' ),
+  'section'    => 'mytheme_new_section_name',
+  'settings'   => 'header_textcolor',
+  ) ) );
+
+}
+add_action( 'customize_register', 'mytheme_customize_register' );
+
+
+--------------------------
+Now we will create another function where we want to run this 
+custom function.
+--------------------------
+
+/* ------------ output customize css ------------ */
+function mytheme_customize_css()
+{
+  ?>
+   <style type="text/css">
+      h1{ color:#<?php echo get_theme_mod('header_textcolor');?>; }
+   </style>
+  <?php
+}
+add_action( 'wp_head', 'mytheme_customize_css');
+
+
+=================================================
+SEARCH OPTION WITH ICON
+=================================================
+
+<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ) ?>">
+<label>
+<span class="screen-reader-text"><?php _x( 'Search for:', 'label' )?></span>
+<input type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder' ) ?>" value="<?php echo get_search_query() ?>" name="s" />
+</label>
+<button type="submit" class="search-submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+</form>
+
+==================================================
+SEARCH OPTION WITH ANIMATION
+==================================================
+
+HTML
+----------------------------------
+<form role="search" method="get" class="search-form navbar-form" action="<?php echo esc_url( home_url( '/' ) ) ?>">
+  <div class="input-group">
+	<span class="screen-reader-text"><?php _x( 'Search for:', 'label' )?></span>
+	<!--<input type="text" class="form-control" placeholder="Search">-->
+	  <input type="search" class="search-field form-control" placeholder="Search" value="<?php echo get_search_query() ?>" name="s" />
+	<span class="input-group-btn">
+		
+	  <button type="submit" class="btn btn-default pull-right">
+		<span class="glyphicon glyphicon-search">
+		</span>
+	  </button>
+	  <button type="reset" class="btn btn-default pull-right">
+		<span class="glyphicon glyphicon-remove">
+		</span>
+	  </button>
+	</span>
+  </div>
+</form>
+
+-----------------------------------
+CSS [Edit as our need]
+-----------------------------------
+.navbar-form .input-group {
+    width: 100%;
+    z-index: 10000;
+    position: relative;
+    background: #ffff;
+  }
+  .navbar-collapse {
+    position: relative;
+    padding-top: 30px !important;
+    max-height: 270px;
+  }
+  .navbar-collapse form[role="search"] {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 0;
+  }
+
+  .navbar-collapse form[role="search"] button,
+  .navbar-collapse form[role="search"] input {
+    padding: 8px 12px;
+    border-radius: 0px;
+    border-width: 0px;
+    color: rgb(119, 119, 119);
+    background-color: rgb(248, 248, 248);
+    border-color: rgb(231, 231, 231);
+    box-shadow: none;
+    outline: none;
+  }
+  .navbar-collapse form[role="search"] input {
+    padding: 16px 12px;
+    font-size: 14pt;
+    font-style: italic;
+    color: rgb(160, 160, 160);
+    box-shadow: none;
+  }
+  .navbar-collapse form[role="search"] button[type="reset"] {
+    display: none;
+  }
+  @media (min-width: 768px) {
+   .navbar-collapse form[role="search"].active input {
+     position: relative;
+     top: 0px !important
+     } 
+    .navbar-collapse {
+      padding-top: 0px !important;
+      padding-right: 38px !important;
+    }
+    .navbar-collapse form[role="search"] {
+      width: 38px;
+    }
+    .navbar-collapse form[role="search"] button,
+    .navbar-collapse form[role="search"] input {
+      padding: 15px 12px;
+    }
+    .navbar-collapse form[role="search"] input {
+      font-size: 18pt;
+      opacity: 0;
+      display: none;            
+      height: 50px;
+    }
+    .navbar-collapse form[role="search"].active {
+      width: 100%;
+    }
+    .navbar-collapse form[role="search"].active button,
+    .navbar-collapse form[role="search"].active input {
+      display: table-cell;
+      opacity: 1;
+    }
+      .navbar-collapse form[role="search"].active input {
+      width: 100%;
+    }
+  }
+
+-----------------------------------
+JS
+-----------------------------------
+
+$(function () {
+     // Remove Search if user Resets Form or hits Escape!
+    $('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
+      console.log(event.currentTarget);
+      if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
+        $(event.currentTarget).attr('type') == 'reset') {
+        closeSearch();
+      }
+    });
+    function closeSearch() {
+       var $form = $('.navbar-collapse form[role="search"].active')
+       $form.find('input').val('');
+      $form.removeClass('active');
+    }
+    // Show Search if form is not active // event.preventDefault() is important, this prevents the form from submitting
+    $(document).on('click', '.navbar-collapse form[role="search"]:not(.active) button[type="submit"]', function(event) {
+      event.preventDefault();
+      var $form = $(this).closest('form'),
+        $input = $form.find('input');
+      $form.addClass('active');
+      $input.focus();
+    });
+ });
+
+************************************************
+NEXT AND PRIVIOUS OPTION ON SINGLE PAGE BASE ON CATEGORY
+************************************************
+ <ul>
+   <li class="next">
+      <?php next_post_link( '%link', 'Next Product', true, '', 'recepe-category' ); ?>
+   </li>
+   <li class="previous">
+      <?php previous_post_link( '%link', 'Previous Product', true, '', 'recepe-category' ); ?>
+   </li>
+</ul>
+
+************************************************
+Breadcrumb section
+************************************************
+source: https://www.codexworld.com/wordpress-how-to-display-breadcrumb-without-plugin/
+
+//breadcrumb
+function get_breadcrumb() {
+  echo '<a href="'.home_url().'" rel="nofollow">Home</a>';
+  if (is_category() || is_single()) {
+      echo "&nbsp;&nbsp;<span>&#8260;</span>&nbsp;&nbsp;";
+      the_category(' &bull; ');
+        if (is_single()) {
+          echo " &nbsp;&nbsp;<span>&#8260;</span>&nbsp;&nbsp; ";
+          the_title();
+        }
+  } elseif (is_page()) {
+      echo "&nbsp;&nbsp;<span>&#8260;</span>&nbsp;&nbsp;";
+      echo the_title();
+  } elseif (is_search()) {
+    echo "&nbsp;&nbsp;<span>&#8260;</span>&nbsp;&nbsp;Search Results for... ";
+    echo '"<em>';
+    echo the_search_query();
+    echo '</em>"';
+  }
+}
+
+//HTML
+<div class="breadcrumb"><?php get_breadcrumb(); ?></div>
+
+************************************************
+Single Page Comment section
+************************************************
+Source:https://developer.wordpress.org/reference/functions/wp_count_comments/
+
+<?php
+$postid = get_the_ID();
+$comments_count = wp_count_comments($postid);
+echo "Total Comments: " . $comments_count->total_comments . "<br />";       //TESTING LINE, DONOT NEED IT
+if($comments_count->total_comments>1){
+?>
+<a href="#reply-title" class="btn btn-secondary pull-right leave-reply">Leave a Reply</a>
+<?php
+}
+?>
+<?php if ( comments_open() && ! post_password_required() ) { comments_template( '', true ); } ?>
+
+-----------------------------------
+CSS [Edit as our need]
+-----------------------------------
+.btn{
+background-color: #194d70;
+color: #fff;
+}
+.btn:hover{
+color: #fff;
+}
+#comments{
+border-top: 1px solid #d8d8d8;
+padding-top: 28px;
+margin-top: 40px;
+}
+.comments .comments-title{
+font-size: 20px;
+margin-bottom: 30px;
+}
+.comments .comment-body{
+margin-top: 12px;
+padding: 16px;
+background: #f3f3f3;
+border: 1px solid #eaeaea;
+}
+#comments-list{
+margin-bottom: 30px;
+}
+.comments ul{
+padding-left: 0px;
+list-style: none;
+}
+.comments .avatar{
+margin-right: 6px;
+margin-bottom: 6px;
+}
+.comments .children{
+padding-left: 20px !important;
+}
+.comments .comment-body p{
+font-size: 17px;
+margin-top: 10px;
+}
+#comments label {
+display: block !important;
+}
+#comments textarea{
+width: 100%;
+height: 110px;
+border-radius: 5px;
+border: 1px solid #dadada;
+outline: none;
+}
+#reply-title{
+font-size: 20px;
+margin-bottom: 6px;
+}
+.comment-form-url, .comment-form-cookies-consent{
+display: none !important;
+}
+#comments input{
+height: 35px;
+border-radius: 5px;
+outline: none;
+border: 1px solid #dadada;
+}
+#comments #submit{
+background: #042c4a !important;
+color: #fff !important;
+padding: 7px 20px !important;
+border: none !important;
+font-size: 14px !important;
+text-transform: uppercase !important;
+margin-top: 8px;
+}
+
+************************************************
+Stop Hackers fron Script Injection
+************************************************
+Add this file in .htaccess file end of the all
+code:
+-----------------------------------------------
+
+# BEGIN Protect Against Script Injections
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} ((left pointy bracket)|%3C).*script.*((right pointy bracket)|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L]
+
+# END Protect Against Script Injections
+
+----------------------------------------------
+
+************************************************
+Remove "Updates" link from Wordpress Admin Dashboard
+************************************************
+
+function edit_admin_menus() {  
+global $submenu;  
+unset($submenu['index.php'][10]);
+return $submenu;
+}  
+add_action( 'admin_menu', 'edit_admin_menus' ); 
+
+**************************************************
+disable form first dropdown option
+**************************************************
+[select* bhk class:form-control "Flat*" "2BHK" "3BHK" "4BHK"]
+<script>
+  $( "form option:first-child" ).attr("disabled","disabled");
+</script>
+
+**************************************************
+Post-Processing of the Image Failed Likely Because the Server is Busy… 
+**************************************************
+ADD THIS ON function.php
+--------------------------------------------------
+add_filter('wp_image_editors', function($editors) {
+return ['WP_Image_Editor_GD', 'WP_Image_Editor_Imagick'];
+})
+
+					    
+********************************
+Allow Editor Role To See Contact Form 7 Database
+********************************
+Install this plugin:
+https://wordpress.org/plugins/members/
+
+********************************
+Increase XAMPP Database upload size
+********************************
+Increase XAMPP Database upload size
+
+xampp
+Apache - - - - - [Config] (On click) -> php.ini -> post_max_size=40M
+					   upload_max_filesize=40M
+
+Save and restart Xampp
+
+
+					    
+********************************
+Advance Search Option
+********************************
+//Add below code on the function.php page
+//source: https://curious-human-b.medium.com/how-to-include-advanced-custom-fields-data-into-wordpress-search-77247f0aa23e
+// Only Post search
+function searchfilter($query) {
+  if ($query->is_search && !is_admin() ) {
+    $query->set('post_type',array('post'));
+  }
+  return $query;
+}
+add_filter('pre_get_posts','searchfilter');
+
+// Join posts and postmeta tables 
+function customfields_search_join( $join ) {     
+  global $wpdb;      
+  if ( is_search() ) {             
+    $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';     
+  }      
+  return $join; 
+} 
+add_filter('posts_join', 'customfields_search_join' );
+
+// Modify the query
+function customfields_search_where( $where) {
+  global $pagenow, $wpdb;
+  if( is_search() ) {
+  $where = preg_replace(
+"/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/","(".$wpdb->posts.".post_title LIKE $1) OR 
+(".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+  }
+  return $where;
+}
+add_filter('posts_where', 'customfields_search_where' );
+
+//Prevent duplicates
+function customfields_search_distinct( $where ) {     
+  global $wpdb;
+  if ( is_search() ) {
+    return "DISTINCT";
+  }
+  return $where;
+} 
+add_filter( 'posts_distinct', 'customfields_search_distinct' );
+
+
+

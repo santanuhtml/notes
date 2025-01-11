@@ -1,0 +1,543 @@
+SHORT CODE:
+
+1.BASIC:
+step:1
+create a page called 'custom_shortcode.php' in inc folder and call it in 
+functions.php page.
+
+step:2
+add this code in 'custom_shortcode.php':
+CODE:
+
+<?php
+  function first_shortcode(){
+    return "first short code";
+  }
+  add_shortcode('callit','first_shortcode');
+?>
+
+step:3
+naw call it in text editor from dashbord
+CODE:
+
+[callit]
+
+//ON HTML
+
+<?php echo do_shortcode( $content ) ?>
+
+in place of $content we will add our 'short-code'
+
+<?php echo do_shortcode( '[contact-form-7 id="454" title="contact form"]' ) ?>
+
+----------
+first_shortcode() has three parameters 
+1.attributes comes with array
+2.content
+3.name of the function
+4.callit => is shortcode registered name.
+
+TESTING IN DIFFERENT FORMAT:
+BASIC EXAMPLES:
+EXAMPLE1:
+on code
+<?php
+  function first_shortcode($para){
+    print_r($para);
+  }
+  add_shortcode('callit','first_shortcode');
+?>
+
+on dashbord
+[callit text="testing content" name="name attribute"]
+
+then we will see like this
+
+on display
+Array ( [text] => testing content [name] => name attribute )
+
+EXAMPLE2: 
+<?php
+  function first_shortcode($para){
+    return $para['text'];
+  }
+  add_shortcode('callit','first_shortcode');
+?>
+
+on display
+testing content
+
+EXAMPLE3:
+<?php
+  function first_shortcode($para){
+   return '<h2>'.$para['value'].'</h2>';
+  }
+  add_shortcode('callit','first_shortcode');
+?>
+
+on dashbord:
+[callit  value="testing content"]
+
+display
+testing content
+
+*EXAMPLE4:
+
+<?php
+  function myfirst_shortcode($para){
+  $test = shortcode_atts(array(
+    'name' => 'Your Name',  
+    'color' => 'red'
+  ),$para); 
+  ?>
+    <h2 style="color:<?php echo $test['color']; ?>"><?php echo $test['name']; ?></h2>
+  <?php
+  }
+  add_shortcode('callit','myfirst_shortcode');
+?>
+
+note:
+1.shortcode_atts() is a function 
+it has 2 attribute:
+shortcode_atts(array(),$para);
+i.array(), use to get attribute.
+ii.$para, variable name from which we may get value.
+
+2.$test is the variable which contain values of the shortcode_atts();
+
+ON DASHBORD
+
+[callit]
+
+DISPLAY
+
+Your Name
+------------
+ON DASHBORD
+
+[callit name="Santanu Chowdhury", color="blue"]
+
+DISPLAY
+
+Santanu Chowdhury
+
+*EXAMPLE5: use $content attribute
+
+<?php
+  function myfirst_shortcode($para,$content){
+  $test = shortcode_atts(array(
+    'name' => 'Your Name',  
+    'color' => 'red'
+  ),$para); 
+  ?>
+    <h2 style="color:<?php echo $test['color']; ?>"><?php echo $content; ?></h2>
+  <?php
+  }
+  add_shortcode('callit','myfirst_shortcode');
+?>
+
+DASHBORD:
+
+[callit color="blue"]testing content value[/callit]
+
+DISPLAY:
+
+testing content value
+
+--------
+ADVANCE EXAMPLES:
+EXAMPLE1:
+<?php
+  function myfirst_shortcode($para,$content){
+  $test = shortcode_atts(array(
+    'name' => 'Your Name',  
+    'color' => 'red'
+  ),$para); 
+  ob_start();
+  ?>
+    <h2 style="color:<?php echo $test['color']; ?>"><?php echo $content; ?></h2>
+  <?php
+  return ob_get_clean();
+  }
+  add_shortcode('callit','myfirst_shortcode');
+?>
+
+Note:
+i.here we add  ob_start(); & ob_get_clean(); function to add 
+function return features.
+
+**ii.do_shortcode( 'shortcode' ); function used to insert our shortcode
+insite the html code.
+example:
+
+<?php
+echo do_shortcode( '[callit color="blue"]testing content value[/callit]' );
+?>
+
+iii.basic structure:
+
+<?php
+  function function_name($para,$content){
+  $test = shortcode_atts(array(
+    '' => '',  
+  ),$para); 
+  ob_start();
+  ?>
+
+
+      // full code place here
+
+   
+  <?php
+  return ob_get_clean();
+  }
+  add_shortcode('shortcode_name','function_name');
+?>
+
+
+EXAMPLE2: WAY TO ADD
+CODE:
+
+function slider_shortcode($para,$content){
+  $test = shortcode_atts(array(
+    '' => '',  
+  ),$para); 
+  ob_start();
+
+  $slider_custom = null;
+  $slider_custom = new WP_Query(array(
+
+      'post_type' => 'team',
+      'posts_per_page' => -1,
+
+    ));
+
+  if($slider_custom->have_posts()){
+    while($slider_custom->have_posts()){
+      $slider_custom->the_post();
+      the_title(); 
+    }
+  }
+  wp_reset_postdata();
+  
+
+  return ob_get_clean();
+  }
+  add_shortcode('sliderShortcode','slider_shortcode');
+
+
+
+DISPLAY:
+
+[sliderShortcode]
+
+
+------ 
+FULL EXAMPLE with id error:
+
+// SLIDER CUSTOM POST
+
+  function slider_shortcode($para,$content){
+  $test = shortcode_atts(array(
+    '' => '',  
+  ),$para); 
+  ob_start();
+?>
+
+
+<section id="carousel-section" class="section-global-wrapper"> 
+        <div class="container-fluid-kamn">
+            <div class="row">
+                <div id="carousel-1" class="carousel slide">
+        
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+
+                    <?php
+
+                      $basicTheme = null;
+                      $basicTheme = new WP_Query(array(
+
+                      'post_type' => 'slider_post', 
+                      'posts_per_page' => -1,
+                      'order' => 'ASC'
+                      ));
+                      // Start with an underscore to hide fields from custom fields list
+                      $prefix = '_office-master_';
+
+                      if ($basicTheme->have_posts()) {
+                        $x = 0;
+                        while($basicTheme->have_posts()){
+                          $basicTheme->the_post();
+                          $slider_caption = get_post_meta(get_the_ID(), $prefix.'slider_caption',true);
+                          $x++;
+                          ?>
+                         <!-- slider -->
+                        <div class="item <?php if($x==1){echo 'active';} ?>">
+                          <?php the_post_thumbnail('slider-size'); ?>
+                          <div class="carousel-caption">
+                              <h3 class="carousel-title hidden-xs"><?php the_title(); ?></h3>
+                              <p class="carousel-body"><?php echo $slider_caption; ?></p>
+                          </div>
+                        </div>
+                        <!-- /slider -->
+                        <?php
+                      }
+                    }
+                    wp_reset_postdata(); 
+
+                    ?>
+                       
+                    </div>
+
+                     <!-- Indicators -->
+                    <ol class="carousel-indicators visible-lg">
+                      <?php
+                       for($i=0; $i<$x; $i++){?>
+                        <li data-target="#carousel-1" data-slide-to="<?php echo $i; ?>" class="<?php if($i==0){echo 'active';} ?>"></li>
+
+                      <?php  }
+                      ?>
+                        
+                    </ol>
+
+        
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-1" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-1" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<?php
+
+  return ob_get_clean();
+  }
+  add_shortcode('sliderShortcode','slider_shortcode');
+
+NOTE:in this code has an id error, mence if we add this shortcode more than one 
+itme in same place then there will be an error.
+to remove this error we will do some task with this id
+
+
+
+SOLVE ID ERROR:
+
+// SLIDER CUSTOM POST
+
+  function slider_shortcode($para,$content){
+  $test = shortcode_atts(array(
+    'id' => 0,  
+  ),$para); 
+  ob_start();
+?>
+
+
+<section id="carousel-section" class="section-global-wrapper"> 
+        <div class="container-fluid-kamn">
+            <div class="row">
+                <div id="carousel-1<?php echo $test['id']; ?>" class="carousel slide">
+        
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+
+                    <?php
+
+                      $basicTheme = null;
+                      $basicTheme = new WP_Query(array(
+
+                      'post_type' => 'slider_post', 
+                      'posts_per_page' => -1,
+                      'order' => 'ASC'
+                      ));
+                      // Start with an underscore to hide fields from custom fields list
+                      $prefix = '_office-master_';
+
+                      if ($basicTheme->have_posts()) {
+                        $x = 0;
+                        while($basicTheme->have_posts()){
+                          $basicTheme->the_post();
+                          $slider_caption = get_post_meta(get_the_ID(), $prefix.'slider_caption',true);
+                          $x++;
+                          ?>
+                         <!-- slider -->
+                        <div class="item <?php if($x==1){echo 'active';} ?>">
+                          <?php the_post_thumbnail('slider-size'); ?>
+                          <div class="carousel-caption">
+                              <h3 class="carousel-title hidden-xs"><?php the_title(); ?></h3>
+                              <p class="carousel-body"><?php echo $slider_caption; ?></p>
+                          </div>
+                        </div>
+                        <!-- /slider -->
+                        <?php
+                      }
+                    }
+                    wp_reset_postdata(); 
+
+                    ?>
+                       
+                    </div>
+
+                     <!-- Indicators -->
+                    <ol class="carousel-indicators visible-lg">
+                      <?php
+                       for($i=0; $i<$x; $i++){?>
+                        <li data-target="#carousel-1<?php echo $test['id']; ?>" data-slide-to="<?php echo $i; ?>" class="<?php if($i==0){echo 'active';} ?>"></li>
+
+                      <?php  }
+                      ?>
+                        
+                    </ol>
+
+        
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-1<?php echo $test['id']; ?>" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-1<?php echo $test['id']; ?>" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<?php
+
+  return ob_get_clean();
+  }
+  add_shortcode('sliderShortcode','slider_shortcode');
+
+
+STEP1:
+i.we add 'id' => 0, in 'shortcode_atts()' function and add
+<?php echo $test['id']; ?> insite the id.
+
+ii.call shortcode with different ids
+example:
+
+[sliderShortcode id=1]
+
+[sliderShortcode id=2]
+
+-----------------------------------------
+
+ANOTHER EXAMPLE:
+/* =========== Image Gallery ========= */
+function image_gallery($para,$content){
+  $test = shortcode_atts(array(
+    'image-no' => 0,
+	'brand-name' =>'a',
+	'image-folder-name' => 'a',
+  ),$para); 
+  ob_start();
+?>
+	<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h2 style="margin-bottom:20px;">
+				<?php echo $test['brand-name']  ?>
+			</h2>
+		</div>
+		<br />
+		<?php 
+		for ($i=1; $i <=$test['image-no']; $i++) { 
+				?>
+			<div class="col-md-3">
+				<div class="zoom-gallery">
+					<a href="<?php echo get_template_directory_uri(); ?>/img/<?php echo $test['image-folder-name'] ?>/<?php echo $i ?>.jpg" data-source="http://500px.com/photo/32736307" title="Into The Blue" class="img-responsive">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/<?php echo $test['image-folder-name'] ?>/<?php echo $i ?>.jpg" class="img-responsive">
+					</a>
+				</div>
+			</div>
+		
+		<?php
+			}
+		?>
+	</div>
+</div>
+
+<?php
+return ob_get_clean();
+}
+add_shortcode('callittwo','image_gallery');  
+
+/*
+ * [callittwo image-no=3 brand-name="Agarwal Vikas Trust" image-folder-name="agarwal-vikas-trust"]
+ * */
+
+--------------------------------
+EXAMPLE:
+        CUSTOM IMAGE GALLERY WITH SHORTCODE
+Note:
+We already created custom post for image gallery.
+Here custom post post_type = magnum_image
+--------------------------------
+
+
+function image_gallery($para,$content){
+  $test = shortcode_atts(array(
+    'brand-name' =>'a',
+    ),$para); 
+    ob_start();
+  ?>
+    <?php
+         $product_image = new WP_Query(array(
+        'post_type' => 'magnum_image', 
+        'product_category' => $test['brand-name'],
+        'posts_per_page' => -1
+        ));
+      if ($product_image->have_posts()) {
+        while($product_image->have_posts()){
+          $product_image->the_post();
+			$banner_image = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID() ), 'full' );
+      ?>
+			<div class="col-md-4">
+				<div class="zoom-gallery">
+					<a class="gallery-img" href="<?php echo $banner_image[0]; ?>" data-source="http://500px.com/photo/32736307" title="<?php the_title(); ?>">
+						<?php the_post_thumbnail('img-resize'); ?>
+						<div class="overlay">
+							<h4><?php the_title(); ?></h4>
+						</div>
+					</a>
+				</div>
+			</div>	
+        <?php
+        }
+      }
+    else{
+       for ($i=1; $i <=3 ; $i++) { 
+      ?>
+       <div class="col-md-4">
+        <div class="gallery-img" data-aos="fade-up" data-aos-once="true">
+        <img src="http://via.placeholder.com/350x250">
+        <div class="content transition">
+          <h3>Image title</h3>
+        </div>
+        </div>
+      </div>
+    <?php
+       }
+    }
+    wp_reset_postdata(); 
+  ?>
+  <?php
+  return ob_get_clean();
+  }
+  add_shortcode('callittwo','image_gallery');  
+
+  /*
+  call it using:
+  [callittwo brand-name="cafe-restaurants"]
+
+  Note:cafe-restaurants is the category name created
+  with taxonomy for this custompost
+ */
+
