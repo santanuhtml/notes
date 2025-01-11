@@ -1,0 +1,18 @@
+Plugins
+--------------
+
+Contact Form 7 By Takayuki Miyoshi
+Contact Form 7 Database Addon – CFDB7 By Arshid
+Contact Form 7 Redirection
+Advanced Custom Fields - By Elliot Condon
+Advanced Custom Fields - Repeater Field
+Responsive Menu - By Peter Featherstone
+WPBakery Page Builder
+WP SUPER CACHE
+WPS Hide Login
+Akismet Anti-Spam  
+All-in-One WP Migration  ---- localhost to server
+
+--------------
+Get Wordpress Details
+https://www.wpthemedetector.com/

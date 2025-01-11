@@ -1,0 +1,60 @@
+PHOTOSHOP TASK
+--------------
+1.CREATING PATTERN OVERLAY
+2.BUTTON
+3.IMAGE OVERLAY TO READ CONTENT OVER IT
+4.EXPORTING GRAPHIC FROM PSD
+
+-------------------------------------------
+1.CREATING PATTERN OVERLAY (HORIZONTAL LINE):
+-------------------------------------------
+File -> new -> width:1px, height:21px, Resulation:144 -> background off
+& take a new layer -> 1px box & fill blue color -> edit -> define pattern
+-> Name: as your need -> ok
+
+Now go to the UI design PSD file -> Take new layer & fill it with white ->
+dbl click ohn this layer -> Pattern overlay[] -> choose created pattern 
+
+-------------------------------------------
+2.BUTTON:
+-------------------------------------------
+Use Rectangle tool to create button with strok [/], 
+take strok form fx=> strok -> size:1px, Position:center, Opacity:0,
+button font should be 18px.
+
+Now group strok color and text layer with name Button
+Note: 
+i.For Clipping Mask select the font layer -> ctrl+alt+G
+ii.button with should be 2 colum and 2 row
+
+-------------------------------------------
+3.IMAGE OVERLAY TO READ CONTENT OVER IT:
+-------------------------------------------
+We have to Image overlay if we want to keep a content
+over it, then we have to take a layer with black color 
+with 20% opacity and Clipping Mask on the image.
+
+-------------------------------------------
+4.EXPORTING GRAPHIC FROM PSD
+-------------------------------------------
+Check []Auto Select -> select logo layer -> ctrl+A -> ctrl+C -> ctrl+N ->
+ctrl+V
+
+Now off the background if we need png file -> file -> save for web ->
+png24(for logo) -> quality:65 -> save
+
+*If any icon contain above one layer then -> select all -> Right Click on
+last selected layer -> Rasterize Layers -> Ctrl+E
+
+
+
+
+
+
+
+
+
+
+
+
+

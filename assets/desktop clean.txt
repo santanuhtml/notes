@@ -1,0 +1,8 @@
+Desktop Clean:
+1. Clean Recycle Bin
+2. C DIRVE Disk Cleanup
+3. Windows + R -> %temp% -> Ok
+4. Crome -> History -> Clear browsing data
+         -> [] Browsing history
+            [OK] cookies and other site data
+            [OK] cached images and files

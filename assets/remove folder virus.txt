@@ -1,0 +1,18 @@
+Remove Folder Virus:
+step1:
+Insert pendirve, and check the location of it
+for example here is D:
+
+step2:
+Open cnd
+-------------------
+1st line:
+D:
+ENTER
+
+2nd line
+attrib -h -r -s /s /d (drive location, here is D):\*.*
+So insert this:
+attrib -h -r -s /s /d D:\*.*
+
+-------------------

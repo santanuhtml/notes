@@ -1,0 +1,115 @@
+
+1. google speed test
+https://developers.google.com/speed/pagespeed/insights/
+get google API KEY:
+https://console.developers.google.com/apis/credentials
+
+2. plugins & links
+https://fotorama.io/
+https://swiperjs.com/
+https://flickity.metafizzy.co/
+https://dimsemenov.com/plugins/magnific-popup/
+https://www.blobmaker.app/
+https://app.haikei.app/
+https://bennettfeely.com/clippy/
+https://webgradients.com/
+https://gijsroge.github.io/tilt.js/
+https://shape.so/app/animated-icons
+https://web.archive.org/
+
+3.free coding & css applications
+https://freefrontend.com/
+https://www.tyler.com/templates/
+
+4.website inspiration
+http://www.cssauthor.com/corporate-business-web-templates/    (best for psd design)
+http://wp.magnium-themes.com/barrel/barrel-selector/
+http://www.espresso-templates.com/
+https://stnsvn.com/showcase/
+http://sktperfectdemo.com/
+https://www.sktthemes.net/
+http://www.boxui.com
+http://www.webdesign-inspiration.com/
+ui8.net
+www.behance.net
+http://athemes.com/collections/best-one-page-wordpress-themes/
+http://designspiration.net/
+http://preview.themeforest.net/item/vina-rubela-multipurpose-virtuemart-joomla-template/full_screen_preview/17203266?_ga=1.113251525.31101759.1475742651
+
+5.app development fremwork
+http://ionicframework.com
+
+6.FONT icons
+https://icons.getbootstrap.com/
+https://icons8.com/line-awesome
+https://thenounproject.com/
+https://themify.me/themify-icons
+http://simplelineicons.com/
+https://linearicons.com/free
+http://icofont.com/
+http://zavoloklom.github.io/material-design-iconic-font/icons.html#image
+
+7.color
+http://flatuicolors.com/
+https://htmlcolorcodes.com/
+
+8.rank of a website
+http://www.alexa.com/
+
+9.Wordpress documentation
+http://keydesign-themes.com/incubator/documentation/
+
+10.amazone
+https://services.amazon.in/services/sell-on-amazon/pricing.html?ref=as_in_soa_sticky_nav_pricing
+
+11.animation
+http://easings.net/
+
+12.movie
+http://webjalsha.in/site_1324.xhtml
+http://pagal-world.in/movies.php
+
+
+13.Free images
+https://pngtree.com/free-banner
+http://www.pngpix.com/
+https://picjumbo.com/
+pixabay.com
+pexels.com
+unsplash.com
+join.deathtothestockphoto.com
+
+14.Videos
+http://coverr.co/
+https://videos.pexels.com/
+
+15.google map maker
+https://www.youtube.com/watch?v=KtPVo52JDxs
+https://mapmaker.google.co.in/mapmaker
+
+
+16.Background pattern
+http://www.heropatterns.com/
+https://www.transparenttextures.com/
+subtlepatterns.com
+
+
+
+18.wordpress inspiration
+https://www.elegantthemes.com/gallery/divi/
+
+19.tutorial website
+http://www.w3schools.com/howto/default.asp
+www.codecademy.com
+www.codeschool.com
+
+20.freelance
+https://www.xplace.com/dev/jobs
+
+21.free music
+https://www.bensound.com/royalty-free-music
+
+3.free domain & hosting
+https://googiehost.com/
+link : https://byet.host/free-hosting/news
+youtub : https://www.youtube.com/watch?v=cFTgeR0eaHI

@@ -1,0 +1,54 @@
+<!-- 
+ADD SHORTCUT ON SUBLIME TEXT
+Location: Tools -> Developer -> new snippet
+STEP1:
+Type your code under [ ]
+STEP2:
+Type an unique name between <tabTrigger> </tabTrigger>
+to call the shortcut
+STEP3:
+To save this file type the 'unique-name.sublime-snippet' 
+and save it.
+Example: newsection.sublime-snippet
+STEP4:
+To edit any shortcut
+File -> Open File -> User -> Choose your file and edit.
+ -->
+
+<snippet>
+	<content><![CDATA[
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-$1">
+					<div class="bp">
+						$2
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>newsection</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
+
+
+
+
+--------------------------
+LIST:
+WORDPRESS:
+wpblog
+
+HTML:
+newsection
+
+BOOTSTRAP:
+bsnav
+bsmedia
+
+CSS
+corecss

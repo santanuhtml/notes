@@ -1,0 +1,58 @@
+WP SUPER CACHE SETTINGS:
+------------------------
+Easy:
+------------------------
+1.Caching -> Caching On [DONE] -> Update Status.
+Note: To update any page click on Delete Cache.
+
+------------------------
+Advanced
+------------------------
+1.Caching [DONE] Enabel Caching
+
+2.Cache Delivery Method [DONE] Simple(Recommended)
+
+3.Miscellaneous:
+  [DONE] Don’t cache pages for known users. (Recommended) 
+  	 Note: Like logedin user / old user
+  [DONE] Don’t cache pages with GET parameters. (?x=y at the end of a url)
+	 Note: dashbord pages.
+  [DONE] Compress pages so they’re served more quickly to visitors. (Recommended)
+  [DONE] Cache rebuild. Serve a supercache file to anonymous users while a new file is being generated. (Recommended)
+  [DONE] 304 Not Modified browser caching. Indicate when a page has not been modified since it was last requested. (Recommended)
+  
+4.Advanced
+  [DONE] Enable dynamic caching. (See FAQ or wp-super-cache/plugins/dynamic-cache-test.php for example code.)
+  [DONE] Mobile device support. (External plugin or theme required. See the FAQ for further details.)
+
+  [DONE] Clear all cache files when a post or page is published or updated.
+  [DONE] Only refresh current page when comments made.
+
+*** [Update Status] click on it.
+
+5.Expiry Time & Garbage Collection
+
+Cache Timeout : 3600
+*** [Change Expiration] Click on it.
+
+6. Accepted Filename & Rejected URls
+   select pages where we don't need any cache.
+
+*** AT THE BOTTOM CLICK ON [SUBMIT]
+
+------------------------
+Contents
+------------------------
+[Delete Expired] -- Delete all expired cache files which is store after each 3600 sec.
+
+------------------------
+Preload
+------------------------
+Refresh preloaded cache files every [100] minutes.
+Note:
+if you puplish post every 2 hrs then you may take 100 minutes
+[DONE] Preload mode (garbage collection disabled. Recommended.)
+*** [Save Settings]
+*** [Preload Cache Now]
+
+SEARCH ON GOOGLE ->Only new pages and post where modification are made will be crawled
