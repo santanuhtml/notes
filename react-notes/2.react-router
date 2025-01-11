@@ -1,0 +1,79 @@
+================================
+11. React Router
+    NavLink
+    Link
+    Outlet
+    useParams
+    useNavigate
+================================
+Install:
+> npm i react-router-dom
+
+Note:
+> import {Link, NavLink} from "react-router-dom"
+
+. We use Link in place of <a> tag in react
+  <a> tag reload the full page so we use Link tag
+
+. <NavLink> component has variable called 'isActive', using
+  this we can check any page active or not.
+  
+. <Link to="/"> Home </Link>
+  <Link to="/about">About</Link>
+  
+. <NavLink to="/">Home</NavLink>
+  <NavLink to="/about">About</NavLink>
+  <NavLink to="/about/career">About</NavLink>               //*Nesting
+  <Route path="/user/:userid" element={<User />} />
+   
+. App.jsx
+  <BrowserRouter>
+    <Routes>
+       <Route path="/" element={<Home />} />
+       <Route path="/about" element={<About />}/>
+       <Route path="/about/career" element={<Career/>} />  //*Nesting
+       <Route path="/contact" element={<Contact />} />
+       <Route path="*" element={<NotFound/>} />	     //404 page
+     </Routes>
+  </BrowserRouter>   
+   
+   
+ # Outlet: This Hook use as a tab
+   <Outlet />
+   
+ 
+ #useParams: From the current URL, useParams Hook retures an object 
+             contain dynamic value. 
+             
+ . (user.jsx)
+   import { useParams } from "react-router-dom";
+   function User(){
+     const {userid} = useParams();
+     return(
+       <div>
+         <Header />
+         User {userid}
+       </div>
+       )
+     }
+   export default User;
+   
+   
+  # useNavigate: useNavigate hook use for logical navigation.
+
+  import { useNavigate } from "react-router-dom";
+  function UserLoggedin(){
+    const navigate = useNavigate();
+    //Logical Navigation
+    function logout(){
+      navigate('/');
+    }
+    return(
+      <div>
+        <button onClick={logout}>Logout</button>
+      </div>
+    )
+  }
+  export default UserLoggedin;
+  
+

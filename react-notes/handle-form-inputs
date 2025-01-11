@@ -1,0 +1,184 @@
+================================
+10. Handle form inputs
+    > Best practices
+================================
+----------
+App.jsx
+----------
+import Inputs from "./Inputs";
+import { useState } from "react";
+
+function App(){
+  const [text, setText] = useState('Santanu Chowdhury');
+  const [number, setNumber] = useState('7278239235');
+  const [email, setEmail] = useState('santanu04@gmail.com');
+  const [age, setAge] = useState(32);
+  const [checked, setChecked] = useState(true);
+  const [radio, setRadio] = useState('Male');
+  const [select, setSelect] = useState('Select');
+
+  return(
+    <>
+     <Inputs 
+      text={text} 
+      setText={setText} 
+      number={number}
+      setNumber={setNumber}
+      email={email}
+      setEmail={setEmail}
+      age={age}
+      setAge={setAge}
+      checked={checked}
+      setChecked={setChecked}
+      radio={radio}
+      setRadio={setRadio}
+      select={select}
+      setSelect={setSelect}
+     />
+    </>
+  )
+}
+
+export default App;
+
+----------
+Input.jsx
+----------
+function Inputs({
+  text, setText,
+  number, setNumber,
+  email, setEmail,
+  age, setAge,
+  checked, setChecked,
+  radio, setRadio,
+  select, setSelect
+  }){
+
+  function submit(){
+    let data = `  
+      Name : ${text}
+      Email: ${email ? email : 'not sumbitted'}
+      Contact: ${number}
+      Age:${age}
+      Employed: ${checked ? 'Yes' : 'No'}
+      Gender: ${radio}
+      Department: ${select}
+    `
+    console.log(data);
+  }
+
+  return(
+    <>
+      <div>
+        <label>Text Input : </label>
+        <input 
+          type="text"  
+          placeholder="Your Name"
+          value={text}
+          onChange={(e)=>{setText(e.target.value)}}
+        />
+      </div>
+      <div>
+        <label>Contact : </label>
+        <input 
+          type="number" 
+          value={number}
+          onChange={(e)=>{setNumber(Number(e.target.value))}}
+        />
+      </div>
+      <div>
+        <label>EmailId : </label>
+        <input 
+          type="email" 
+          placeholder="Your Active Email"
+          value={email}
+          onChange={(e)=>{setEmail(e.target.value)}}
+        />
+      </div>
+      <div>
+        <label>Age is {age} : </label>
+        <input 
+          type="range"  
+          min={18}
+          max={60}
+          value={age}
+          onChange={(e)=>{setAge(e.target.value)}}
+        />
+      </div>
+      <div>
+       Gender : 
+        <label>
+          <input 
+          type="radio" 
+          name="myRadio" 
+          value="Male" 
+          checked={radio === 'Male'}
+          onChange={(e) => setRadio(e.target.value)}
+          />
+          Male
+        </label>
+        <label>
+          <input 
+          type="radio" 
+          name="myRadio" 
+          value="Female" 
+          checked={radio === 'Female'}
+          onChange={(e) => setRadio(e.target.value)}
+          />
+          Female
+        </label>
+      </div>
+      <div>
+        <label>Employed : </label>
+        <input 
+          type="checkbox" 
+          defaultChecked={checked}
+          onChange={(e)=>{setChecked((prev)=>!prev)}}
+        />
+      </div>
+      <div>
+      <label>Department: </label>
+        <select value={select} onChange={(e)=>{setSelect(e.target.value)}}>
+          <option value="Select" disabled={select !== 'Select'}>Select</option>
+          <option value="IT">IT</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      <div>
+      <button onClick={submit}>Submit</button>
+      </div>
+    </>
+  )
+}
+
+export default Inputs;
+
+
+================================
+> Best practices
+================================
+> We should not update State on click event! we can update it
+  under a function.
+----------------
+
+<label>Text Input : </label>
+<input 
+  type="text"  
+  placeholder="Your Name"
+  value={text}
+  onChange={(e)=>{updateText(e)}}
+/>
+
+-----
+
+function updateText(e){
+  setText(e.target.value);
+}
+
+----------------
+> Here we update our State under a function.
+> Using this way we can eassyliy validate or doing 
+  others changes.
+
+
+

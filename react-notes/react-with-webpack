@@ -1,0 +1,82 @@
+# Install React with webpack
+===========================
+I. Packages Installation:
+===========================
+. Create new Project folder and within the Project folder
+  open terminal
+
+> code .
+> nvm use v20
+> npx webpack init
+   . ES6
+   . npm
+> npm i react
+> npm i react-dom
+> npm i --save-dev @babel/preset-react
+> npm run serve
+
+===========================
+II. Code Update:
+===========================
+. Update index.html file with 
+  <div id="root"></div>
+
+. Now setup index.js file
+  search 'create root react'
+-------------
+index.js
+-------------
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.js';
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
+-------------
+
+. Creat App.jsx file
+-------------
+App.js
+-------------
+import React from "react";
+function App(){
+  return(
+    <div>App</div>
+  )
+}
+export default App;
+-------------
+
+. Update 'webpack.config.js' for dev server
+-------------
+output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+},
+devServer: {
+  open: true,
+  host: 'localhost',
+  port: '8081',
+  historyApiFallback: true
+},
+-------------
+
+1. Visit .babelrc file and add:
+"@babel/preset-react"
+-------------
+.babelrc
+-------------
+{
+  "plugins": ["@babel/syntax-dynamic-import"],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ],
+    "@babel/preset-react"
+  ]
+}
+-------------
+

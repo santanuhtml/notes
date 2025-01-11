@@ -1,0 +1,799 @@
+1. Topics
+2. Project Setup
+3. Introduction
+4. Functional Components
+5. Hooks
+6. Virtual DOM
+7. React + Viet + Tailwindcss
+8. Props
+9. Reusable Component	
+10. Handle form inputs
+================================
+1. Topics
+================================
+
+> React mainly use for conplex front-end desing
+  for example: on single click so many changes/ updates
+  happning on a page.
+  
+> React is libary
+
+> React use for SPA(Single Page Application, means page does't reload)
+
+> Core Topics:
+  . State or UI manupulation and JSX
+  . Component Reusability
+  . Props (Use to pass data on component)
+  . Hooks:useState, useEffect, useCallback (Use to Update/Changes on UI)
+  
+> Additional Topics:
+  . Router (Use to navigate)
+  . State Management: Redux, Redux toolkit, Zuntand, context API
+  . BAAS Apps (Backend as a service): appwrite, firebase, Supabase etc
+    (use to create backend)
+  . Fream Work: Next Js
+ 
+ Note: JavaScript Object Property called Props
+ 
+> React + React-dom     use for Web Project
+  React + React Native  use for Mobile Apps
+
+================================
+2. Project Setup
+   i.  Using create-raect-app (old way)
+   ii. Using vite
+================================
+> Reposetary creating(check video 2)
+
+i. Installation React Using create-raect-app (old way/basic way)
+   > ls  //dir for windows	
+   > npx create-react-app 01basicreact
+   > cd 01basicreact
+   > ls  //dir for windows	
+   > npm run start
+     (use 'run' to start the project)
+   
+   (Build use for production)
+   > npm run build
+
+> **Always Check package.json file to understand the Project.**
+    On React project
+    . Main dependencies are -
+      "react": "^18.2.0",        //code react package
+      "react-dom": "^18.2.0",    //Creare own Vertual Dom
+      "react-scripts": "5.0.1",  //* Add <script src="..."> link itself on index.html page
+    
+    . Main scripts are -
+      start: use to run the project
+      build: use to build and deployment the project
+      
+  
+ ii. Installation React Using vite
+     (Vite requires Node.js version 18+ or 20+)
+     > nvm use v18
+     > ls  				
+     > npm create vite@latest
+     > ls  
+     > cd 01vitereact[PROJECT NAME]
+     > npm i
+     > npm run dev
+     
+> Check package.json file to understand the Project.  
+    . dependencies - 
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+      
+    . Scripts are -
+      dev: use to run the project
+      build: use to build and deployment the project
+      
+> Removing unwanted files and folders (at video 2 : 26min)
+    
+================================ 
+3. Introduction
+   Video - 3
+================================    
+index.js
+--------------
+> React Create it's own DOM called "Virtual DOM" using ReactDOM.createRoot() method.
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  
+  . This "Virtual DOM" compare with Actual DOM and if find any changes on Actual DOM
+    then update those elements only on 'root' element.
+  
+  . Using Fiber Algorithem, "Virtual DOM" did those task.
+
+> Component name and Component file name starts with UPPER CASE
+
+> JSX return only one element at a time, 
+  so we wrapp all code with in <></> called Fragment
+  
+> Using JavaScript XML(JSX) we write HTML code with in React.
+
+> .jsx use when create a component (for Vied)
+  
+> Adding Variable on JSX:
+  function App() {
+  let user = 'Santanu';
+  return (
+    <div>
+      <Chai />
+      <h1>React App using Vide | {user}</h1>
+    </div>
+    )
+  }
+  
+Note:
+Evaluate Expression: {} called Evaluate Expression means final result will display here.
+example: {user} => Santanu, {10+10+10} => 30
+
+================================
+With out HOOK:
+================================
+With out Hook UI update was very complex, 
+and to so solve this issue React js comes!
+Example:
+App.jsx
+---------------------------------
+function App(){
+  let counter = 15;
+  const addValue = () => {
+    counter++;
+    console.log(counter);
+    document.getElementById('h1').innerHTML = `Counter Value ${counter}` ;
+    document.getElementById('h2').innerHTML = `Counter Value ${counter}` ;
+    document.getElementById('button').innerHTML = `Button ${counter}` ;
+    document.getElementById('p').innerHTML = `Paragraph ${counter}` ;
+    document.getElementById('footer').innerHTML = `${counter}` ;
+  }
+  return(
+    <div>
+      <h1 id="h1">Chai and React! {counter}</h1>
+      <h2 id="h2">Counter Value: {counter}</h2>
+      <p id="p">Paragraph {counter}</p>
+      <button id="button" onClick={addValue}>Add Value {counter}</button>
+      <div id="footer">Footer {counter}</div>
+    </div>
+  )
+}
+
+export default App;
+ 
+================================
+5. Hooks
+   I. useState() HOOK
+   II. useEffect() HOOK
+   III. useCallback() HOOK
+   IV. useRef()
+    V. forwardRef()
+================================  
+
+> Hook use to update or changes on UI.  
+  
+> Import Hook before use
+  import { useState } from 'react'  
+  
+---------------------------
+I. useState() HOOK
+---------------------------
+> Use to add state variable on our component
+
+Example:
+App.jsx
+---------------------------
+import { useState } from 'react'
+import './App.css'
+function App() {
+  const [counter, setCounter] = useState(15);
+  const addValue = () => {
+    setCounter(counter+1);
+  }
+  return (
+    <>
+      <h1>Chai and React! {counter}</h1>
+      <h2>Counter Value: {counter}</h2>
+      <button onClick={addValue}>Add Value {counter}</button>
+      <div>Footer {counter}</div>
+    </>
+  )
+}
+export default App
+
+---------------------------
+Note:
+const [counter, setCounter] = useState(15);
+counter      => It is a simple variable
+useState(15) => Default value set here
+setCounter   => It is a function, under which variable update done
+                setCounter(counter+1);
+
+** Same Example with simple variable 'x' and funcion 'newFunction'
+
+--------------------------
+import { useState } from 'react'
+import './App.css'
+function App() {
+  const [x, newFunction] = useState(15);
+  const addValue = () => {
+    newFunction(x+1);
+  }
+  return (
+    <>
+      <h1>Chai and React! {x}</h1>
+      <h2>Counter Value: {x}</h2>
+      <button onClick={addValue}>Add Value {x}</button>
+      <div>Footer {x}</div>
+    </>
+  )
+}
+export default App     
+--------------------------  
+  
+Example: Add value and Remove value
+--------------------------
+import { useState } from 'react'
+import './App.css'
+function App() {
+  const [counter, setCounter] = useState(15);
+  const addValue = () => {
+    setCounter(counter+1);
+  }
+  const removeValue = () => {
+    setCounter(counter-1);
+  }
+  return (
+    <>
+      <h1>Chai and React! {counter}</h1>
+      <h2>Counter Value: {counter}</h2>
+      <button onClick={addValue}>Add Value {counter}</button>
+      <br />
+      <button onClick={removeValue}>Remove Value {counter}</button>
+      <div>Footer {counter}</div>
+    </>
+  )
+}
+export default App  
+
+---------------------------
+II. useEffect() HOOK
+---------------------------
+> Use to run a normal function / callback function first time 
+  when browser reload or file load or Hook load.
+  
+useEffect(()=>{} , [])
+
+Example: 
+--------------------------
+import { useState, useEffect } from 'react'
+
+function App() {
+  const [counter, setCounter] = useState(15);
+  const addValue = () => {
+    setCounter(counter+1);
+  }
+  useEffect(()=>{addValue()},[])
+  return (
+    <>
+      <h1>Chai and React! {counter}</h1>
+    </>
+  )
+}
+export default App  
+
+---------------------------
+III. useCallback() HOOK
+---------------------------
+When a function depends on other input/dependencyes and want to 
+run the function to get updated data on chnage of input/dependencyes, 
+then we may use useCallback Hook.
+
+to run this callback function my use useEffect() Hook.
+
+Syntax:
+const x = useCallback(fn, [input/dependencyes]);
+useEffect(()=>{x()} , []);
+
+---------------------------
+IV. useRef()
+. It is commonly used to access and manipulate DOM elements
+---------------------------
+Example1: Get input value and send to console
+---------------------------
+
+import React from "react";
+import { useRef } from "react";
+
+function App(){
+  const inputRef = useRef(null);
+  function myfun(){
+    console.log(inputRef.current.value)
+  }
+  return(
+    <>
+      <input type="text" ref={inputRef} onChange={myfun} />
+    </>
+  )
+}
+
+export default App;
+
+---------------------------
+Example2: Get value from text area and show another input
+---------------------------
+import React, { useRef, useState } from "react";
+
+function App() {
+  const inputRef = useRef(null);
+  const [value1, setValue1] = useState('');
+
+  function myfun(e) {
+    const newValue = e.target.value; // Get the new value from the second input
+    setValue1(newValue);             // Update state with the new value
+    inputRef.current.value = newValue; // Update the value of the first input
+  }
+
+  return (
+    <>
+      <input type="text" ref={inputRef} /> 
+      <br />
+      <textarea type="text" onChange={myfun} placeholder="Type here" />
+    </>
+  );
+}
+
+export default App;
+
+---------------------------
+V. forwardRef()
+   To send Ref to child component we use forwardRef
+---------------------------
+App.jsx
+-----------------
+import React, { useRef, useState } from "react";
+import Input from "./Input";
+
+function App() {
+  const inputRef = useRef(null);
+  const [value1, setValue1] = useState('');
+
+  function myfun(e) {
+    const newValue = e.target.value; 
+    setValue1(newValue);             
+    inputRef.current.value = newValue; 
+  }
+
+  return (
+    <>
+      <Input ref={inputRef} />  {/* Passing ref to child compnent */}
+      <br />
+      <textarea type="text" onChange={myfun} placeholder="Type here" />
+    </>
+  );
+}
+
+export default App;
+
+-----------------
+Input.jsx
+-----------------
+import React from "react";
+function Input(props,ref){ {/* get the ref */}
+  return(
+    <>
+      <input type="text" ref={ref} />
+    </>
+  )
+}
+
+export default React.forwardRef(Input);
+
+================================
+6. Virtual DOM
+================================
+Video - 6,8
+Important video for interview
+
+
+================================
+7. React + Viet + Tailwindcss
+================================
+> Install React using Viet Project
+> Visit Tailwind Css for install at Framework Guides
+  and select Viet and follow the process.
+> Watch Video 7
+
+================================
+8. Props
+================================
+> props use to pass value to Components.
+
+> Passing Props
+  . Let we have a component with name Card.jsx
+  . We pass value to Card.jsx component via App.jsx
+
+Example: Props  
+App.jsx
+--------------------------------
+import Card from './components/Card'
+function App() {
+  return (
+    <>
+      <Card passName="Santanu" />
+      <Card passName="Mayank" />
+      <Card />
+    </>
+  )
+}
+export default App
+--------------------------------
+
+Card.jsx (Way 1 with Props)
+--------------------------------
+function Card(props){
+  return(
+    <div>
+      <h2>Hi my name is {props.passName}</h2>
+    </div>
+  )
+}
+export default Card;
+--------------------------------
+
+Card.jsx (Way 2 with Destructur the object)
+--------------------------------
+function Card({passName}){
+  return(
+    <div>
+      <h2>Hi my name is {passName}</h2>
+    </div>
+  )
+}
+export default Card;
+
+--------------------------------
+
+> Set Default value on Function
+
+Card.jsx 
+--------------------------------
+function Card({passName="Add User Name"}){
+  return(
+    <div>
+      <h2>Hi my name is {passName}</h2>
+    </div>
+  )
+}
+export default Card;
+--------------------------------
+
+Example: Props Children 
+App.jsx
+--------------------------------
+import Chai from "./Chai"
+function App() {
+  return (
+    <div>
+      <Chai name="Santanu">
+        <p>Pass this children Property</p>
+      </Chai>
+      <Chai name="Mayank">
+        <button>Simple Button</button>
+      </Chai>
+      <Chai />
+    </div>
+  )
+}
+export default App
+--------------------------------
+Chai.jsx
+--------------------------------
+function Chai({name='Hunny', children}){
+  return(
+    <div>
+      <h1>Chai is Ready! {name}</h1>
+      {children}
+    </div>
+  )
+}
+
+export default Chai;
+
+--------------------------------
+** Way to use Props syntax
+--------------------------------
+With Attribute
+--------------------------------
+const info = [
+  { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
+  { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+]
+
+<Data info={info[0]} />
+<Data info={info[1]} />
+<Data info={info[2]} />
+
+----
+
+function Data({info}){
+  return(
+    <>
+      <div style={{border:'1px solid', marginBottom:'10px'}}>
+        <div>{info.name}</div>
+        <div>{info.price}</div>
+      </div>
+    </>
+  )
+}
+
+--------------------------------
+With out Attribute
+--------------------------------
+
+<Data {...info[0]} />
+<Data {...info[1]} />
+<Data {...info[2]} />
+
+----
+
+function Data({name, price}){
+  return(
+    <>
+      <div>
+        <div>{name}</div>
+        <div>{price}</div>
+      </div>
+    </>
+  )
+}
+export default Data;
+
+--------------------------------
+With loop
+--------------------------------
+import Data from "./Data";
+
+function App(){
+  const info = [
+    { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+    { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
+    { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+  ]
+
+  return(
+      <>
+        {
+          info.map((item, index)=> (
+            <Data key={index} info={item} />
+          ))
+        }
+      </>
+  )
+}
+
+export default App;
+
+------
+function Data({info}){
+  return(
+    <>
+      <div>
+        <h2>{info.name}</h2>
+        <p>{info.price}</p>
+      </div>
+    </>
+  )
+}
+
+export default Data;
+
+----------
+NOTE: ** Must add 'key' when using a loop on JSX.
+
+================================
+9. Reusable Component	
+================================
+Example:1
+Creating Reusable Button
+----------
+Button.jsx
+----------
+import React from "react";
+function Button({
+  children,
+  bgColor = "btn-primary",
+  textColor="text-white",
+  className = '',
+  ...props
+}){
+  return(
+    <button className={`btn ${bgColor} ${ textColor}`} {...props}>{children}</button>
+  )
+}
+
+export default Button;
+
+----------
+App.jsx
+----------
+import React from "react";
+import Button from "./components/Button";
+function App(){
+  return(
+    <>
+      <Button>Button 03</Button>
+
+      <Button 
+      bgColor="btn-primary-dark"
+      textColor="text-grey"
+      type ="button"
+      >Button 01</Button>
+
+      <Button 
+      bgColor="btn-secondary"
+      textColor="text-white"
+      type ="button"
+      >Button 02</Button>
+    </>
+  )
+}
+export default App;
+
+----------
+Example:2
+* First We have to create everything on a component
+----------
+Step1: BASIC INPUT COMPONENT
+Input.jsx
+----------
+import React, { useRef, useState } from "react";
+function Input(){
+  const myRef = useRef(null)
+  const [data, setData] = useState("");
+  function myChanges(e){
+    setData(e.target.value);
+    console.log(myRef.current);
+  }
+  return(
+    <>
+      <input 
+        type="text" 
+        value={data}
+        ref={myRef}
+        onChange={myChanges}
+      />
+    </>
+  )
+}
+export default Input;
+
+----------
+App.jsx
+----------
+import React from "react";
+import Input from "./Input";
+function App(){
+  return(
+    <div>
+      <Input />
+    </div>
+  )
+}
+
+export default App;
+
+----------
+Step2:
+.**Now keep all State, function code to 'App.js' 
+  to make it reusable.
+.**Pass everything via props like state and function in here.
+Input.jsx
+----------
+import React, { useRef, useState } from "react";
+function Input({data, myRef, myChanges}){
+  return(
+    <>
+      <input 
+        type="text" 
+        value={data}
+        ref={myRef}
+        onChange={myChanges}
+      />
+    </>
+  )
+}
+export default Input;
+
+----------
+App.jsx
+----------
+import React, { useRef, useState } from "react";
+import Input from "./Input";
+function App(){
+  const myRef = useRef(null)
+  const [data, setData] = useState("");
+  function myChanges(e){
+    setData(e.target.value);
+    console.log(myRef.current);
+  }
+  return(
+    <div>
+      <Input 
+        myRef={myRef}
+        data={data}
+        myChanges={myChanges}
+      />
+    </div>
+  )
+}
+
+export default App;
+
+----------
+Example:2
+----------
+App.jsx
+----------
+import { useState } from "react";
+import Input from "./Input";
+
+function App(){
+  const [text, setText] = useState('Santanu')
+  const [range, setRange] = useState(10);
+  const [addNumber, setaddNumber] = useState(true);
+
+  return(
+    <>
+     <Input
+      text = {text}
+      setText ={setText}
+      range={range} 
+      setRange={setRange}
+      addNumber={addNumber}
+      setaddNumber={setaddNumber}
+     />
+    </>
+  )
+}
+
+export default App;
+
+----------
+Input.jsx
+----------
+function Input({text, setText, range, setRange, addNumber, setaddNumber}){
+  return(
+    <>
+      <div>
+        <input 
+        type="text" 
+        placeholder="Add your Name" 
+        value={text} 
+        onChange={(e) => {setText(e.target.value)}} />
+      </div>
+      <div>
+        <input 
+        type="range" 
+        min={4} 
+        max={50} 
+        value={range}
+        onChange={(e)=>{setRange(e.target.value)}}
+        />
+        <label>Your age is :{range}</label>
+      </div>
+      <div>
+      <input 
+      type="checkbox"
+      defaultChecked={addNumber}
+      onChange={()=>{setaddNumber((prev)=>!prev)}}
+      />
+      <label>Add Contact</label>
+      </div>
+    </>
+  )
+}
+export default Input;
+
+
+
+************* Revice + Study JavaScript + start from Video 10 *********************

@@ -1,0 +1,205 @@
+================================
+Redux Toolkit
+================================
+Introduction:
+> 'Redux' is a State management library that may use any 
+  JavaScript libraries like React js, Vue js, etc.
+  
+> Use 'react-redux' for React js project
+
+> 'Redux Toolkit' is an updated version of Core Redux 
+  contain other essential packages like Redux Thunk and Reselect
+  
+> Redux Toolkit has steps
+  store,       //Data Store here
+  reducers,    //All task define here with in Slice
+  useDispatch  //Use to send data to store
+  useSelector, //Use to get data from store
+ 
+  
+================================
+Redux Package install:
+
+Visit Redux Toolkit
+> npm install @reduxjs/toolkit
+> npm install react-redux
+
+================================
+
+creating folder unser []src
+[]src
+  []store
+    store.js
+    dataSlice.js
+ Input.js
+ Display.js
+      
+Note: 
+> yourname-Slice.js is Redux toolkit naming convention.
+
+> * we can keep all files like store.js and dataSlice.js in same
+  folder called []store
+
+================================
+Step1: 
+store.js
+================================
+. In first step we have to configure a 'store'
+. after configure store we define all reducer in it.
+. The store holds the global state of the application.
+--------------------------------
+import { configureStore } from "@reduxjs/toolkit";
+import dataSlice from "./dataSlice";
+export const store = configureStore({
+  reducer: {
+    //Add reducer list
+    storeData: dataSlice, //dataSlice.js file name
+  }
+});
+
+================================
+Step2: 
+dataSlice.js
+... 
+================================
+. Here we have to create 'createSlice'
+. Within 'createSlice' function define 
+  name, 
+  initialState, 
+  reducers
+. *The action payload carries the new input data.
+
+. Now we export reducer called 'inputSlice.reducer' and
+  all actions using 'inputSlice.actions'
+--------------------------------
+dataSlice.js
+--------------------------------
+import { createSlice } from "@reduxjs/toolkit";
+
+export const dataSlice = createSlice({
+  name:'sliceName',
+  initialState: {
+    initialData:[{data01:'santanu', data02:'chowdhury'}]  
+    //'data01' and 'data02' are the input state`
+   },
+  reducers:{
+    //Action list called reducers
+    //First Action define here
+    updateData: (state, action) => { 
+      const addData = {
+        data01 : action.payload.data01,
+        data02 : action.payload.data02,
+      }
+
+      //New Updated Data send to Store
+      state.initialData = [addData];
+      
+      //state.initialData = [...state.initialData, addData];
+    }
+  }
+})
+
+export const {updateData} = dataSlice.actions;
+export default dataSlice.reducer;
+
+================================
+Step3:
+Wrap 'App' usgin 'Provider' component with 'store' props
+================================
+import { createRoot } from 'react-dom/client';
+import React from 'react';
+import App from './App';
+import { store } from './store/store';
+import { Provider } from 'react-redux';
+
+createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+)
+
+
+================================
+Step4:
+. Using 'useDispatch' method we send updated value to 
+  store via updateData() method, which is mention on
+  'dataSlice.js' 
+--------------------------------
+Input.js
+--------------------------------
+import React, {useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateData } from "./store/dataSlice";
+
+function Input(){
+  const [data01, setData01] = useState("");
+  const [data02, setData02] = useState("");
+  const dispatch = useDispatch();
+  function submitData(e){
+    e.preventDefault();
+    dispatch(updateData({data01, data02}));
+    setData01('');
+    setData02('');
+  }
+  return(
+    <>
+      <form onSubmit={submitData}>
+        {data01}
+        <input 
+          type="text" 
+          value={data01}
+          onChange={(e)=>{setData01(e.target.value)}}
+        />
+        <br />
+        {data02}
+        <input 
+          type="text" 
+          value={data02}
+          onChange={(e)=>{setData02(e.target.value)}}
+        />
+        <button>Submit</button>
+      </form>
+    </>
+  )
+}
+export default Input;
+
+
+--------------------------------
+Display.js
+
+. Using useSelector we get valu for Store 
+--------------------------------
+import { useSelector } from "react-redux";
+import React from "react";
+function Display(){
+  const fetchedData = useSelector(state => state.storeData.initialData);
+  console.log(fetchedData);
+  return(
+    <div>{fetchedData.map((item, index) => (
+      <div key={index}>
+        <p>Data01: {item.data01}</p>
+        <p>Data02: {item.data02}</p>
+      </div>
+    ))}</div>
+  )
+}
+
+export default Display;
+
+--------------------------------
+App.jsx
+--------------------------------
+import React from "react";  
+import Display from "./Display";
+import Input from "./Input";
+function App(){
+  return(
+    <div>
+      <Input />
+      <Display />
+    </div>
+  )
+}
+export default App;
+

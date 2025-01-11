@@ -1,0 +1,283 @@
+================================
+Context API
+ 1. Basic Example
+ 2. Example with Fetch Data and loop
+================================
+Introduction:
+> Redux and context API use for Props state management
+> Context API only associate to React js
+> Redux associated to React, view and others libary.
+  react-redux, redux-toolkit use for React
+
+> React.createContext(); => Call Context API method
+> useContext(); => use to Add data and Show data from Context API
+
+================================
+1. Basic Example
+Step:1
+Let we want to create context for User
+================================
+Folder:
+[]src
+  []context
+    UserContext.js
+    UserContextProvider.jsx
+
+--------------
+UserContext.js
+--------------
+import React from "react";
+const UserContext = React.createContext();
+export default UserContext;
+
+--------------
+UserContextProvider.jsx
+--------------
+import React from "react";
+import { useState } from "react";
+import UserContext from "./UserContext";
+
+function UserContextProvider({children}){
+  const [user, setUser] = useState(null);
+
+  return(
+    <UserContext.Provider value={{user, setUser}}> 
+    {children}
+    </UserContext.Provider>
+  )
+}
+
+export default UserContextProvider;
+--------------
+
+Note: Context-related components will wrap with this <UserContextProvider>
+      
+================================
+Step:2
+Now We create two component 'Login.jsx' and 'Profile.jsx'
+
+> Login.jsx use for Set Data (using 'setUser')
+> Profile.jsx use for Get Data (using 'user')
+
+================================
+Folder:
+[]src
+  []components
+    Login.jsx
+    Profile.jsx
+
+--------------
+Login.jsx
+> we use 'Login.jsx' for Set Data (using 'setUser')
+>*** useContext() method use to target our Context.
+     const {setUser} = useContext(UserContext);
+
+--------------
+import React from "react";
+import { useState, useContext } from "react";
+import UserContext from "../context/UserContext";
+
+function Login(){
+
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const {setUser} = useContext(UserContext);
+  
+
+ const handleSumbit = (e) =>{
+    e.preventdefault;
+    setUser({username, password})
+  }
+
+  return(
+    <div>
+      <h2>Login</h2>
+      <input 
+        type="text" 
+        placeholder="username" 
+        value={username}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <input 
+        type="text" 
+        placeholder="password" 
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleSumbit}>Submit</button>
+    </div>
+  )
+}
+
+export default Login;
+
+--------------
+Profile.jsx
+> we use 'Profile.jsx' use for Get Data (using 'user')
+
+>*** useContext() method use to target our Context.
+     const {user} = useContext(UserContext);
+     
+--------------
+
+import React from "react";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
+function Profile(){
+  const {user} = useContext(UserContext);
+  if(!user){
+    return <div>Please Login</div>
+  }
+  else{
+    return <div>Welcome {user.username} {user.password}</div>
+  }
+}
+export default Profile;
+--------------
+
+================================
+Step:3
+Wrapping Context related component with <UserContextProvider>
+
+App.jsx
+================================
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+import UserContextProvider from "./context/UserContextProvider";
+
+function App(){
+  return(
+    <>
+      <UserContextProvider>
+        <Login />
+        <Profile />
+      </UserContextProvider>
+    </>
+  )
+}
+
+export default App;
+================================
+
+================================
+ 2. Example with Fetch Data and loop
+ 
+Step:1
+Lets create context for Loop
+================================
+Folder:
+[]src
+  []context
+    LoopContext.js
+    LoopContextProvider.js
+--------------
+LoopContext.js
+--------------
+import React from "react";
+const LoopContext = React.createContext();
+export default LoopContext;
+
+
+--------------
+LoopContextProvider.js
+--------------
+import React, { useState, useEffect } from "react";
+import LoopContext from "./LoopContext";
+
+
+function LoopContextProvider({ children }) {
+
+  //Fixed Data
+  const [info, setInfo] = useState([]);
+  useEffect(()=>{
+    const info = [
+      { name: "Apple", id: 1 },
+      { name: "Dragonfruit", id: 2 },
+      { name: "Passionfruit", id: 3 },
+    ]
+    setInfo(info)
+  }, [])
+
+  //Api Data
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    async function getData(){
+      const response = await fetch("https://dummyjson.com/users");
+      const data = await response.json(); 
+      return data;
+    }
+    getData().then(data=>{
+      setUsers(data.users);
+    })
+
+  }, []); // Empty dependency array means this runs once when the component mounts.
+
+  return (
+    <LoopContext.Provider value={{ info, users }}>
+      {children}
+    </LoopContext.Provider>
+  );
+}
+
+export default LoopContextProvider;
+
+
+================================
+Step:2
+Now We create component 'LoopCardDisplay.js' to display data
+
+> LoopCardDisplay.js use to display data
+================================
+import React, { useContext } from "react";
+import LoopContext from "../context/LoopContext";
+
+function DisplayData() {
+  const { info, users } = useContext(LoopContext);
+
+  return (
+    <div>
+      <h2>Info:</h2>
+      <ul>
+        {info.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+
+      <h2>Users:</h2>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            {user.firstName} {user.lastName} (ID: {user.id})
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default DisplayData;
+
+================================
+Step:3
+Wrapping Context related component with <LoopContextProvider>
+
+App.jsx
+================================
+import React from "react";
+import LoopCardDisplay from "./components/LoopCardDisplay";
+import LoopContextProvider from "./context/LoopContextProvider";
+function App(){
+  console.log(123);
+  return(
+    <div>
+      <LoopContextProvider>
+        <LoopCardDisplay />
+      </LoopContextProvider>
+    </div>
+  )
+}
+
+export default App;
+================================
+

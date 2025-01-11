@@ -1,0 +1,402 @@
+==========================
+React hook form
+1. Introduction
+2. Basic Example
+3. Example with reusable components
+4. Form submit using POST method
+5. Form submit using POST method and response message
+==========================
+1. Introduction
+--------------------------
+install Package:
+> npm i react-hook-form
+
+Note:
+. Import useForm function which returns object contain
+  different methods like register(), handleSubmit() etc.
+
+--------------------------
+2. Basic Example
+--------------------------
+
+import React from "react";
+import { useForm } from "react-hook-form";
+
+function App(){
+
+  const {register, handleSubmit} = useForm();
+  async function getFormData(data){
+    console.log(data);
+  }
+
+  return(
+    <>
+      <form onSubmit={handleSubmit(getFormData)}>
+        <input 
+          type="text" 
+          placeholder="Enter your full name"
+          {...register('name', {
+            required:true,
+          })}
+        />
+        <input 
+          type="email" 
+          placeholder="Enter your full name"
+          {...register('email', {
+            required:true,
+          })}
+        />
+        <button>Submit</button>
+      </form>
+    </>
+  )
+}
+
+export default App;
+
+--------------------------
+3. Example with reusable components
+--------------------------
+[]src
+  []components
+    - Button.jsx
+    - Input.jsx
+    - Select.jsx
+ - App.jsx  
+
+--------------------------
+Input.jsx
+--------------------------
+import React from "react";
+import { useId } from "react";
+
+function Input({
+  label,
+  type ="text",
+  className="",
+  ...props
+
+},ref){
+  const id = useId();
+  return(
+    <>
+      {label && <label htmlFor={id}>{label}</label>}
+      <input 
+        id={id} 
+        type={type} 
+        className={`form-inline ${className}`}
+        ref={ref}
+        {...props}
+       />
+    </>
+  )
+}
+export default React.forwardRef(Input);
+
+
+--------------------------
+Select.jsx
+--------------------------
+import React from "react";
+import { useId } from "react";
+
+function Select({
+  label,
+  options,
+  className='',
+  ...props
+  
+},ref){
+  const id = useId();
+  return(
+    <>
+      {label && <label htmlFor={id}>{label}</label>}
+      <select
+        className={` ${className}`}
+        id={id}
+        ref={ref}
+        {...props}
+      >
+        {options?.map((option, index)=>(
+           <option key={index} value={option}>{option}</option>
+        ))}
+        
+      </select>
+    </>
+  )
+}
+export default React.forwardRef(Select);
+
+
+--------------------------
+Button.jsx
+--------------------------
+import React from "react";
+function Button({
+  children,
+  bgColor = "btn-primary",
+  textColor="text-white",
+  className = '',
+  ...props
+}){
+  return(
+    <button className={`btn ${bgColor} ${ textColor}`} {...props}>{children}</button>
+  )
+}
+
+export default Button;
+
+--------------------------
+App.jsx
+--------------------------
+import React from "react";
+import Button from "./components/Button";
+import Input from "./components/Input";
+import Select from "./components/Select";
+import { useForm } from "react-hook-form";
+
+function App(){
+
+  const {register, handleSubmit} = useForm();
+  async function getFormData(data){
+    console.log(data);
+  }
+
+  return(
+    <>
+
+      <form onSubmit={handleSubmit(getFormData)}>
+        <Input 
+          label="Full Name :"
+          type="text"
+          placeholder="Enter your full name"
+          {...register('name', {
+            required:true,
+          })}
+        />
+        <br />
+        <Input 
+          label="Email :"
+          type="email"
+          placeholder="Enter your Email"
+          {...register('email', {
+            required:true,
+          })}
+        />
+        <br />
+        <Select
+          label="Select:"
+          options={['Kolkata', 'Delhi']}
+          {...register('city', {
+            required:true,
+          })}
+        />
+        <Button>Submit</Button>
+      </form>
+    </>
+  )
+}
+
+export default App;
+
+
+--------------------------
+4. Form submit using POST method
+--------------------------
+import React from "react";
+import Header from "./Header";
+import Input from "../components/Input";
+import { useForm } from "react-hook-form";
+import Button from "../components/Button";
+
+function Contact() {
+  const { register, handleSubmit, reset } = useForm();
+
+  function formSubmit(data) {
+    fetch(`https://cp-express-api.netlify.app/api/users/add/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((res) => res.json())  
+    .then((data) => {
+      console.log(data);
+      reset();
+    }) 
+    .catch((error) => console.error('Error:', error));  
+  }
+  
+  return (
+    <>
+      <Header />
+      <div>Contact Page</div>
+      <form onSubmit={handleSubmit(formSubmit)}>
+        <Input
+          label="First Name:"
+          type="text"
+          placeholder="First Name"
+          {...register('fname', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Last Name:"
+          type="text"
+          placeholder="Last Name"
+          {...register('lname', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Your Email Id:"
+          type="email"
+          placeholder="Valid Email"
+          {...register('email', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Password"
+          type="password"
+          placeholder="password"
+          {...register('password', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Date of birth:"
+          type="date"
+          placeholder="Age"
+          {...register('dob', {
+            required: true,
+          })}
+        />
+        <Button bgColor="bg-red">Submit</Button>
+      </form>
+    </>
+  );
+}
+
+export default Contact;
+
+
+--------------------------
+5. Form submit using POST method and response message
+--------------------------
+import React, { useState } from "react";
+import Header from "./Header";
+import Input from "../components/Input";
+import { useForm } from "react-hook-form";
+import Button from "../components/Button";
+
+function Contact() {
+  const { register, handleSubmit, reset } = useForm();
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  function formSubmit(data) {
+
+    setMessage(null);
+    setError(null);
+
+    fetch(`https://cp-express-api.netlify.app/api/users/add/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((res) => res.json())  
+    .then(data => {
+        // Check if the response indicates success
+        if (data.data.acknowledged) { //*** shoud have `data.data.success`, depends on API ***
+          setMessage(`Form submitted successfully!`);
+          reset();
+          console.log(data);
+        } else {
+          setError("Failed to submit the form.");
+          console.log(data);
+        }
+      }) 
+    .catch((error) => {
+      setError(`Error: ${error.message}`);
+      console.log('Error:', error.message)
+    });  
+  }
+
+  return (
+    <>
+      <Header />
+      <div>Contact Page</div>
+      <form onSubmit={handleSubmit(formSubmit)}>
+        <Input
+          label="First Name:"
+          type="text"
+          placeholder="First Name"
+          {...register('fname', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Last Name:"
+          type="text"
+          placeholder="Last Name"
+          {...register('lname', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Your Email Id:"
+          type="email"
+          placeholder="Valid Email"
+          {...register('email', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Password"
+          type="password"
+          placeholder="password"
+          {...register('password', {
+            required: true,
+          })}
+        />
+        <Input
+          label="Date of birth:"
+          type="date"
+          placeholder="Age"
+          {...register('dob', {
+            required: true,
+          })}
+        />
+        <Button bgColor="bg-red">Submit</Button>
+      </form>
+      {message && <div style={{ color: 'green' }}>{message}</div>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+    </>
+  );
+}
+
+export default Contact;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
