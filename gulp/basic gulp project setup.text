@@ -1,0 +1,196 @@
+=================================
+Basic Project setup using Gulp
+=================================
+1. Create a black project and with in open new Terminal
+----------------------
+node -v [Note: Check node verison]
+nvm ls  [check node details on ubontu OS]
+nvm -ls  [check node details on windows OS]
+----------------------
+[
+default -> 14.21.1 
+	v14.21.3
+        v18.18.2
+        v20.0.0
+]
+----------------------
+nvm use v18.18.2 
+----------------------
+[
+> to move any perticular version only for this project
+> ***Always check the version when close this Terminal***
+]
+
+3.
+----------------------
+npm init [install npm to crate Package.json]
+----------------------
+[
+ add project details one by one and if do not want to
+ add details, then add below code, it will add default value
+----------------------
+ ctrl+c
+ npm init -y
+----------------------
+ NOTE: 
+ npm init	[to add details one by one]
+ npm init -y 	[add default details]
+]
+
+=========================
+Folder Structure
+=========================
+[]folder-name
+ |_[]src
+     |_[]scss
+     |_[]js
+     |_[]images
+     
+ |_[]dist
+    |_[]css
+    |_[]js
+    |_[]images
+    
+Node:
+mkdir src
+mkdir dist
+cd src
+mkdir scss
+mkdir js
+mkdir images
+cd ..
+cd dist
+mkdir css
+mkdir js
+mkdir images
+
+=========================
+Gulp install
+=========================
+1. After project setup we can install Gulp 
+----------------------
+npm install --global gulp-cli 
+npm install --save-dev gulp
+----------------------
+
+1.1 Install SCSS
+----------------------
+npm i gulp-sass --save-dev
+npm i sass --save-dev
+----------------------
+
+1.2 Install minify [js]
+----------------------
+npm i gulp-minify --save-dev
+----------------------
+
+==============
+2. gulpfile.js
+==============
+> create this file on the project root.
+Note: Here we have to defaine all task using function like
+      SCSS to CSS convert, JavaScript minification etc.
+
+Step1: Import all packages on this gulpfile.js file
+--------------
+// import packages
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass'));
+const minify = require('gulp-minify');
+--------------
+
+Step2: Define there task
+--------------
+gulp.task('styles', ()=>{
+    return gulp.src('src/scss/**/*.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest('dist/css'))
+})
+
+gulp.task('minify', ()=>{
+    return gulp.src('src/js/**/*.js')
+    .pipe(minify())
+    .pipe(gulp.dest('dist/js'))
+})
+--------------
+Note:
+> 'styles' and 'minify' are the name of the task
+> gulp.src  => source file over which the task will execute
+> pipe(sass()) and .pipe(minify()) are the perticular task function
+> gulp.dest => End of the task new code will placed there
+
+
+Step3: Adding watch() method so that we don't need to
+run the terminal after doing any changes.
+--------------
+gulp.task('watch', (done) => {
+    gulp.watch('src/scss/**/*.scss', gulp.series('styles'));
+    gulp.watch('src/js/**/*.js', gulp.series('minify'));
+    done();
+  });
+
+--------------       
+
+Step4: Adding series() method to run every packages on
+single command called 'gulp'
+-------------- 
+gulp.task(
+    "default",
+    gulp.series("styles", "minify", "watch")
+);
+
+-------------------------
+Full code
+gulpfile.js   
+-------------------------
+// import packages
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass'));
+const minify = require('gulp-minify');
+
+gulp.task('styles', ()=>{
+    return gulp.src('src/scss/**/*.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest('dist/css'))
+})
+
+gulp.task('minify', ()=>{
+    return gulp.src('src/js/**/*.js')
+    .pipe(minify())
+    .pipe(gulp.dest('dist/js'))
+})
+
+gulp.task('watch', (done) => {
+    gulp.watch('src/scss/**/*.scss', gulp.series('styles'));
+    gulp.watch('src/js/**/*.js', gulp.series('minify'));
+    done();
+  });
+
+gulp.task(
+    "default",
+    gulp.series("styles", "minify", "watch")
+  );
+------------------------
+Bug fix:
+** src directory and dest directory must be different 
+to avoid terminal run-related issues.
+
+=================================
+*** Gulp summary:
+=================================
+> Install Gulp globally and locally
+> Under the project directory create a file
+  called 'gulpfile.js'
+> under gulpfile.js file import all
+  packages like gulp, scss, minify, etc
+> Define task() which has Task name, 'src', 'pipe' and 'dist'
+  'src'  => source files for the task
+  'pipe' => define all the task
+  'dist' => processed files destination directory
+> End of all we define task() contain 'series'
+  for above the task.
+  'series' => Using this all tasks will run using
+  single command.
+
+
+
