@@ -1,0 +1,169 @@
+-------------------------
+Grid box
+-------------------------
+1. columns and row
+2. Properties
+3. minmax()
+4. grid areas
+-------------------------
+1. columns and row
+-------------------------
+> fr => fraction unit (Responsive)
+
+> grid-template-columns: 1fr 1fr 1fr 1fr;
+  gird-template-columns: repeat(4, 1fr);
+  [ 1 ][ 2 ][ 3 ][ 4 ]
+  
+
+> grid-template-columns:1fr 1fr;
+  [  1  ][  2  ]
+  
+> grid-template-columns:1fr 2fr;
+  [  1  ][     2     ]
+  
+> grid-template-rows:1fr 1fr;
+  |	1	|
+  |	2	|	
+
+> grid-template-rows:1fr 2fr;
+  |	1	|
+  |		|	
+  |	2	|
+  |		|
+  
+> Example:
+-------------------------
+HTML
+-------------------------
+<div class="grid-box">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+</div>
+-------------------------
+CSS
+-------------------------
+grid-box{
+ display:grid;
+ grid-template-columns:1fr 3fr;
+ grid-template-rows:1fr 3fr;
+}  
+_________________________
+|___1____|_______2_______|
+|	 |		  |
+|   3    |       4       |
+|________|_______________|
+
+
+-------------------------
+2. Properties
+-------------------------
+I.   justify-content (Horizontal Align to all content)
+II.  align-content   (vertial Align to all content)
+III. justify-items   (Horizontal Align to each element)
+IV.  align-items     (vertial Align to each element)
+
+V.   grid-auto-flow: dense; // use for image gallery
+
+
+-------------------------
+3. minmax()
+-------------------------
+{
+ height:100%;
+ display:grid;
+ gird-template-columns: repeat(auto-fit, minmax(200px, 1fr);
+}
+
+> auto-fit  => Item takes remaining screen.
+> auto-fill => keep remaining space.
+
+
+-------------------------
+4. grid areas
+Example:1
+-------------------------
+<div class="grid-box">
+  <div class="h">Header</div>
+  <div class="n">Navbar</div>
+  <div class="c">Content</div>
+  <div class="f">Footer</div>
+</div>
+   
+<style> 
+.grid-box{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-template-areas:
+  "h h h h"
+  "n c c c"
+  "f f f f";
+}
+.h{
+  grid-area:h;
+ }
+.n{
+  grid-area:n;
+}
+.c{
+  grid-area:c;
+}
+.f{
+ grid-area:f;
+}
+</style> 
+
+-------------------------
+Example:2 with color
+-------------------------
+<div class="grid-box">
+  <div class="h">Header</div>
+  <div class="n">Navbar</div>
+  <div class="c">Content</div>
+  <div class="f">Footer</div>
+</div>
+   
+<style> 
+.grid-box{
+  height:100vh;
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-template-rows:50px auto 50px;
+  grid-template-areas:
+  "h h h h"
+  "n c c c"
+  "f f f f";
+}
+@media(min-width:767px){
+  .grid-box{
+    grid-template-areas:
+    "f f f f"
+    "n c c c"
+    "h h h h";
+  }
+}
+.h{
+  grid-area:h;
+  background:#f00;
+ }
+.n{
+  grid-area:n;
+  background:#ddd;
+}
+.c{
+  grid-area:c;
+  background:#0f0;
+}
+.f{
+ grid-area:f;
+ background:#ccc;
+}
+</style> 	
+
+
+
+
+
+
+

@@ -1,0 +1,128 @@
+-------------------------
+Flex box
+-------------------------
+1. Basic
+2. Others Property
+3. Order
+4. Overflow trick
+-------------------------
+1. Basic
+-------------------------
+> Use to fix card height issue
+> Using flex item can flow on X-axis or Y-axis
+
+-------------------------
+Basic HTML Structure:
+-------------------------
+<div class="flex-box">
+  <div class="item one">1</div>
+  <div class="item two">2</div>
+  <div class="item three">3</div>
+  <div class="item four">4</div>
+  <div class="item five">5</div>
+  <div class="item six">6</div>
+</div>
+
+-------------------------
+CSS Structure:
+-------------------------
+.flex-box{
+  display:flex;
+  flex-direction:row; //default
+  flex-wrap:nowrap;   //default
+}
+-------------------------
+Properties:
+
+flex-direction:row | row-reverse | column | column-reverse;
+
+flex-wrap:nowrap | wrap;
+
+flex-flow: [row] [nowrap]
+
+justify-content: center | space-between | space-around | flex-start | flex-end | ...
+
+align-items: center | normal | ...
+
+align-content: center;
+
+
+-------------------------
+2. Others Property
+-------------------------
+I Take items remaining screen/full screen
+flex-grow:1;
+flex-grow:0 | 1;
+
+II. flex-basis: it is same as min-width property
+flex-basis:200px;
+
+
+III. Prevent from line braking
+white-space: nowrap; 
+white-space: nowrap | normal | pre;
+
+IV. Icon issue fix
+flex:0 0 auto; 
+
+V. Gap fallback:
+{
+ gap:15px;
+ margin:15px;
+}
+
+-------------------------
+3. Order
+-------------------------
+> By defautl order is 0
+> usgin -1 item move first
+
+-------------------------
+Basic HTML Structure:
+-------------------------
+<div class="flex-box">
+  <div class="item one">1</div>
+  <div class="item two">2</div>
+  <div class="item three">3</div>
+  <div class="item four">4</div>
+  <div class="item five">5</div>
+  <div class="item six">6</div>
+</div>
+-------------------------
+CSS
+-------------------------
+.one{
+  order:1;
+}
+.three{
+  order:2;
+}
+.five{
+  order:2;
+}
+
+-------------------------
+output
+-------------------------
+[2] [4] [6] [1] [3] [5] 
+
+-------------------------
+4. Overflow trick
+-------------------------
+<section>
+  <div class="wrapper">
+    <img src="https://placehold.co/200x200" alt="">
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis dolores eaque rem quia, 
+    similique temporibus. Officia in ex, eum unde ipsa ratione! Nesciunt eum quae voluptates! 
+    Libero expedita dolore voluptates.</p>
+  </div>
+</section>
+<style>
+.wrapper{
+  overflow: auto;
+  background-color: #ccc;
+}
+.wrapper img{
+    float: left;
+}
+</style>

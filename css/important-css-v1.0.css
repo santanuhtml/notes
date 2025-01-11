@@ -1,0 +1,613 @@
+/*
+-----------------------------------------------------
+ CSS INDEX
+==========================
+1.core css
+2.overlay
+3.transition
+4.anchor tag
+5.form
+6.radio active
+7.button
+8.shadow
+9.background-image
+10.background-color with image
+11.title underline
+12.after & before css
+13.responsive
+14.on hover dropdown menu open
+15.over text with...
+16.Test Shadow
+17.logo css
+18.navbar-center
+19. Owl nav adjust
+20. Image property
+21. mix-blend-mode: exclusion;
+22. container-wide
+23. em
+24. Flex
+25. Grid
+26. Add Font
+27. click link below a higher z-index div
+-----------------------------------------------------
+*/
+/*
+-------------------------------------
+1.core css
+-------------------------------------
+*/
+html {
+   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  width: 100%;
+  height: 100%;
+}
+body{
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  //overflow-x: hidden;
+}
+h1,h2,h3,h4,h5,h6{
+  margin: 0px;
+}
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.row-flex {
+  display: flex;
+  align-items: center;
+}
+.add-icon {
+  padding-left: 20px;
+}
+.add-icon li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.add-icon li:before {
+  font-family: 'Line Awesome Brands';
+  content: "\f299";
+  background-size: 10px 20px;
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  position: absolute;
+  left: 15px;
+  color: #8dc63f;
+}
+.mt-15{
+ margin-top:15px !important;
+}
+.mt-30{
+ margin-top:30px !important;
+}
+.mb-15{
+ margin-bottom:15px !important;
+}
+.mb-30{
+ margin-bottom:30px !important;
+}
+/*
+-------------------------------------
+2.overlay
+-------------------------------------
+*/
+.overlay {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*
+-------------------------------------
+3.transition
+-------------------------------------
+*/
+a,.btn,
+a:hover,
+a:focus,.transition, #back-to-top:hover {
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+
+/*
+-------------------------------------
+4.anchor tag
+-------------------------------------
+*/
+a{
+  text-decoration: none;
+  color: #2dcc70;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #2dcc70;
+}
+
+/*
+-------------------------------------
+5.form
+-------------------------------------
+*/
+.form-group .form-control:focus {
+  outline: none;
+  box-shadow: none;
+  background: #fff;
+  border-color: #2dcc70;
+}
+.form-control {
+  padding: 12px 20px;
+  height: 44px;
+}
+
+/*
+-------------------------------------
+6.radio active
+-------------------------------------
+*/
+.feedback-modal label > input:checked + img {
+  border: 2px solid #fb9928;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/*
+-------------------------------------
+7.button
+-------------------------------------
+*/
+.btn{
+  border-radius: 0px;
+  padding: 8px 30px;
+}
+.btn-primary {
+  background-color: #8a1f53;
+  border-color: #751a46;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #751a46;
+  border-color: #60163a;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*
+-------------------------------------
+8.shadow
+-------------------------------------
+*/
+.img-shadow{
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/*
+-------------------------------------
+9.background-image
+-------------------------------------
+*/
+.background-image{
+  padding-top: 90px; 
+  padding-bottom: 90px;
+  background-position: center center;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-attachment: fixed;
+}
+
+/*
+-------------------------------------
+10.background-color with image
+note:image will be small;
+-------------------------------------
+*/
+.background-img-color{
+  background-color: #413a86;
+  background-image: url(../../img/video-bg.png);
+  -webkit-background-size: 320px 121px;
+  background-size: 320px 121px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* set a image properly from bg */
+.nav-arc{
+  position: absolute;
+  bottom: -42px;
+  background-image: url(../img/nav-arc.png);
+  background-repeat: repeat-x;
+  -webkit-background-size: 1700px 56px;
+  background-size: 1700px 56px;
+  background-position: center;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+/*
+-------------------------------------
+11.title underline
+html:
+<h2 class="title-underline">
+  Your Title
+</h2>
+-------------------------------------
+*/
+h2.title-underline {
+  margin-bottom: 20px;
+  position: relative;
+}
+h2.title-underline:after {
+  content: " ";
+  display: block;
+  background: #b20d13;
+  height: 3px;
+  width: 50px;
+  margin-top: 10px;
+}
+/*
+--------------------
+Note:to keep center title & underline
+html:
+<h2 class="title-underline title-center">
+  Your Title
+</h2>
+--------------------
+*/
+.title-center {
+  text-align: center;
+  position: relative;
+}
+.title-center:after {
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+/*
+-------------------------------------
+12.after & before css
+html:
+<ul class="add-icon">
+  <li>text1</li>
+  <li>text2</li>
+  <li>text3</li>
+</ul>
+-------------------------------------
+*/
+.add-icon li:before {
+  /*font-family: FontAwesome;
+  content: "\f105";*/
+  content:url('img/angle-right.svg');
+  background-size: 10px 20px;
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+}
+after{
+position: absolute;
+background-image: url('../img/dotted-pattern.png');
+background-size: 100px 100px;
+display: inline-block;
+width: 100px; 
+height: 100px;
+content:"";
+}
+
+&:last-child:after{
+  display: none;
+}
+/*
+-------------------------------------
+13.responsive
+-------------------------------------
+*/
+@media only screen and (max-width: 767px){
+}
+
+/*
+-------------------------------------
+14.on hover dropdown menu open
+-------------------------------------
+*/
+@media (min-width: 768px) {
+  ul.nav li:hover > ul.dropdown-menu {
+    display: block;
+  }
+}
+
+/*
+-------------------------------------
+15.over text with...
+-------------------------------------
+*/
+.news-box .content h4 {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*
+-------------------------------------
+16.Test Shadow
+-------------------------------------
+*/
+.main-banner h2 {
+ text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+/*
+-------------------------------------
+17.logo css
+-------------------------------------
+*/
+.navbar-brand {
+    max-width: 150px;
+    padding: 5px 15px;
+    img{
+      max-width: 100%;
+    }
+  }
+
+/*
+-------------------------------------
+18.navbar-center
+Note: add this class 'navbar-center' just after 'navbar-nav'
+-------------------------------------
+*/
+.navbar-nav.navbar-center {
+  position: relative;
+  left: 50%;
+  transform: translatex(-50%);
+}
+
+/*
+-------------------------------------
+19. Owl nav adjust
+-------------------------------------
+*/
+-------------------------
+1. Both arrow Right Site
+-------------------------
+.owl-slider{
+	.owl-nav{
+	  position: absolute;
+	  bottom: 50px;
+	  transition: 0.3s;
+	  height: 1px;
+	  width: 100px;
+	  right: 20px;
+	  .owl-prev, .owl-next{
+	  	i{
+	  		font-size: 30px;
+	  	}
+	  	&:hover{
+		  	background:transparent;
+		  	color: @primary-color;
+		  }
+	  }
+	}
+}
+
+
+/*
+-------------------------------------
+20. Image property
+-------------------------------------
+*/
+
+img {
+    max-width: 400px;
+    height: 300px;
+    object-fit: cover;
+}
+
+
+/*
+-------------------------------------
+22. container-wide
+-------------------------------------
+*/
+.container-wide {
+  width: 100%;
+  max-width: 1650px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 992px) {
+  .container-wide {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  //.container-wide .row{
+     // margin-left: -50px !important;
+     // margin-right: -50px !important;
+  //}
+}
+@media (max-width: 992px) {
+  .container-wide .row {
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+  }
+}
+
+
+/*
+-------------------------------------
+23. em
+-------------------------------------
+*/
+Introduction of em:
+body{
+font-size:15px;
+  @media only screen and (max-width : 480px) {
+     font-size: 14px;
+  }
+}
+h1{
+font-size:4em; 
+}
+/* 15x4 = 60px;  
+   on mobile view it will be
+   14x4 = 56px;
+*/
+
+
+
+/*
+-------------------------------------
+24. Flex
+-------------------------------------
+*/
+
+flex:
+In flex items are flexible with the same length and 
+not depend on content.
+------------
+display: flex;
+------------
+Features:
+1. flex: 1|2|25%|50%;
+
+2. flex-wrap:
+   Make the flexible items wrap if necessary
+   values:
+   flex-wrap: nowrap|wrap|wrap-reverse;
+
+3. flex-direction:
+   Set the direction of the flexible items
+   values:
+   flex-direction: row | column | row-reverse|column-reverse;
+
+Example:
+HTML
+---------
+<div class="flex-container">
+  <div class="flex-item">1</div>
+  <div class="flex-item" style="background:#ddd">2</div>
+</div>
+---------
+CSS
+---------
+*{
+  box-sizing: border-box;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex-item{
+  background-color: #f1f1f1;
+  padding: 0px 30px;
+  flex: 50%;
+}
+@media (max-width: 767px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+---------
+
+/*
+-------------------------------------
+25. Grid
+-------------------------------------
+*/
+
+Grid:
+1. display: grid; /* Introducing Grid */
+2. grid-template-columns: auto auto auto; /* Number of colums 3 dependent on content */
+4. grid-template-columns: repeat(3, 1fr); /* Number of colums 3 independent on content */
+5.
+.item1 {
+  grid-row: span 2;
+}
+6. width: 95%;
+7. margin: 0 auto;
+
+Example:
+HTML
+---------
+<div class="grid-container">
+  <div class="item1">1</div>
+  <div class="item2">2</div>
+  <div class="item3">3</div>  
+  <div class="item4">4</div>
+  <div class="item5">5</div>
+  <div class="item6">6</div>
+  <div class="item7">7</div>
+  <div class="item5">5</div>
+</div>
+---------
+CSS
+---------
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+  //width: 95%;
+  //margin: 0 auto;
+}
+.grid-container > div {
+  background-color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+.item1 {
+  grid-row: span 2;
+}
+---------
+
+/*
+-------------------------------------
+26. Add Font
+-------------------------------------
+*/
+@font-face {
+  font-family: 'GeneralSans';
+  src: url('../fonts/GeneralSans-Variable.woff2') format('woff2'),
+       url('../fonts/GeneralSans-Variable.woff') format('woff'),
+       url('../fonts/GeneralSans-Variable.ttf') format('truetype');
+       font-weight: 200 700;
+       font-display: swap;
+       font-style: normal;
+}
+
+@font-face {
+    font-family: 'Harmony';
+    src: url('../fonts/harmony.woff2') format('woff2'),
+         url('../fonts/harmony.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@body-font: 'GeneralSans', sans-serif;
+@head-font: 'Harmony', serif;
+
+/*
+-------------------------------------
+27. click link below a higher z-index div
+-------------------------------------
+*/
+pointer-events: none;
