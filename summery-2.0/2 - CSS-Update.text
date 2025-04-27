@@ -1,0 +1,1044 @@
+1. CSS stands for Cascading Style Sheets
+   CSS is not case sensitive
+
+2. What is new in CSS3?
+   New in CSS3:
+   @media(){}
+   @font-face{}
+   @keyframes
+   transform
+
+3. Difference between ID and Class Selectors?
+   Id is used to identify one element
+   Class is used to identify any number of elements
+   Note: Do not start an ID or Class name with a NUMBER.
+
+4. Gropping Selectors:
+   h1,h2{ font-size:20px; }
+
+5. Universal selector
+   * is the universal selector
+   The universal selector (*) selects all HTML elements
+   Example:
+   *{
+     padding:0px;
+     margin:0px;
+   }
+
+6. How To Add CSS
+   Three Ways to Insert CSS:
+   i.  External CSS
+   ii.  Internal CSS
+   iii. Inline CSS
+
+   i. External CSS
+   <link href="css/custom.css?v=1.5" rel="stylesheet">
+
+   ii. Internal CSS: within <style> tag
+   <head>
+     <title></title>
+     <style type="text/css">
+      p{
+        color:blue;
+       }
+     </style>
+   </head>
+
+  iii. Inline CSS
+  <p style="color: pink;">Hello World!</p>
+
+
+7. CSS Specificity:
+   Inline styles (highest priority) → color: pink;
+   ID selectors → #demo { color: blue; }
+   Class selectors → .test { color: green; }
+   Element selectors → p { color: red; }
+
+   OR
+
+   style="color: pink;" > #demo {color: blue;} > .test {color: green;} > p {color: red;}
+
+
+8. What is !important?
+   !important rule used to override all other styles.
+   
+   Best Practices
+   . Use !important only when necessary.
+   . Try increasing specificity first before using !important.
+
+
+9. CSS Colors
+   main ways to define colors:
+   i.   Named Colors
+   ii.  RGB (Red, Green, Blue)
+          RGB with Opacity (rgba)
+   iii.  HEX Colors
+   
+   
+   i. Named Colors: 
+      CSS provides 140+ predefined color names like red, blue, green, etc.
+
+   ii. RGB (Red, Green, Blue):
+       RGB values range from 0 to 255.
+       
+       Example:
+       color: rgb(255, 0, 0);         /* Red */
+       color: rgb(255, 255, 255);     /* White */
+       color: rgb(0, 0, 0);  	      /* Black */
+       
+       Note:
+       rgba(red, green, blue, alpha)
+       The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (not transparent at all)
+    
+    iii. HEX Colors:
+         It represent colors in RGB format (#RRGGBB).
+   	 Example:
+   	 #FFFFFF;  //white
+   	 #000000;  //black
+   	 #FF0000;  //red
+   	 
+   	 Note: we can also use use 3-digit shorthand 
+   	 #f00; //red
+
+
+10. appearance: none;
+    . It is used to remove the default browser styling from form
+      element like input, checkbox etc
+    . allow us fully customize their styles.
+    
+    Example:
+    i. Without css:
+       -------------
+       <input type="checkbox">
+       <style>
+         input[type="checkbox"] {
+	   appearance: none;
+	   width: 20px;
+	   height: 20px;
+	   background: blue;
+	   border: 2px solid #000;
+	   cursor: pointer;
+	   transition: background 0.3s ease;
+	  }
+	  input[type="checkbox"]:checked {
+	    background: green;
+	  }
+	</style>
+	-------------
+    
+    ii. With class:
+       -------------
+       <input type="checkbox" class="customcheckbox">
+       <style>
+         .customcheckbox {
+	   appearance: none;
+	   width: 20px;
+	   height: 20px;
+	   background: blue;
+	   border: 2px solid #000;
+	   cursor: pointer;
+	   transition: background 0.3s ease;
+	  }
+	  .customcheckbox:checked {
+	    background: green;
+	  }
+	</style>
+	-------------
+    
+
+10. CSS background
+
+  . Properties:
+  -----------
+  background-color: #ffffff;
+  background-image: url("img_tree.png");
+  background-size: 400px 400px; //image size
+  background-repeat: no-repeat | repeat-x | repeat-y;
+  background-position: right top;
+  background-attachment: fixed | scroll;
+
+
+  . CSS background - Shorthand property
+  -----------
+  body {
+    background: #ffffff url("img_tree.png") no-repeat right top;
+  }
+
+
+11. CSS Borders
+    
+   . Properties:
+   -----------
+   border-style: dotted | dashed | solid | double | groove | ridge | inset | outset | none | hidden;
+   border-width: 5px 20px; /* 5px top and bottom, 20px on the sides */
+   border-color: red green blue yellow;
+
+   . CSS Borders - Shorthand property
+   -----------
+   .boxBorder{
+     border: 1px soild #f00;
+   }
+   -----------
+
+
+12. CSS Margins
+    Margins are used to create space around elements, outside of any defined borders.
+
+13. CSS Padding
+    Padding is used to create space around an element's content, inside of any defined borders.
+
+14. CSS height and width Values
+    
+    Height Properties:
+    -----------
+    height: initial | auto | inherit;
+    
+    Explain
+    initial - default value
+    auto    - browser calculates the height and width
+    inherit - width and height depends of its parent value
+
+
+15. CSS Text
+    
+    .Text Align:
+    text-align: center | left | right | justify;
+
+    Explain:
+    text-align: justify;
+    Stretches the text so that left and right edges align.
+
+   .Vertical Alignment
+    vertical-align: baseline;
+
+   .Text Decoration
+    text-decoration: overline | line-through | underline | overline underline;
+   
+
+16. CSS Text Shadow
+    
+    Properties:
+    text-shadow: left down opacity color;
+    
+    Example:
+    -----------
+    h1 {
+     text-shadow: 2px 2px 5px red;
+    }
+    -----------
+
+17. CSS Font Fallbacks & font-display: swap;
+
+     I. font-display: swap; (For Web Fonts)
+        When using web fonts (like Google Fonts) or any custom fonts, font-display: swap; ensures that 
+        text appears immediately until the custom font loads.
+
+        Example:
+        @font-face {
+          font-family: 'MyFont';
+          src: url('myfont.woff2') format('woff2');
+          font-display: swap;
+        }
+
+     II. When the specified font isn't available then 
+         CSS font fallbacks allow browsers to use alternative fonts.
+    
+        Example:
+        body {
+          font-family: "Open Sans", Arial, sans-serif;
+        }
+    
+        Note: 
+        If "Open Sans" is available, it will be used.
+        If not, Arial is the fallback.
+        If neither is available, the browser defaults to a generic sans-serif font.
+    
+    
+    
+18. Block-level Elements 
+    . Always starts on a new line and 
+    . takes full width
+    
+    Examples of block-level elements:
+    <div>
+    <h1> - <h6>
+    <p>
+    
+
+19. Inline Elements 
+    An inline element does not start on a new line and only takes necessary width.
+    
+    Examples of block-level elements:
+    <span>
+    <a>
+    <img>
+    
+
+20. CSS display Property
+    The display property determines how an element is displayed.
+    
+    I. display: block;
+       . Elements take up the full width 
+       . Starts on a new line.
+       . support width/height properties.
+       
+       
+    II. display: inline;
+        . Does not start on a new line and only takes necessary width.
+        . Does not support width/height properties.
+        
+    
+    III. display: inline-block;
+         . Similar to inline, 
+         . support width/height properties.
+         
+    
+    IV. display: none;
+        . Hides the element completely
+        . does not take up space
+        
+    
+    V. display: table;
+       . Makes an element behave like an HTML <table>.
+       
+    
+    VI. display: contents;
+        . makes element disappear but
+        . keeps its children visible
+        
+        -----------
+        <div class="wrapper">
+	  <p>Text inside a wrapper</p>
+	</div>
+	<style>
+	.wrapper {
+	  display: contents;
+	  background: red; /* Will NOT apply */
+	  border: 2px solid blue; /* Will NOT apply */
+	  padding: 10px; /* Will NOT apply */
+	}
+	</style>
+        -----------
+       
+Note:
+20.1. Difference between  block, inline,  inline-block
+inline => Does not support width/height properties.
+inline-block => support width/height properties.
+block => support width/height properties.
+
+20.2. A common example is making inline <li> elements for horizontal menus:
+-----------
+li {
+  display: inline;
+}
+-----------
+
+20.3. Difference between Display:none and Visibility:hidden
+
+display: none;
+. Hides the element completely
+. does not take up space
+
+visibility:hidden; 
+. hides an element but 
+. the element will still take up the same space as before.
+
+
+20.4. width and max-width:
+Case:1
+div.ex1 {
+  width: 500px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}
+
+Case:2
+div.ex2 {
+  max-width: 500px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}
+
+Case:1 => browser window is smaller than the width of the element. 
+The browser then adds a horizontal scrollbar to the page.
+
+Case:2 => Using max-width browser window is smaller than the width of the element. 
+box size adjust.
+
+
+21. The z-index Property
+    The z-index property controls which element appears in front or behind others.
+    
+    click link below a higher z-index div
+    {
+      pointer-events: none;
+    }
+    
+    
+22. CSS Overflow
+    when the content of an element is too big to fit in the specified area 
+    the overflow property used.
+    
+    overflow: visible; => Default.
+    
+    overflow-wrap: break-word;
+    this be allowed to break long words
+
+
+23. The float:  
+    It is used to set position the content.
+
+
+    * The clearfix Hack:
+      If a floated element is taller than the containing element, 
+      then it will "overflow" outside of its container. 
+      We can then add a clearfix hack to solve this problem:
+
+      ------------------
+	<div class="clearfix">
+	  <img class="img2" src="pineapple.jpg" alt="Pineapple" width="170" height="170">
+	  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet...
+	</div>
+
+	<style>
+	div {
+	  border: 3px solid #4CAF50;
+	  padding: 5px;
+	}
+	.img2 {
+	  float: right;
+	}
+
+	.clearfix {
+	  overflow: auto;
+	}
+	</style>
+      ------------------
+      
+
+24. position
+    
+    I. position: static;
+       . The default position for all elements.
+       . top, left, right, bottom do not work.
+
+
+    II. position: relative;
+        . Moves the element relative to its original position.
+        
+
+    III. position: absolute;
+         . Moves Elements relative to the nearest positioned element.
+
+
+     IV. position: fixed;
+         . Stays fixed on the screen even when scrolling.
+
+
+    V. position: sticky;
+       . At first, it behaves like relative
+       . Becomes fixed when the element touch to top of the screen. 
+       
+       
+    VI. position: unset;
+      
+      
+
+25. flex 
+
+    . Css flex use one-dimensional layout system, which help to align items.
+    . Use to fix card height issue / create boxes with same height.
+    
+    Properties:
+    display: flex;
+    flex-wrap: wrap | nowrap | wrap-reverse;
+    
+    Note: Use `box-sizing: border-box;` Properties
+    *{
+       box-sizing: border-box;
+     }
+    
+    Example:
+    HTML
+    ----------------
+    <div class="flex-container">
+     <div class="flex-item">1</div>
+     <div class="flex-item" style="background:#ddd">2</div>
+    </div>
+    ----------------
+    CSS
+    ----------------
+    *{
+       box-sizing: border-box;
+     }
+    .flex-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+     }
+    .flex-item{
+      background-color: #f1f1f1;
+      padding: 0px 30px;
+      flex: 50%;
+    }
+    @media (max-width: 767px) {
+      .flex-container {
+       flex-direction: column;
+      }
+    }
+    ----------------
+
+
+26. grid   
+   . Css grid use for two-dimensional layout system, which makes website easier.   
+      
+ 
+27.1. Center Vertically - Using position & transform      
+<style>
+.center {
+  position: relative;
+}
+.center p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>      
+      
+      
+27.2. Center Vertically - Using Flexbox
+<style>
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  border: 3px solid green; 
+}
+</style>
+<div class="center">
+  <p>I am vertically and horizontally centered.</p>
+</div>      
+      
+
+
+28. CSS Align
+
+    I. Center an Image
+       <style>
+	 img {
+	  display:block;
+	  margin:0 auto;
+	 }
+       </style>
+
+    II. Left and Right Align - Using position
+	<style>
+	  .right {
+	    position: absolute;
+	    right: 0px;
+	    width: 300px;
+	  }
+	</style>
+
+    III. Left and Right Align - Using float
+	<style>
+	.right {
+	  float: right;
+	  width: 300px;
+	}
+	</style>
+	
+  
+29. CSS Combinators
+    A combinator is something that explains the relationship between the selectors.
+
+    
+    I. selects all <p> elements inside <div> elements:
+	div p {
+	  background-color: yellow;
+	}
+
+
+    II. selects all <p> elements that are children of a <div> element:
+	div > p {
+	  background-color: yellow;
+	}
+
+
+    III. selects the first <p> element that are placed after <div> elements
+         div + p {
+          background-color: yellow;
+         }
+        <div>
+	  <p>Paragraph 5 in the div.</p> // Background Yellow
+	  <p>Paragraph 6 in the div.</p>
+        </div>
+      
+
+    IV. selects all <p> elements that are next siblings of <div> elements: 
+	<style>
+	div ~ p {
+	  background-color: yellow;
+	}
+	</style>
+
+	<div>
+	  <p>Paragraph 2.</p>
+	</div>
+	<p>Paragraph 3.</p> // Background Yellow
+	<code>Some code.</code>
+	<p>Paragraph 4.</p> // Background Yellow
+
+      
+  
+
+30. CSS Pseudo-classes
+    define a special state of an element. 
+    
+    a:hover {
+      color: #FF00FF;
+    }
+    
+    ------------
+    I. :has()
+    ------------
+    <div class="product">
+      <span class="price">100.00</span>
+    </div>
+    <div class="product">
+      <span class="price">80.00</span>
+      <div class="discount">20.00</div>
+    </div>
+
+    <style>
+     .product .price{
+       color:#000;
+      }
+     .product:has(.discount) .price{
+      color:#f00;
+     }
+    </style>
+    
+    ------------
+    II. :not()
+    ------------
+    <ul>
+      <li>Menu 1</li>
+      <li class="active">Menu 2</li>
+      <li>Menu 3</li>
+      <li>Menu 4</li>
+    </ul>
+    <style>
+     li {
+       display: inline;
+     }
+     li a:hover:not(.active) {
+       background-color: #f00;
+     }
+     .active {
+       background-color: #04AA6D;
+     }
+    </style>
+	
+	
+    ------------
+    III. :focus()
+    ------------
+    <input type="text" class="input-field" placeholder="Enter text">
+    <style>
+      .input-field:focus {
+        border-color: #f00;
+        outline: none;
+      }
+    </style>
+    
+    ------------
+    IV. :checked()
+    ------------
+     <input type="checkbox" id="agree" class="checkbox">
+     <label for="agree">I agree to the terms</label>
+
+    <style>
+      .checkbox {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        top: 7px;
+      }
+      .checkbox:checked {
+        background-color: #04aa6d;
+        border-color: #04aa6d;
+      }
+      .checkbox:checked::after {
+        content: '✔';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 16px;
+       }
+    </style>
+    
+    ------------
+    V. :after() / :before()
+    ------------
+    Example:1
+     <button class="arrow-btn">Next</button>
+     <style>
+      .arrow-btn:after {
+        content: '→';
+        margin-right: 5px;
+      }
+    </style>
+    
+    Example:2
+    <ul>
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+    <style>
+      ul li::before {
+       content: "";
+       display: inline-block;
+       width: 19px;
+       height: 20px;
+       background-image: url('https://cycleconcept.co.uk/app/img/check-icon-green.png');
+       background-size: cover;
+       background-position: center;
+       margin-right: 6px;
+       position: relative;
+       top: 5px;
+     }
+    </style>
+    
+    ------------
+    VI. :first-child / :last-child
+    ------------
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+    </ul>
+    <style>
+     li:first-child {
+      font-weight: bold;
+     }
+     li:last-child {
+      font-style: italic;
+     }
+    </style>
+    
+    
+    ------------
+    VII. :nth-child()
+    ------------
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+    </ul>
+    <style>
+      ul li:nth-child(even) {
+       background-color: #ddd;
+      }
+      ul li:nth-child(odd) {
+       background-color: #f00;
+      }
+    </style>
+    
+    ------------
+    VIII. :first-of-type & :last-of-type
+    ------------
+    :first-child/:last-child, but they target the first or last element of a specific type.
+    
+    <div class="parent">
+        <span>This is a span.</span> <br>
+        <h3>This is a title</h3>
+        <p>This is a paragraph.</p>
+        <p>This is another paragraph.</p>
+        <p>Yet another paragraph.</p> <br>
+        <span>This is a span.</span> <br>
+    </div>
+    <style>
+      .parent h3:first-of-type {
+        background-color: red;
+        font-weight: bold;
+      }
+     .parent p:last-of-type{
+       background-color: #f00;;
+     }
+    </style>
+    
+    
+    ------------
+    IX. :nth-of-type()
+    ------------
+    <div class="parent">
+        <span>This is a span.</span> <br>
+        <h3>This is a title</h3>
+        <p>This is a paragraph.</p>
+        <p>This is another paragraph.</p>
+        <p>Yet another paragraph.</p> <br>
+        <span>This is a span.</span> <br>
+    </div>
+    <style>
+     .parent p:nth-of-type(2){
+       background-color: #f00;;
+     }
+    </style>
+    
+    ------------
+    X. :nth-of-type()
+    ------------
+    <input type="text" class="input-field" placeholder="Enter text" disabled>
+    <style>
+      .input-field:disabled {
+        border-color: #ddd;
+      }
+    </style>
+
+
+
+    
+31. mix-blend-mode
+    . mix-blend-mode controls how an element’s color blends with the background or other elements.
+       
+      mix-blend-mode: normal | multiply | difference | overlay | darken;
+    
+    
+    
+32. Responsive:
+
+    @media(min-width:767px){
+    }
+    
+    @media(max-width:767px){
+    }
+    
+    
+33. Add Font:
+
+    @font-face{
+      font-family: 'Harmony';
+      src: url();
+      font-display: swap;
+   }
+   body{
+     font-family: 'Harmony';
+   }
+   
+
+34. transform: 
+    .The transform property allows us to move, rotate, scale, an element without affecting other elements.
+    
+    .transform: translate(x,y) | rotate(deg) | scale(x,y) | skew(x,y) | matrix()	
+
+
+35. @keyframes
+
+    <img src="https://i.ibb.co/B4GKy7J/snowflake.png" width="128" />
+    <style>
+      img{
+        animation: spin linear 10s infinite;
+      }
+      @keyframes spin {
+	0% {
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    transform: rotate(360deg);
+	  }
+       }
+    </style>
+
+
+36. CSS Units
+    Introduction of em:
+    body{
+     font-size:14px;
+     @media only screen and (min-width : 767px) {
+        font-size: 15px;
+       }
+     }
+    h1{
+     font-size:4em; 
+    }
+    /* 15x4 = 60px;  
+       on mobile view it will be
+       14x4 = 56px;
+    */
+
+
+
+37. box-sizing:
+    box-sizing property controls how the total width and height of an element are calculated. 
+    OR
+    box-sizing property controls the calculation of elements total with and height.
+    
+    box-sizing: content-box;  /* Default behavior */
+    box-sizing: border-box;
+    
+    
+    Example:
+    ----------
+    
+    /* Default behavior */
+    .element {
+      box-sizing: content-box;
+      width: 200px;
+      padding: 20px;
+      border: 5px solid black;
+    }
+    /* Total width = 200px + 40px (padding) + 10px (border) = 250px */
+
+
+    /* Preferred approach */
+    .element {
+     box-sizing: border-box;
+     width: 200px;
+     padding: 20px;
+     border: 5px solid black;
+    }
+    /* Total width remains 200px, as padding and border are included */
+
+   ----------
+   
+   Most developers use border-box globally:
+   ----------
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+   ----------
+
+
+   box-sizing Hack:
+   ----------
+   <style>
+    * {
+      box-sizing: border-box;
+     }
+    .box {
+      float: left;
+      width: 33.33%;
+      padding: 50px;
+    }
+    .clearfix{
+      overflow: auto;
+    }
+   </style>
+
+   <div class="clearfix">
+     <div class="box" style="background-color:#bbb">
+       <p>Some text inside the box.</p>
+     </div>
+     <div class="box" style="background-color:#ccc">
+       <p>Some text inside the box.</p>
+     </div>
+     <div class="box" style="background-color:#ddd">
+       <p>Some text inside the box. Here, we use the clearfix hack to take care of the layout flow.</p>
+     </div>
+   </div>
+   ----------
+   
+21. CSS Image Sprites
+    Single image containing multiple smaller images, used to reduce HTTP requests and improve performance.
+
+    ----------
+    <div class="icon home"></div>
+    <div class="icon search"></div>
+    <div class="icon user"></div>
+    
+    <style>
+      .icon {
+        width: 50px;  /* Icon width */
+        height: 50px; /* Icon height */
+        background: url("sprite.png") no-repeat;
+        display: inline-block;
+      }
+
+      /* Positioning each icon */
+      .home{
+        background-position: 0px 0px;
+      }
+     .search {
+       background-position: 0px -50px;
+      }
+     .user {
+       background-position: 0px -100px;
+      }
+    </style>
+
+        
+
+/*
+-----------------------------------------------
+CSS CODING
+-----------------------------------------------
+*/
+
+1. For Smooth scroll use "scroll-behavior: smooth;" on html{}
+Ex:
+html {
+   scroll-behavior: smooth;
+}
+
+2. For Smooth effect use  "transition"
+Ex:
+a,a:hover,a:focus{
+  transition: all .3s;
+}
+
+3. Image property:
+
+img {
+    max-width: 400px;
+    height: 300px;
+    object-fit: contain | cover  | fill;
+}
+
+4. Browser Support:
+
+-webkit- for safari
+-ms-     for Internet Explorer
+-moz-    for olf mozila firefox
+-o-      for Opera 11
+
+
+5. coloum count:
+p{
+  column-count:3;
+  column-gap:40px;
+}
+
+6. Sticky Sidebar:
+.make_me_sticky{
+  
+   display: block;
+  
+   position: sticky;
+  
+   top: 20px;
+
+ }
+
+7. monsary gallery:
+.gallery-grid{
+  
+  columns: 3;
+  
+  column-gap: 30px;
+
+}
+

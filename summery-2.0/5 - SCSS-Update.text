@@ -1,0 +1,277 @@
+1. Difference between SCSS and SASS?
+SCSS:
+. It is same as css use {} curly Brackets and ; semicolons
+Example:
+-----------
+.navbar{
+  background-color: blue;
+  color: white;
+  }
+-----------
+
+SASS:
+. It is use intentation (Tab / Space)
+. Not use {} curly Brackets and ; semicolons
+
+Example:
+-----------
+.navbar
+  background-color: blue
+  color: white
+-----------  
+  
+  
+2. Nesting:
+-----------
+a{
+  &:hover{
+  }
+}
+-----------
+
+3. Variable:
+-----------
+$primary-color:#f00;
+$secondary-color:#0f0;
+-----------
+
+Note:
+CSS also have variable property called `CSS Custom Property`.
+-----------
+root {
+  --primary-color: #5dcda0;
+  --black:#000;
+}
+body{
+  color: var(--black);
+}
+-----------
+
+
+4. @import
+   . Used to import SCSS files.
+-----------
+// _variables.scss
+$primary-color: blue;
+
+// main.scss
+@import "variables";  // Importing the file
+body {
+  color: $primary-color;
+}
+-----------
+Note:
+@import is deprecated and replaced by @use for better performance,
+
+Why?
+. Loads the file multiple times if imported in different places.
+. Generates multiple HTTP requests.
+  Which May slow down performance.
+
+
+
+5. @use
+-----------
+// _variables.scss
+$primary-color: blue;
+
+
+// main.scss
+@use "variables";  // Importing with namespace
+body {
+  color: variables.$primary-color; // Must use namespace
+}
+
+-----------
+Why use @use
+. Loads each file only once, improving performance.
+. take less HTTP requests 
+
+
+6. Partials in Sass
+-----------
+. Partials start with an underscore _ and are not compiled into a separate CSS file.
+
+-----------
+_variables.scss
+_reste.scss
+custom.scss
+
+//custom.scss
+@use "variables"; 
+@use "reste"; 
+
+Note: Do not use _ when use @use
+-----------
+
+7. @mixin in Sass
+   . @mixin allow us to reuse a block of CSS styles across different selectors.
+   -----------
+   syntax
+   -----------
+   @mixin mixin-name {
+     /* Styles */
+   }
+
+   .selector {
+     @include mixin-name;
+   }
+
+   -----------
+   Example:
+   -----------
+   // Define a mixin
+   @mixin flex-center {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   }
+
+   // Use the mixin
+   .container {
+     height: 100vh;
+     @include flex-center;
+   }
+   -----------
+   
+   I. mixing with Parameters
+   -----------
+   Example:
+   -----------
+   @mixin button($bg-color, $text-color: white) {
+     background-color: $bg-color;
+     color: $text-color;
+     padding: 10px 20px;
+   }
+   .button-primary {
+     @include button(blue);
+    }
+
+   .button-secondary {
+      @include button(green, black);
+    }
+    
+   -----------
+   Output in CSS
+   -----------
+   .button-primary {
+     background-color: blue;
+     color: white;
+     padding: 10px 20px;
+    }
+
+    .button-secondary {
+      background-color: green;
+      color: black;
+      padding: 10px 20px;
+    }
+    -----------
+    
+   
+   II. @mixin with Default Values
+   -----------
+   Example:
+   -----------
+   @mixin border-radius($radius: 5px) {
+     border-radius: $radius;
+   }
+   
+   .card {
+     @include border-radius;    // Uses default 5px
+   }
+
+   .box {
+     @include border-radius(10px);  // Overrides default value
+   }
+   
+   -----------
+   Output in CSS
+   -----------
+   .card {
+     border-radius: 5px;
+   }
+   .box {
+     border-radius: 10px;
+   }
+   -----------
+   
+   III. @mixin Inside Another @mixin
+   -----------
+   Example:
+   -----------
+   // Define a mixin for flexbox
+   @mixin flex-center {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   }
+
+   // Define a mixin for a box, which includes flex-center
+   @mixin box($width, $height, $bg-color) {
+     width: $width;
+     height: $height;
+     background-color: $bg-color;
+     @include flex-center;  // Including another mixin
+   }
+
+   // Apply the mixin
+   .container {
+     @include box(200px, 200px, blue);
+   }
+   
+  
+   
+   IV. @mixin with @if-else
+   -----------
+   Example:
+   -----------
+   // Define a mixin for theme styles
+   @mixin theme($mode) {
+      @if $mode == dark {
+        background-color: #121212;
+        color: #ffffff;
+      } 
+      @else if $mode == light {
+        background-color: #ffffff;
+        color: #000000;
+      } @else {
+        background-color: #f5f5f5; // Default theme
+        color: #333333;
+     }
+   }
+   
+   // Apply the mixin to different themes
+   .dark-theme {
+     @include theme(dark);
+   }
+   
+   .light-theme {
+      @include theme(light);
+   }
+   
+   .default-theme {
+     @include theme(default);
+   }
+   
+   -----------
+ 
+   
+8. Built-in Functions
+   
+   I. lighten / darken
+      
+      lighten($color, $amount)	
+      darken($color, $amount)	
+      
+      Example:
+      
+      .button {
+        background-color: lighten(#3498db, 10%);
+        color: darken(white, 20%);
+      }
+
+
+
+
+
+

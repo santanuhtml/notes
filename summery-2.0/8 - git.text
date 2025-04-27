@@ -1,0 +1,103 @@
+Tips:
+. Always take a backup before push.
+. Never work on old branch.
+. Always take pull before start to work.
+
+
+1. git install
+---------------
+git init
+
+
+2. git remove
+---------------
+rm -rf .git
+
+
+3. Clone new project: (use http)
+---------------
+git clone https://......../project-name.git
+cd project-name
+
+
+4. Workflow
+---------------
+git status 					[check status]
+git branch					[check master branch or development branch or child branch]
+git checkout -b "features-home-page--SC"	[creating a branch to new work]
+git status					[check current branch]
+
+After work...
+
+git status					[red changes file list]
+GIT ADD FORM VS CODE
+git status					[green added changes file]
+git commit -m "features home page desing"	
+git status					[nothing to commit, working tree clean]
+git pull origin master 				[pull the maser to keep branch updated]
+git push origin features-home-page--SC		[store the branch local to server]
+
+git checkout master				[move to master]
+git status					[check branch]
+git pull origin master				[pull the maser to keep local master uptodate]
+git pull origin features-home-page--SC		[marge master code and branch code]
+git pull origin master				[pull the maser to keep local master uptodate again]
+git push origin master				[finally update master into server]
+
+
+for conflict
+ctrl+q
+enter
+ctrl+x
+
+
+5. Branch Naming:
+---------------
+For master branch use
+ "features-home-page--SC"
+ 
+For development branch use
+ "stg/features-home-page--SC"
+ "dev/features-home-page--SC"
+ 
+ 
+LIVE <---- master <---- development(stg)
+ 
+
+6. git configaration: (local)
+---------------
+git config --list					[check configaration list]
+git config --local user.name santanuhtmlcss		[set user name]
+git config --local user.email santan04@gmail.com	[set user email]
+
+
+7. Usefull command:
+---------------
+clear
+ctrl+c
+ctrl+x
+npx npkill
+git branch -D stg/features-home-page--SC		[delete old branch]
+
+
+8. git merge setup (the default strategy)
+---------------
+git config pull.rebase false
+
+
+9. Errors
+---------------
+I. If we add code by mistake on master branch then 
+   do not add this code
+   create branch and then commit this code
+   
+Example:
+git checkout -b "features-home-page--SC"
+git checkout master
+git reset --hard origin/master
+
+Note: 
+reset local master branch same as origin/master
+it will remove all local commit form master
+
+

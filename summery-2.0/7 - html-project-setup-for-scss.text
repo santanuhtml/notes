@@ -1,0 +1,85 @@
+HTML Project Setup for SCSS:
+1. Installation
+2. Projec structure
+3. Update Live Sass Compiler settings
+4. How to run:
+5. How to run .php file
+6. Tailwind CSS setup using CLI
+
+
+1. Installation
+install 'Live Sass Compiler'
+install 'Live Server'
+
+2. Projec structure
+[]Projec-name
+  -[]assets
+    -[]scss 
+    -[]images
+    -[]js
+  -index.html
+
+3. Update Live Sass Compiler settings
+. On VS Code press ctrl+,
+. type 'Live Sass Compiler: Settings.'
+. Update the code
+----------
+settings.json
+----------
+{
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    "settingsSync.ignoredExtensions": [],
+    "liveSassCompile.settings.useNewCompiler": false,
+
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/assets/css"
+        }
+    ],
+    "liveSassCompile.settings.generateMap": true
+    
+}
+----------
+
+4. How to run:
+. Click on 'Watch Sass'
+  []css folder will generated under []assets
+  
+. Clieck 'Go Live' to run live.
+
+
+5. How to run .php file
+just open 
+localhost/project-name
+
+
+----------
+6. Tailwind CSS setup using CLI
+----------
+URL:
+https://tailwindcss.com/docs/installation/tailwind-cli
+
+. Install Tailwind CSS
+  > npm install tailwindcss @tailwindcss/cli
+
+. Import Tailwind in your CSS
+  src/input.css
+  > @import "tailwindcss";
+
+. Start the Tailwind CLI build process
+  npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
+
+. Start using Tailwind in your HTML
+  src/index.html
+
+  
+
+
+
+
+

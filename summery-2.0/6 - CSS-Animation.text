@@ -1,0 +1,326 @@
+1. Fade In Animation
+   ------------------
+   <div class="fade-in">Hello, I'm fading in!</div>
+   <style>
+     @keyframes fadeIn {
+       0% {
+         opacity: 0;
+       }
+       100% {
+         opacity: 1;
+       }
+     }
+
+     .fade-in {
+       animation: fadeIn 1s ease-in-out;
+     }
+  </style>
+  
+  
+2. Slide In from Left
+   ------------------
+   <div class="slide-in">I'm sliding in from the left!</div>
+   <style>
+     @keyframes slideIn {
+       0% {
+         transform: translateX(-20px);
+         opacity: 0;
+       }
+       100% {
+         transform: translateX(0);
+         opacity: 1;
+       }
+     }
+     .slide-in {
+       animation: slideIn 0.5s ease-out;
+     }
+   </style>
+
+
+3. Bounce Effect
+   ------------------
+   <div class="bounce ball"></div>
+   <style>
+     @keyframes bounce {
+       0%, 100% {
+         transform: translateY(0);
+       }
+       50% {
+         transform: translateY(-20px);
+       }
+     }
+
+    .bounce {
+      animation: bounce 1s ease-in-out infinite;
+    }
+    .ball {
+       width: 32px;
+       height: 32px;
+       background: #f00;
+       border-radius: 50px;
+    }
+   </style>
+
+
+4. Rotate Animation
+   ------------------
+   <div class="rotate square"></div>
+   <style>
+     @keyframes rotate {
+       0% {
+         transform: rotate(0deg);
+       }
+       100% {
+       transform: rotate(360deg);
+       }
+     }
+
+    .rotate {
+     animation: rotate 5s linear infinite;
+    }
+    .square {
+      width: 32px;
+      height: 32px;
+      background: #f00;
+    }
+   </style>
+   
+   
+5. ** Hover Effects (Scale Up)
+   ------------------
+   <button class="hover-scale">Hover me!</button>
+   <style>
+     @keyframes scaleUp {
+       0%, 100% {
+         transform: scale(1);
+       }
+       50%{
+         transform: scale(1.1);
+       }
+     }
+    .hover-scale:hover {
+     animation: scaleUp 1s ease-in-out infinite;
+    }
+   </style>
+
+
+
+6. Background Color Change
+   ------------------
+   <div class="bg-change">Changing Background Color</div>
+   <style>
+     @keyframes bgColorChange {
+       0% {
+         background-color: red;
+       }
+       50% {
+        background-color: blue;
+       }
+       100% {
+        background-color: green;
+       }
+     }
+  
+    .bg-change {
+     animation: bgColorChange 5s infinite alternate;
+    }
+  </style>
+  
+  
+  
+7. Navigation Menu Hover Effect
+   -----------
+   <nav>
+     <a href="#" class="nav-link active">Home</a>
+     <a href="#" class="nav-link">About</a>
+     <a href="#" class="nav-link">Services</a>
+     <a href="#" class="nav-link">Contact</a>
+   </nav>   
+   <style>
+    .nav-link {
+      position: relative;
+      text-decoration: none;
+      padding-bottom: 5px;
+      transition: color 0.3s ease-in-out;
+      margin-right:10px;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #ff5722;
+      transition: width 0.3s ease-in-out;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link.active::after{
+      width: 100%;
+    }
+  </style>
+  -----------
+  
+8. Floating Social Media Icons
+   -----------
+   <a href="#" class="social-icon">🔗</a>
+   <a href="#" class="social-icon">📘</a>
+   <a href="#" class="social-icon">🐦</a>   
+  <style>
+   .social-icon {
+     display: inline-block;
+     font-size: 24px;
+     margin: 10px;
+     transform: translateY(0px);
+     transition: all 0.3s ease-in-out;
+   }
+   .social-icon:hover {
+     transform: translateY(-5px);
+    }
+  </style> 
+  -----------
+  
+  
+9.1. Card Hover Effect
+  -----------
+  <div class="card">Hover over me!</div>
+  <style>
+  .card {
+     width: 300px;
+     height: 200px;
+     padding: 20px;
+     background: white;
+     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+   }
+   .card:hover {
+     transform: translateY(-10px);
+     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+   }
+   </style>
+   -----------
+   
+   
+9.2. Tilt Effect
+   -----------
+   <div class="tilt-box">Hover Me!</div>
+   <div class="tilt-box">Hover Me!</div>
+   <div class="tilt-box">Hover Me!</div>
+   <style>
+     @keyframes tilt {
+       0%, 100% { transform: rotate(0deg); }
+       50% { transform: rotate(3deg); }
+     }
+    .tilt-box {
+      width: 200px;
+      height: 200px;
+      background: #ff5722;
+      transition: transform 0.3s ease-in-out;
+      margin-bottom:10px;
+     }
+     .tilt-box:hover {
+      animation: tilt 0.3s ease-in-out;
+     }
+  </style> 
+ 
+   
+10. Loading Spinner
+    -----------
+    <div class="spinner"></div>
+    <style>
+     @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+     }
+     .spinner {
+       width: 40px;
+       height: 40px;
+       border: 4px solid rgba(0, 0, 0, 0.2);
+       border-top: 4px solid #ff5722;
+       border-radius: 50%;
+       animation: spin 1s linear infinite;
+     }
+    </style>
+    -----------
+
+
+
+11. Page Load Fade-In Effect
+    -----------
+    <h2>Welcome to My Website!</h2>
+    <style>
+     @keyframes fadeIn {
+       from {
+         opacity: 0;
+         transform: translateY(5px);
+       }
+       to {
+         opacity: 1;
+         transform: translateY(0);
+       }
+     }
+     * {
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out forwards;
+     }
+   </style>
+   -----------
+
+
+
+12. flip-card
+    -----------
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">Front</div>
+        <div class="flip-card-back">Back</div>
+      </div>
+    </div>
+    <style>
+     .flip-card {
+       width: 200px;
+       height: 200px;
+       perspective: 1000px;
+       margin-bottom:30px;
+      }
+     .flip-card-inner {
+       width: 100%;
+       height: 100%;
+       transition: transform 0.6s;
+       transform-style: preserve-3d;
+      }
+     .flip-card:hover .flip-card-inner {
+       transform: rotateY(180deg);
+     }
+     .flip-card-front, .flip-card-back {
+       width: 100%;
+       height: 100%;
+       position: absolute;
+       backface-visibility: hidden;
+     }
+     .flip-card-front {
+       background-color: #ff5722;
+     }
+    .flip-card-back {
+      background-color: #ff9800;
+      transform: rotateY(180deg);
+    }
+   </style>
+   -----------
+
+
+
+
+
+
+
+
+
+
+  

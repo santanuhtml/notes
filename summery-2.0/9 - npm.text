@@ -1,0 +1,101 @@
+
+* To run npm we have to install Node.js
+
+# npm (Node Package Manager)
+. npm is Node Package Manager, All types of JavaScript packages avalable here.
+. using npm we can install packages globally or locally, after this we can run this package on our project.
+. npm installs dependencies and devdependencies in the folder [] 'node_modules' 
+. All dependencies and devdependencies are records them in the file package.json file, 
+  so its called DNA of the project
+
+
+# npx (Node Package Execute)
+. using npx we can run any Node.js packages without installing them.
+. packages fetche and runs the without adding it to node_modules.
+
+
+# nvm (Node Version Manager)
+nvm use to manage multiple versions of Node.js on your system.
+
+
+Note:
+. npx is a service under npm
+. LTS called Long Term Support, always download
+
+
+# Basic Commands:
+> node -v		[Check node version]
+> npm -v		[check npm version]
+> nvm ls		[check node details]
+
+> npm init -y		[Create a default package.json]
+> npm i			[Install all dependencies under node_modules]
+
+> npx npkill		[to delete node_modules folder]
+
+> mkdir src		[create a folder src]
+> cd src		[move inside the src folder]
+> cd..			[move ouside the src folder]
+
+> touch gulpfile.js	[create a file gulpfile.js]
+
+
+
+# What is a Module Bundler?
+A module bundler is a tool that collects your code and files like JavaScript, CSS, and images, 
+and combines them into one file (or a few files) so the browser can understand and run your website smoothly.
+
+
+# Why Use a Module Bundler?
+When building a website or app, your code is usually split into many small files (like components, styles, scripts, etc.) to keep things organized and easy to manage.
+But the browser prefers fewer files to load quickly and efficiently.
+
+# Popular Module Bundlers:
+Webpack	
+Vite	
+Parcel
+Rollup
+
+
+# package.json vs package-lock.json
+  package.json: Lists the packages needs for the project.
+  package-lock.json: List of the exact version of every installed package.
+
+  Notes: Never delete package-lock.json — it ensures that the project works everywhere.
+
+
+# Dependencies vs DevDependencies
+  Dependencies: Needed to run the app.
+  DevDependencies: Only needed during development.
+  
+  Note: `npm install --save-dev` to add a dev dependency.
+  
+
+# Global vs Local Installation
+  Local Install: Installs package inside your project.
+  Global Install: Installs package for your whole system, usable anywhere.
+  
+  
+# Scripts in package.json
+  You can define commands under a "scripts" section:
+
+
+# .gitignore and node_modules
+  Never push node_modules to GitHub!
+  Always add it to .gitignore so the folder isn't tracked.
+  
+  -------------------
+  .gitignore
+  -------------------
+  # Node.js dependencies
+  node_modules/
+  package-lock.json
+  
+  
+  
+  
+  
+  
+  
+
+
