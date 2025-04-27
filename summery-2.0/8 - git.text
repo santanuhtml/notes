@@ -85,6 +85,29 @@ git branch -D stg/features-home-page--SC		[delete old branch]
 git config pull.rebase false
 
 
+9. Create and Push Version Tags
+---------------
+git tag v1.0
+git push origin v1.0
+
+
+---------------
+WE can repeat this for other versions later:
+---------------
+git commit -m "Some new update"
+git tag v1.1
+git push origin main
+git push origin v1.1
+
+
+10. Release
+---------------
+After pushed the tag with git, we can click on New Release 
+> Add New Release name
+> Details
+> Publish release
+
+
 9. Errors
 ---------------
 I. If we add code by mistake on master branch then 
@@ -99,5 +122,4 @@ git reset --hard origin/master
 Note: 
 reset local master branch same as origin/master
 it will remove all local commit form master
-
 
