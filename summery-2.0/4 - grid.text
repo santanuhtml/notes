@@ -77,7 +77,7 @@ V.   grid-auto-flow: dense; // use for image gallery
 }
 
 > auto-fit  => Item takes remaining screen.
-> auto-fill => keep remaining space.
+> auto-fill => Do not take remaining space.
 
 
 -------------------------
