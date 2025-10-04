@@ -1289,8 +1289,8 @@ info.map(() =>{return()})     // With curly braces {} use return() to return a v
 
 --------------
 V. find() 
-   Only returns the first match element
-   Returns undefined if no match is found:
+   Only returns the first matched "Object"
+   Returns undefined if no match is found.
 --------------
 Example:1
 --------------
@@ -1327,7 +1327,7 @@ Example:2
 --------------
 VI. filter()
     returns all element that passes a test 
-    and creates a new array with them.
+    and creates a new [array] with them.
 --------------
 const arr = [10,20,30,40,50];
 const result = arr.filter((value, key)=>{
