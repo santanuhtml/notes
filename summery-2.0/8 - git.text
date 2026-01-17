@@ -1,23 +1,32 @@
 Tips:
-. Always take a backup before push.
-. Never work on old branch.
-. Always take pull before start to work.
+. * Always take a backup before push.
+. ** Never work on old branch.
+. * Always take pull before start to work.
 
 
-1. git install
+Git:
+. Git is a version control system that runs locally on my machine.
+. It tracks code changes, manages branches.
+
+GitHub:
+. GitHub is a cloud platform that hosts Git repositories and
+  adds features like pull requests, code reviews.
+
+
+1. Clone new project Or Start New Project: (use http)
+---------------
+git clone https://......../project-name.git
+cd project-name
+
+
+2. git install
 ---------------
 git init
 
 
-2. git remove
+3. git remove
 ---------------
 rm -rf .git
-
-
-3. Clone new project: (use http)
----------------
-git clone https://......../project-name.git
-cd project-name
 
 
 4. Workflow
@@ -67,9 +76,8 @@ LIVE <---- master <---- development(stg)
 6. git configaration: (local)
 ---------------
 git config --list					[check configaration list]
-git config --local user.name santanuhtmlcss		[set user name]
+git config --local user.name santanuhtml		[set user name]
 git config --local user.email santan04@gmail.com	[set user email]
-
 
 7. Usefull command:
 ---------------
@@ -90,7 +98,6 @@ git config pull.rebase false
 git tag v1.0
 git push origin v1.0
 
-
 ---------------
 WE can repeat this for other versions later:
 ---------------
@@ -108,7 +115,7 @@ After pushed the tag with git, we can click on New Release
 > Publish release
 
 
-9. Errors
+9. Errors / Mistake
 ---------------
 I. If we add code by mistake on master branch then 
    do not add this code
@@ -122,4 +129,8 @@ git reset --hard origin/master
 Note: 
 reset local master branch same as origin/master
 it will remove all local commit form master
+
+
+II. If we add some code but not need to commit then use
+> git stash
 
