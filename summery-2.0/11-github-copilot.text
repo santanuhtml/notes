@@ -1,0 +1,41 @@
+GitHub Copilot Notes
+
+Do you know Copilot?
+Yes. I use GitHub Copilot as a coding assistant during development.
+It helps with inline suggestions and speeds up repetitive tasks.
+I always review and validate the suggestions before accepting them.
+
+Installation:
+Github Copilot (use: ctrl+i)
+Github Copilot Chat (use: ctrl+alt+i)
+
+Uses:
+Github Copilot: Press Ctrl + I to get inline suggestions
+GitHub Copilot Chat: Press Ctrl + Alt + I to open the chat interface
+ 
+Requirements:
+A GitHub account is required to use GitHub Copilot.
+
+Features:
+1. provides inline code suggestions called Ghost Text.
+
+2. press Ctrl + I to ask Copilot to:
+   Add more code
+   Modify or explain code
+   type / to get suggestion commands like:/fix , /explain, /optimize
+
+3.  Ask Questions:
+   // q: What does this function do?
+
+4. Copilot Chat (Interactive Assistant):
+   Open chat with Ctrl + Alt + I.
+   Use it like ChatGPT, ask for help,
+         
+Summery:
+ inline comment
+ GHOST TEXT
+ Copilot Chat
+ 
+
+Use in CV
+GitHub Copilot & ChatGPT – AI-powered assistants used to accelerate daily development workflows and enhance productivity.
