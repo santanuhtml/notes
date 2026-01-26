@@ -3,11 +3,25 @@
 3. Introduction
 4. Functional Components
 5. Hooks
-6. Virtual DOM
-7. React + Viet + Tailwindcss
-8. Props
-9. Reusable Component	
-10. Handle form inputs
+6. Props
+7. Reusable Component	
+8. react.lazy and suspense
+9. Passing Data from Child to Parent
+10. React.memo()
+11. localstorage
+12. useCallback hook
+15. React Router
+16. Context API
+17. CRUD
+18. Curt
+19. React hook form
+
+AUTH with JWT
+React + Viet + Tailwindcss
+Redux
+
+
+Virtual DOM
 ================================
 1. Topics
 ================================
@@ -24,7 +38,7 @@
   . State or UI manupulation and JSX
   . Component Reusability
   . Props (Use to pass data on component)
-  . Hooks:useState, useEffect, useCallback (Use to Update/Changes on UI)
+  . Hooks:useState, useEffect, useRef, forwardRef, useCallback (Use to Update/Changes on UI)
   
 > Additional Topics:
   . Router (Use to navigate)
@@ -86,9 +100,7 @@ i. Installation React Using create-raect-app (old way/basic way)
     . Scripts are -
       dev: use to run the project
       build: use to build and deployment the project
-      
-> Removing unwanted files and folders (at video 2 : 26min)
-    
+        
 ================================ 
 3. Introduction
    Video - 3
@@ -165,7 +177,7 @@ export default App;
    II. useEffect() HOOK
    III. useCallback() HOOK
    IV. useRef()
-    V. forwardRef()
+    V. React.forwardRef()
 ================================  
 
 > Hook use to update or changes on UI.  
@@ -176,7 +188,7 @@ export default App;
 ---------------------------
 I. useState() HOOK
 ---------------------------
-> Use to add state variable on our component
+> Use to initialization state/data in to a component
 
 Example:
 App.jsx
@@ -257,117 +269,251 @@ export default App
 ---------------------------
 II. useEffect() HOOK
 ---------------------------
-> Use to run a normal function / callback function first time 
-  when browser reload or file load or Hook load.
+> When component mount then the useEffect() Hook runs.
+> useEffect with an empty dependency array [] runs only once.
+Syntax:
+  useEffect(()=>{} , []) 
   
-useEffect(()=>{} , [])
-
-Example: 
+--------------------------
+# Component Mounting with empty dependency array [] so runs only once
 --------------------------
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [counter, setCounter] = useState(15);
-  const addValue = () => {
-    setCounter(counter+1);
-  }
-  useEffect(()=>{addValue()},[])
+  const [counter, setCounter] = useState(0);
+  
+  useEffect(()=>{
+    console.log('Component Mounted');
+    setTimeout(()=>{
+      setCounter(counter+1);
+    },1000);
+  },[])
+  
   return (
     <>
-      <h1>Chai and React! {counter}</h1>
+      <h1>UseEffect runs only once after component Mount {counter}</h1>
     </>
   )
 }
-export default App  
+export default App 
 
----------------------------
-III. useCallback() HOOK
----------------------------
-When a function depends on other input/dependencyes and want to 
-run the function to get updated data on chnage of input/dependencyes, 
-then we may use useCallback Hook.
+--------------------------
+# Component Updating
+  Component Mounting with dependency array [counter] so, the component Mounted
+  again and again. *Its called Component Updating.
+--------------------------
+import { useState, useEffect } from 'react'
 
-to run this callback function my use useEffect() Hook.
+function App() {
+  const [counter, setCounter] = useState(0);
+  useEffect(()=>{
+    console.log('Component Mounted due to counter change');
+    setTimeout(()=>{
+      setCounter(counter+1);
+    },1000);
+  },[counter])
 
-Syntax:
-const x = useCallback(fn, [input/dependencyes]);
-useEffect(()=>{x()} , []);
+  return (
+    <>
+      <div>
+        <h1>useEffect with dependencies so it runs only when those values change. {counter}</h1>
+      </div>
+    </>
+  )
+}
+export default App 
+
+
+--------------------------
+# Component Unmount
+  When the component is removed from the screen, this is the unmounting phase.
+--------------------------
+***Test this during Rounting***
+--------------------------
+useEffect(() => {
+  const timer = setTimeout(() => {
+    console.log("Timer finished!");
+  }, 5000);
+
+  // Cleanup function to clear the timer when the component unmounts
+  return () => {
+    clearTimeout(timer);
+  };
+}, []);  // Only runs once
+
 
 ---------------------------
 IV. useRef()
-. It is commonly used to access and manipulate DOM elements
 ---------------------------
-Example1: Get input value and send to console
----------------------------
+. It is commonly used to access a DOM element (like a button, input, or div) and manipulate DOM elements
+. It is not needing to set up state or use useEffect.
+. useRef() returns an object with a 'current' property, we use 'current' property to get the value.
 
-import React from "react";
-import { useRef } from "react";
-
-function App(){
-  const inputRef = useRef(null);
-  function myfun(){
-    console.log(inputRef.current.value)
-  }
-  return(
-    <>
-      <input type="text" ref={inputRef} onChange={myfun} />
-    </>
-  )
-}
-
-export default App;
+syntax:
+ const myRef = useRef(initialValue);
 
 ---------------------------
-Example2: Get value from text area and show another input
+Example1: Add event
 ---------------------------
-import React, { useRef, useState } from "react";
+ import React, { useRef } from 'react';
 
 function App() {
   const inputRef = useRef(null);
-  const [value1, setValue1] = useState('');
 
-  function myfun(e) {
-    const newValue = e.target.value; // Get the new value from the second input
-    setValue1(newValue);             // Update state with the new value
-    inputRef.current.value = newValue; // Update the value of the first input
-  }
+  const focusInput = () => {
+    inputRef.current.focus(); // Focus the input field when the button is clicked
+  };
 
   return (
-    <>
-      <input type="text" ref={inputRef} /> 
-      <br />
-      <textarea type="text" onChange={myfun} placeholder="Type here" />
-    </>
+    <div>
+      <input type="text" ref={inputRef} placeholder="Focus me" />
+      <button onClick={focusInput}>Focus on Input</button>
+    </div>
   );
 }
 
 export default App;
 
 ---------------------------
-V. forwardRef()
-   To send Ref to child component we use forwardRef
+Toggle Class
 ---------------------------
 App.jsx
------------------
-import React, { useRef, useState } from "react";
-import Input from "./Input";
+---------------------------
+import React, { useRef } from 'react';
 
 function App() {
-  const inputRef = useRef(null);
-  const [value1, setValue1] = useState('');
+  const boxRef = useRef(null);
 
-  function myfun(e) {
-    const newValue = e.target.value; 
-    setValue1(newValue);             
-    inputRef.current.value = newValue; 
+  const addClass = () => {
+    boxRef.current.classList.toggle('highlight');  // Adds the 'highlight' class
+  };
+
+  return (
+    <div>
+      <div ref={boxRef}>
+        This is a box!
+      </div>
+      <button onClick={addClass}>Add Highlight Class</button>
+    </div>
+  );
+}
+
+export default App;
+
+---------------------------
+Note: 
+add and remove same as above
+classList.add()
+classList.remove()
+---------------------------
+
+---------------------------
+Example2: Get input value and send to console
+---------------------------
+
+import { useRef } from "react";
+function App(){
+  const myInput = useRef(null);
+  const getData = () => {
+    console.log(myInput.current.value);
+  }
+  return(
+    <>
+      <input type="text" ref={myInput} onChange={getData} />
+    </>
+  )
+}
+export default App;
+
+---------------------------
+Example3: Get value from text area and show another input
+---------------------------
+import { useRef } from 'react';
+
+function App() {
+  const displayRef = useRef(null);
+  
+  let getData = (e) => {
+    let data = e.target.value;
+    console.log(data);
+    displayRef.current.value = data;
   }
 
   return (
-    <>
-      <Input ref={inputRef} />  {/* Passing ref to child compnent */}
+    <div>
+      <textarea onChange={getData}></textarea>
       <br />
-      <textarea type="text" onChange={myfun} placeholder="Type here" />
-    </>
+      <textarea ref={displayRef} disabled></textarea>
+    </div>
+  );
+}
+
+export default App;
+
+
+---------------------------
+Example4: Privious example with Clear all value.
+---------------------------
+import { useRef } from 'react';
+
+function App() {
+  const displayRef = useRef(null);
+  const inputRef = useRef(null); 
+  
+  const getData = (e) => {
+    const data = e.target.value;
+    console.log(data);
+    displayRef.current.value = data;  
+  };
+
+  const clearFields = () => {
+    inputRef.current.value = '';    
+    displayRef.current.value = '';  
+  };
+
+  return (
+    <div>
+      <textarea ref={inputRef} onChange={getData}></textarea>
+      <br />
+      <textarea ref={displayRef} disabled></textarea>
+      <br />
+      <button onClick={clearFields}>Clear Both Textareas</button>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+---------------------------
+V. forwardRef()
+   Used to pass refs from parent components to child functional components so that 
+   the parent can manipulate the child’s DOM elements.
+   
+---------------------------
+Example:1
+---------------------------
+App.jsx
+-----------------
+import React, { useRef } from 'react';
+import Input from './Input';
+
+function App() {
+  const inputRef = useRef(null);
+
+  const updateInputValue = (e) => {
+    const newValue = e.target.value;
+    inputRef.current.value = newValue;  // directly manipulated the value without re-rendering
+  };
+
+  return (
+    <div>
+      <textarea onChange={updateInputValue}></textarea>
+      <br />
+      <Input ref={inputRef} />
+    </div>
   );
 }
 
@@ -376,34 +522,21 @@ export default App;
 -----------------
 Input.jsx
 -----------------
-import React from "react";
-function Input(props,ref){ {/* get the ref */}
-  return(
+import React from 'react';
+
+function Input(props, ref) {
+  return(   
     <>
-      <input type="text" ref={ref} />
+        <input type="text" ref={ref} />
     </>
   )
 }
 
 export default React.forwardRef(Input);
 
-================================
-6. Virtual DOM
-================================
-Video - 6,8
-Important video for interview
-
 
 ================================
-7. React + Viet + Tailwindcss
-================================
-> Install React using Viet Project
-> Visit Tailwind Css for install at Framework Guides
-  and select Viet and follow the process.
-> Watch Video 7
-
-================================
-8. Props
+6. Props
 ================================
 > props use to pass value to Components.
 
@@ -499,56 +632,6 @@ function Chai({name='Hunny', children}){
 export default Chai;
 
 --------------------------------
-** Way to use Props syntax
---------------------------------
-With Attribute
---------------------------------
-const info = [
-  { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
-  { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
-  { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
-]
-
-<Data info={info[0]} />
-<Data info={info[1]} />
-<Data info={info[2]} />
-
-----
-
-function Data({info}){
-  return(
-    <>
-      <div style={{border:'1px solid', marginBottom:'10px'}}>
-        <div>{info.name}</div>
-        <div>{info.price}</div>
-      </div>
-    </>
-  )
-}
-
---------------------------------
-With out Attribute
---------------------------------
-
-<Data {...info[0]} />
-<Data {...info[1]} />
-<Data {...info[2]} />
-
-----
-
-function Data({name, price}){
-  return(
-    <>
-      <div>
-        <div>{name}</div>
-        <div>{price}</div>
-      </div>
-    </>
-  )
-}
-export default Data;
-
---------------------------------
 With loop
 --------------------------------
 import Data from "./Data";
@@ -590,28 +673,87 @@ export default Data;
 ----------
 NOTE: ** Must add 'key' when using a loop on JSX.
 
+--------------------------------
+Example: With Fatching data
+--------------------------------
+App.jsx
+---------------
+import { useEffect, useState } from "react";
+import User from "./component/user";
+
+function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    console.log("App component mounted");
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <>
+      {
+        data.map((user, index) => {
+          console.log(user);
+         return (
+            <User key={user.id} info={user} />
+          )
+        })
+      }
+    </>
+  );
+}
+
+export default App;
+
+---------------
+User.jsx
+---------------
+function User({info}) {
+  return (
+    <div style={{border:"1px solid black", margin:"10px", padding:"10px"}}>
+        <div>
+            Name:{info.name}
+        </div>
+        <div>
+            User Name: {info.username}
+        </div>
+        <div>
+            Email: <a href={`mailto:${info.email}`}>{info.email}</a>
+        </div>
+    </div>
+  )
+}
+
+export default User;
+
+
 ================================
-9. Reusable Component	
+7. Reusable Component	
 ================================
 Example:1
 Creating Reusable Button
 ----------
 Button.jsx
 ----------
-import React from "react";
 function Button({
   children,
-  bgColor = "btn-primary",
-  textColor="text-white",
   className = '',
+  bgColor = "btn-primary",
   ...props
 }){
   return(
-    <button className={`btn ${bgColor} ${ textColor}`} {...props}>{children}</button>
+    <button className={`btn ${bgColor} ${className}`} {...props}>
+        {children}
+    </button>
   )
 }
-
 export default Button;
+
 
 ----------
 App.jsx
@@ -625,13 +767,11 @@ function App(){
 
       <Button 
       bgColor="btn-primary-dark"
-      textColor="text-grey"
       type ="button"
       >Button 01</Button>
 
       <Button 
       bgColor="btn-secondary"
-      textColor="text-white"
       type ="button"
       >Button 02</Button>
     </>
@@ -639,161 +779,1370 @@ function App(){
 }
 export default App;
 
-----------
-Example:2
-* First We have to create everything on a component
-----------
-Step1: BASIC INPUT COMPONENT
-Input.jsx
-----------
-import React, { useRef, useState } from "react";
-function Input(){
-  const myRef = useRef(null)
-  const [data, setData] = useState("");
-  function myChanges(e){
-    setData(e.target.value);
-    console.log(myRef.current);
-  }
-  return(
-    <>
-      <input 
-        type="text" 
-        value={data}
-        ref={myRef}
-        onChange={myChanges}
-      />
-    </>
-  )
-}
-export default Input;
 
-----------
+================================
+8. react.lazy and suspense
+================================
+. React lazy loading in load a component only when it’s needed (when the button is clicked). 
+. This can be achieved using React.lazy() in combination with Suspense.
+
+Syntax:
+//dynamically import a component
+const LazyComponent = React.lazy(() => import('./component/LazyComponent'));
+
+//Wrap the Lazy Component with Suspense
+<Suspense fallback={<div>Loading...</div>}>
+  <LazyComponent />
+</Suspense>
+
+---------------
+Example: 
+---------------
 App.jsx
-----------
+--------------
+
+import { Suspense, useState } from "react";
 import React from "react";
-import Input from "./Input";
-function App(){
+
+const LazyComponent = React.lazy(() => import('./component/Card'));
+
+function App() {   
+  const [componentVisible, setComponentVisible] = useState(false);
+
+  let addComponent = () => {
+    setComponentVisible((prev)=>!prev);
+  }
+
   return(
-    <div>
-      <Input />
+    <>
+      <h1>Component Load after button click</h1>
+      <button onClick={addComponent}>{componentVisible ? 'Hid Component'  : 'Show Component'}</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        {componentVisible && <LazyComponent />}
+      </Suspense>
+    </>
+  )
+}
+export default App;
+
+---------------
+Card.jsx
+--------------
+import { useEffect } from 'react';
+
+function Card() {
+
+    //Testing: Log when Card component is mounted
+    useEffect(() => {       
+        console.log("Modal component mounted");
+    }, []);
+
+  return (
+    <div className="card">
+        <h1>Lazy loding component</h1>
     </div>
+  );
+  
+}
+
+export default Card;
+
+
+================================
+9. Passing Data from Child to Parent
+================================
+Parent → Child: Data is passed down via props.
+Child → Parent: Data is passed up via callback functions.
+
+--------------
+Example 1: Single Data
+App.js | Parent
+--------------
+
+import  { useState } from 'react';  
+import Counter from './component/Counter';
+
+function App() {
+  const[count,setCount]= useState(0);
+  const handleCountUpdate = (newcount) => {
+    setCount(newcount);
+  }
+  return (
+    <>
+      <h1>Get data Child to Parent using CallBack</h1>
+      <p>{count}</p>
+      <Counter onUpdate={handleCountUpdate} />
+      
+    </>
+  )
+} 
+
+export default App; 
+
+--------------
+Counter.js | Child
+--------------
+
+import  { useState } from 'react';
+
+function Counter({onUpdate}) {
+  const [counter, setCounter] = useState(0);
+
+  const increment = () => {
+    setCounter(counter + 1);
+    if (onUpdate) {
+      onUpdate(counter + 1); // Notify parent of the new count
+    }
+  }
+
+  return (
+    <>
+      <h1>Counter: {counter}</h1>
+      <button onClick={increment}>Increment</button>
+    </>
+  );
+}   
+
+export default Counter; 
+
+--------------
+Example 2: With Multiple data
+App.js | Parent
+--------------
+
+import { useState } from "react";
+import FromInput from "./FromInput";
+
+function App() {
+  const [allData, setAllData] = useState([]);
+
+  const handleData = (newData)=>{
+    setAllData((prev)=>([...prev, newData]));
+  }
+  console.log(allData);
+  return (
+    <>
+      {allData && allData.map((item, index)=>{
+        return(
+          <li key={index}>Name: {item.name} <br />Email: {item.email} <br />Phone: {item.phone}</li>
+        )
+      })}
+      <FromInput onUpdate={handleData} />
+      
+      <style>
+        {
+          `
+            li{
+              list-style:none;
+              padding:10px;
+              border:1px solid #ddd;
+              margin-bottom:10px;
+            }
+          `
+        }
+      </style>
+      
+    </>
   )
 }
 
 export default App;
 
-----------
-Step2:
-.**Now keep all State, function code to 'App.js' 
-  to make it reusable.
-.**Pass everything via props like state and function in here.
-Input.jsx
-----------
-import React, { useRef, useState } from "react";
-function Input({data, myRef, myChanges}){
-  return(
-    <>
-      <input 
-        type="text" 
-        value={data}
-        ref={myRef}
-        onChange={myChanges}
-      />
-    </>
-  )
-}
-export default Input;
+--------------
+FromInput.jsx
+--------------
 
-----------
-App.jsx
-----------
-import React, { useRef, useState } from "react";
-import Input from "./Input";
+import { useState } from "react";
+
+function FromInput({onUpdate}){
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+
+     const addName = (e) =>{
+        setName(e.target.value);
+    }
+    const addEmail = (e) =>{
+        setEmail(e.target.value);
+    }
+    const addPhone = (e) =>{
+        setPhone(e.target.value);
+    }
+
+    function fromSubmit() {
+        const collectAll = {
+            name,
+            email,
+            phone
+        };
+        if(onUpdate){
+            onUpdate(collectAll);
+        }
+       setName('');
+       setEmail('');
+       setPhone('');
+  }
+
+    return(
+        <>
+            <input value={name} onChange={addName}  type="text" placeholder="Name" />
+            <input value={email} onChange={addEmail}  type="email" placeholder="Email" />
+            <input value={phone} onChange={addPhone}  type="number" placeholder="Phone Number" />
+            <button onClick={fromSubmit}>Submit</button>
+
+            <style>
+                {
+                `input{
+                    display:block;
+                    margin-bottom:5px;
+                }
+                `
+                }
+            </style>
+        </>
+    )
+}
+
+export default FromInput;
+
+================================
+10. React.memo() 
+================================
+. React.memo() is used to preventing unnecessary re-renders of a component
+  when its props haven't changed.
+
+. Just wrap the component with React.memo() to implement this
+
+. useCallback used to preventing unnecessary re-renders of a function.
+
+--------------
+Example 1:
+If the props 'item' have not changed, React skips the render for the 'List' component.
+--------------
+
+import React, { useState } from "react";
+
+// const List = ({item}) =>{
+//     console.log('Re-render List Component');
+//     return(
+//       <>
+//         <div>{item}</div>
+//       </>
+//     )
+// }
+
+const List = React.memo(
+  ({item}) =>{
+    console.log('Re-render List Component');
+    return(
+      <>
+        <div>{item}</div>
+      </>
+    )
+  }
+)
+
 function App(){
-  const myRef = useRef(null)
-  const [data, setData] = useState("");
-  function myChanges(e){
-    setData(e.target.value);
-    console.log(myRef.current);
+
+  const [count, setCount] = useState(0);
+  const items = ["Apple", "Orange", "Banana"];
+  
+  const reCount = () =>{
+    setCount(count + 1);
   }
   return(
+    <>
+      <div>
+        {
+          items.map((item, index)=>(
+            <List key={index} item={item} />
+          ))
+        }
+        <br />
+        {count}
+        <br />
+        <button onClick={reCount}>Count</button>
+      </div>
+    </>
+  )
+}
+
+export default  App;
+
+--------------
+Example 2:
+--------------
+App.jsx
+--------------
+// App.jsx
+import { useState } from 'react';
+import Card from './components/Card';
+
+function App() {
+  const [appCount, setAppCount] = useState(0);          // Counter for App renders
+  const [cardCounter, setCardCounter] = useState(0);    // Counter passed to Card
+  console.log("🔄 App Rendered");
+
+  const handleCounter = () => {
+    setAppCount(appCount + 1);
+  };
+  const handleCardRender = () => {
+    setCardCounter(cardCounter + 1);
+  };
+
+  return (
+    <>
+      <h2>App Count: {appCount}</h2>
+      <Card info={cardCounter} />
+      <button onClick={handleCounter}>Increment App</button>
+      <button onClick={handleCardRender}>Update Card</button>
+    </>
+  );
+}
+
+export default App;
+
+--------------
+Card.jsx
+--------------
+// components/MemoizedCard.jsx
+import React from "react";
+
+function Card({ info }) {
+  console.log("🎴 Card Rendered");
+  return (
+    <div>Card Value: {info}</div>
+  );
+}
+
+// Wrapped with React.memo so it only re-renders when `info` changes
+export default React.memo(Card);
+
+
+================================
+11. localstorage
+================================
+Example 1: 
+--------------
+
+import { useState } from "react";
+
+function App() {
+
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [phone, setPhone] = useState('');
+
+  const [name, setName] = useState(()=>{
+    return localStorage.getItem('name')
+  });
+  const [email, setEmail] = useState(()=>{
+    return localStorage.getItem('email')
+  });
+  const [phone, setPhone] = useState(()=>{
+    return localStorage.getItem('phone');
+  });
+
+  const addName = (e) =>{
+    setName(e.target.value);
+    localStorage.setItem('name', e.target.value);
+  }
+  const addEmail = (e) =>{
+    setEmail(e.target.value);
+    localStorage.setItem('email', e.target.value);
+  }
+  const addPhone = (e) =>{
+    setPhone(e.target.value);
+    localStorage.setItem('phone', e.target.value);
+  }
+
+  // useEffect(()=>{
+  //   setName(localStorage.getItem('name'));
+  //   setEmail(localStorage.getItem('email'));
+  //   setPhone(localStorage.getItem('phone'));
+  // },[])
+
+
+  return (
+    <>
+      {name}
+      <br />
+      {email}
+      <br />
+      {phone}
+      <br />
+      <input onChange={addName}  type="text" placeholder="Name" /> <br />
+      <input onChange={addEmail}  type="email" placeholder="Email" /> <br />
+      <input onChange={addPhone}  type="number" placeholder="Phone Number" />
+    </>
+  )
+}
+
+export default App;
+
+
+--------------
+Example 2: 
+--------------
+App.jsx
+--------------
+
+
+import { useEffect, useState } from "react";
+import FromInput from "./FromInput";
+
+function App() {
+  
+  // const [allData, setAllData] = useState(([]));
+
+  const [allData, setAllData] = useState(()=>{
+    return JSON.parse(localStorage.getItem('storeData')) || [];
+  });
+
+  const handleData = (newData)=>{
+    setAllData((prev)=>{
+      const storeData = [...prev, newData];
+      localStorage.setItem('storeData', JSON.stringify(storeData));
+      return storeData;
+    });
+  }
+
+  // useEffect(()=>{
+  //   setAllData(JSON.parse(localStorage.getItem('storeData')) || []);
+  // },[])
+
+  return (
+    <>
+      {allData && allData.map((item, index)=>{
+        return(
+          <li key={index}>Name: {item.name} <br />Email: {item.email} <br />Phone: {item.phone}</li>
+        )
+      })}
+      <FromInput onUpdate={handleData} />
+      
+      <style>
+        {
+          `
+            li{
+              list-style:none;
+              padding:10px;
+              border:1px solid #ddd;
+              margin-bottom:10px;
+            }
+          `
+        }
+      </style>
+      
+    </>
+  )
+}
+
+export default App;
+
+--------------
+FromInput.jsx
+--------------
+
+import { useState } from "react";
+
+function FromInput({onUpdate}){
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+
+     const addName = (e) =>{
+        setName(e.target.value);
+    }
+    const addEmail = (e) =>{
+        setEmail(e.target.value);
+    }
+    const addPhone = (e) =>{
+        setPhone(e.target.value);
+    }
+
+    function fromSubmit() {
+        const collectAll = {
+            name,
+            email,
+            phone
+        };
+        if(onUpdate){
+            onUpdate(collectAll);
+            console.log(collectAll);
+        }
+       setName('');
+       setEmail('');
+       setPhone('');
+  }
+
+    return(
+        <>
+            <input value={name} onChange={addName}  type="text" placeholder="Name" />
+            <input value={email} onChange={addEmail}  type="email" placeholder="Email" />
+            <input value={phone} onChange={addPhone}  type="number" placeholder="Phone Number" />
+            <button onClick={fromSubmit}>Submit</button>
+
+            <style>
+                {
+                `input{
+                    display:block;
+                    margin-bottom:5px;
+                }
+                `
+                }
+            </style>
+        </>
+    )
+}
+
+export default FromInput;
+
+--------------
+
+
+================================
+12. useCallback hook
+================================
+. useCallback use to memorise function. 
+. React.memo use to memorise component.
+
+
+---------------------------
+Example 1:
+App.jsx
+---------------------------
+import React, { useState, useCallback } from 'react';
+import Card from './components/Card';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  const handleCount = () => {
+    setCount(count + 1);
+  }
+
+  const handleClick = useCallback(() => {
+    console.log("Button clicked!");
+  }, []);
+
+  return (
     <div>
-      <Input 
-        myRef={myRef}
-        data={data}
-        myChanges={myChanges}
-      />
+      <h1>Count: {count}</h1>
+      <button onClick={handleCount}>Increment</button>
+      <Card handleClick={handleClick} />
+    </div>
+  );
+}
+
+export default App;
+
+---------------------------
+Card.jsx
+---------------------------
+
+import React from 'react';
+
+function Card({ handleClick }) {
+  console.log("Child re-rendered");
+  return(
+    <>
+      <button onClick={handleClick}>Click Me</button>
+    </>
+  )
+}
+
+export default React.memo(Card);
+
+
+---------------------------
+
+. Use useCallback with React.memo when you pass functions as props to child components 
+  and want to avoid unnecessary re-renders.
+
+. Avoid using useCallback with React.memo in cases where:
+   . The child component doesn’t depend on functions or reference checks.
+   . There’s no significant re-render or performance issue.
+   
+---------------------------
+Example:2
+App.jsx
+---------------------------
+
+import { useCallback, useEffect, useState } from "react";
+import FromInput from "./FromInput";
+
+function App() {
+
+  // const [allData, setAllData] = useState(([]));
+  const [test, setTest] = useState('')
+  const [allData, setAllData] = useState(()=>{
+    return JSON.parse(localStorage.getItem('storeData')) || [];
+  });
+
+  const handleData = useCallback((newData)=>{
+    setAllData((prev)=>{
+      const storeData = [...prev, newData];
+      localStorage.setItem('storeData', JSON.stringify(storeData));
+      return storeData;
+    });
+  },[])
+
+  // useEffect(()=>{
+  //   setAllData(JSON.parse(localStorage.getItem('storeData')) || []);
+  // },[])
+
+  return (
+    <>
+    {test}
+      {allData && allData.map((item, index)=>{
+        return(
+          <li key={index}>Name: {item.name} <br />Email: {item.email} <br />Phone: {item.phone}</li>
+        )
+      })}
+      <FromInput onUpdate={handleData} />
+      <button onClick={()=>{setTest(test + 1)}}>button</button>
+      <style>
+        {
+          `
+            li{
+              list-style:none;
+              padding:10px;
+              border:1px solid #ddd;
+              margin-bottom:10px;
+            }
+          `
+        }
+      </style>
+      
+    </>
+  )
+}
+
+export default App;
+
+-----------------------
+FromInput.jsx
+-----------------------
+
+import React from "react";
+import { useState } from "react";
+
+
+// Memoize the child component with React.memo
+const FromInput = ({ onUpdate }) => {
+  console.log('component Mount CHILD');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const addName = (e) => setName(e.target.value);
+  const addEmail = (e) => setEmail(e.target.value);
+  const addPhone = (e) => setPhone(e.target.value);
+
+  function fromSubmit() {
+    const collectAll = { name, email, phone };
+    if (onUpdate) {
+      onUpdate(collectAll);
+      console.log(collectAll);
+    }
+
+    setName('');
+    setEmail('');
+    setPhone('');
+  }
+
+  return (
+    <>
+      <input value={name} onChange={addName} type="text" placeholder="Name" />
+      <input value={email} onChange={addEmail} type="email" placeholder="Email" />
+      <input value={phone} onChange={addPhone} type="number" placeholder="Phone Number" />
+      <button onClick={fromSubmit}>Submit</button>
+
+      <style>
+        {`
+          input {
+            display: block;
+            margin-bottom: 5px;
+          }
+        `}
+      </style>
+    </>
+  );
+};
+
+export default React.memo(FromInput);
+
+
+================================
+15. React Router
+    NavLink
+    Outlet
+    Link
+    useParams
+    useNavigate
+   
+================================
+I. Navlink: use to Create Navigation.
+-----------------------
+Step 1: install 
+
+npm i react-router-dom
+
+-----------------------
+Step 2:
+Create all pages.
+-----------------------
+Header.jsx
+Footer.jsx
+Home.jsx
+About.jsx
+Team.jsx
+Mission.jsx
+Vision.jsx
+NotFound.jsx
+
+-----------------------
+Step 3:
+Update page code
+Home.jsx
+-----------------------
+import Header from "./Header";
+import Footer from "./Footer";
+
+function Home(){
+    return(
+        <>
+            <Header />
+            <br />
+            Home Page
+            <br />
+            <Footer/>
+        </>
+    )
+}
+
+export default Home;
+
+-----------------------
+NotFound.jsx
+-----------------------
+import Header from "./Header";
+import Footer from "./Footer";
+
+function NotFound(){
+    return(
+        <>
+            <Header />
+            <br />
+            404 Page
+            <br />
+            <Footer/>
+        </>
+    )
+}
+
+export default NotFound;
+
+-----------------------
+Step 4:
+Update Header.jsx file
+-----------------------
+import { NavLink } from "react-router-dom";
+
+function Header() {
+    return (
+        <>
+            <ul>
+                <li>
+                    <NavLink to="/" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                        Home
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/about" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                        About
+                    </NavLink>
+                    <ul>
+                        <li>
+                            <NavLink to="/about/team" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                                Team
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/mission" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                                Mission
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/vision" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                                Vision
+                            </NavLink>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <NavLink to="/contact" className={({ isActive }) => `nav__a ${isActive ? 'text-red' : ''}`}>
+                        Contact
+                    </NavLink>
+                </li>
+            </ul>
+
+            <style>
+                {
+                    `
+                    .text-red{
+                    color:#f00;
+                    }
+                    `
+                }
+            </style>
+
+        </>
+    )
+}
+
+export default Header;
+
+
+-----------------------
+step 5:
+Update App.jsx file
+-----------------------
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Mission from "./pages/Mission";
+import Vision from "./pages/Vision";
+import Team from "./pages/Team";
+import NotFound from "./pages/NotFound";
+
+function App() {
+  return (
+    <div>
+      <BrowserRouter> {/* Enable React Router functionality */}
+        <Routes>      {/* Define all the routes for the app */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/mission" element={<Mission />} />
+          <Route path="/vision" element={<Vision />} />
+          <Route path="/about/team" element={<Team />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound/>} />
+
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
 
 export default App;
+-----------------------
+NOTE:
+1. Why is the App.jsx file required when you already have links in Header.jsx?
 
-----------
-Example:2
-----------
+. In Header.jsx, the NavLink components (e.g., to="/") are used to navigate to different paths.
+
+. However, React Router needs to know which component should be rendered for each of those paths.
+
+. This is done by App.jsx (e.g., path="/" element={<Home />}), where React Router associates each 
+  path with a specific component.
+
+
+2. Quick folder structure:
+
+src/
+├─ pages/
+│  ├─ Home.jsx
+│  ├─ About.jsx
+│  ├─ Team.jsx
+│  ├─ Mission.jsx
+│  ├─ Vision.jsx
+│  ├─ Contact.jsx
+│  └─ NotFound.jsx
+├─ components/
+│  ├─ Header.jsx
+│  └─ Footer.jsx
+└─ App.jsx
+
+
+-----------------------
+II. Outlet
+step:
+. Create a Layout.jsx file on component file.
+. Update App.jsx and keep all pages child of Layout.jsx
+. Add Header.jsx, Footer.jsx and other side component like CartTab.jsx 
+-----------------------
 App.jsx
-----------
+-----------------------
+<BrowserRouter>
+<Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<Home />}></Route>
+    <Route path="/about" element={<About />}></Route>
+    <Route path="/:slug" element={<Details />}></Route>
+  </Route>
+</Routes>
+</BrowserRouter>
+
+-----------------------
+Layout.jsx
+-----------------------
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import CartTab from "./CartTab";
+
+function Layout(){
+    return(
+        <>
+            <main>
+                <Header/>
+                <Outlet/>
+            </main>
+           <CartTab />
+        </>
+    )
+}
+
+export default Layout;
+
+-----------------------
+III. Link: use to redirect to another page just link <a> tag
+-----------------------
+Home.jsx
+-----------------------
+import Header from "./Header";
+import Footer from "./Footer";
+import { Link } from "react-router-dom";
+
+function Home(){
+    return(
+        <>
+            <Header />
+            <br />
+            Home Page
+            <Link to="/about">About Page</Link>
+            <br />
+            <Footer/>
+        </>
+    )
+}
+
+export default Home;
+
+
+-----------------------
+IV. useParams: 
+     useParams is a hook in React Router use to access dynamic url from the router.
+ 
+ uses: 
+ . Blog Post Page with Dynamic URL Parameters    
+ . E-Commerce Product Page with Dynamic URL Parameters
+-----------------------
+Step 1: App.jsx
+-----------------------
+import User from "./pages/Post";
+
+<Route path="/post/:id" element={<Post />} />
+
+-----------------------
+Step 2: Post.jsx
+-----------------------
+import { useParams } from "react-router-dom";
+function post(){
+    const {id} = useParams();
+    return(
+        <>
+            post {id}
+        </>
+    )
+}
+export default post;
+
+-----------------------
+Step 3: Access
+-----------------------
+for useParams type :http://localhost:5173/user/100
+
+
+-----------------------
+V. useNavigate
+    Use for logical navigation.
+-----------------------
+
+import { useNavigate } from 'react-router-dom';
+function Contact() {
+  const navigate = useNavigate();  // Get the navigate function
+  const handleSubmit = () => {
+    navigate('/');
+  };
+  return (
+      <>
+        <button onClick={handleSubmit}>Submit</button>
+      </>
+  );
+}
+export default Contact;
+
+
+================================
+16. Context API
+================================
+. Using Context API we can share data across different components without 
+  pass props down manually at every level. It’s a great way to avoid "prop drilling,"
+
+. Key Terms:
+  Context:  A container to store data and shared data to the components.
+  Provider: A component that provides the data to other components.
+  Consumer: A component that consumes or uses the data from the context.
+
+src/
+│
+├── assets/                # Static files like images, fonts, etc.
+├── components/            # Reusable components (e.g., Header, Footer)
+├── context/               # React Context files (providers, consumers, etc.)
+│   └── ThemeContext.js    # Context file for theme management
+│
+├── pages/                 # React pages (e.g., Home, About)
+│   └── Home.js
+│
+├── App.js                 # Main app component, routing
+└── index.js               # Entry point (renders the app)
+
+
+-----------------------
+Example 1:
+-----------------------
+ThemeContext.js 
+. declear context using createContent
+. Assign the context to ThemeContext
+-----------------------
+import { createContext } from "react";
+const ThemeContext = createContext();
+export default ThemeContext;
+
+-----------------------
+App.js   
+. Provider provide data to all components using value
+-----------------------
+import ThemeContext from "./context/ThemeContext";
 import { useState } from "react";
-import Input from "./Input";
+import Home from "./pages/Home";
+
+function App() {
+
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () =>{
+    setTheme(prev =>(prev === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <ThemeContext.Provider value={{theme, toggleTheme}}>
+      <>
+        <Home />
+        <button onClick={toggleTheme}>Toggle Button</button>
+      </>
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
+
+-----------------------
+Home.js   
+. useContext() get the data from ThemeContext and use it.
+-----------------------
+import { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+
+function Home(){
+    const {theme, toggleTheme} = useContext(ThemeContext);
+    
+    return(
+        <>  
+            <div style={{backgroundColor: theme === 'light' ? '#fff' : '#000', color: theme === 'light' ? '#000' : '#fff' }}>
+                <h1>Home page with  {theme} theme</h1>
+                <button onClick={toggleTheme}>Toggle Theme Child</button>
+            </div>
+        </>
+    )
+}
+
+export default Home;
+
+
+-----------------------
+Example:1 (With Correct Way)
+** Moving ThemeProvider to ThemeContext.jsx
+   To keep App.jsx clean
+-----------------------   
+ThemeContext.js 
+-----------------------
+import { createContext, useState } from 'react';
+
+const ThemeContext = createContext();
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export { ThemeProvider };
+export default ThemeContext;
+
+
+-----------------------
+App.js 
+-----------------------
+import { ThemeProvider } from './context/ThemeContext';
+import Home from './pages/Home';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Home />
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
+-----------------------
+Home.js 
+-----------------------
+import { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+
+function Home(){
+    const {theme, toggleTheme} = useContext(ThemeContext);
+    
+    return(
+        <>  
+            
+            <div style={{backgroundColor: theme === 'light' ? '#fff' : '#000', color: theme === 'light' ? '#000' : '#fff' }}>
+                <h1>Home page with  {theme} theme</h1>
+                <button onClick={toggleTheme}>Toggle Theme Child</button>
+            </div>
+            
+        </>
+    )
+}
+
+export default Home;
+
+
+-----------------------
+Example:2 (With Multiple context: Theme and Auth)
+----------------------- 
+
+src/
+│
+├── context/
+│   ├── ThemeContext.jsx
+│   └── AuthContext.jsx
+│
+├── pages/
+│   ├── Home.jsx
+│      
+│
+├── components/
+│   ├── Header.jsx
+│   └── Footer.jsx
+│
+├── App.jsx
+└── index.js
+
+-----------------------
+AuthContext.jsx
+-----------------------
+import { createContext } from "react";
+import { useState } from "react";
+
+const AuthContext = createContext();
+
+const AuthProvider = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const login = () => setIsAuthenticated(true);
+    const logout = () => setIsAuthenticated(false);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+
+}
+
+export { AuthProvider };
+export default AuthContext;
+
+
+-----------------------
+App.jsx
+** Update App.jsx
+-----------------------
+import Home from './pages/Home';
+import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
+function App() {    
+  return (
+    <>
+      <ThemeProvider>
+        <AuthProvider>
+          <Home />
+        </AuthProvider>
+      </ThemeProvider>
+    </>
+  )
+}
+export default App;
+
+-----------------------
+Home.jsx
+** Update Home.jsx
+-----------------------
+import { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+import AuthContext from "../context/AuthContext";
+
+function Home() {
+    const { theme, toggleTheme } = useContext(ThemeContext);
+    const { isAuthenticated, login, logout } = useContext(AuthContext);
+  return (
+    <div>
+      <h1>Home Page has {theme}</h1>
+      <button onClick={toggleTheme}>chagne</button>
+      {isAuthenticated ? (
+        <div>
+          <h2>Welcome, User!</h2>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <h2>Please log in.</h2>
+          <button onClick={login}>Login</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Home;
+
+-----------------------
+
+
+================================
+17. CRUD
+================================
+
+================================
+18. Curt
+================================
+
+================================
+19. React hook form
+================================
+#Install 
+npm i react-hook-form	
+
+#Features:
+✅ useForm() — how to initialize a form.
+
+✅ register() — how to connect inputs.
+
+✅ handleSubmit() — how to manage submission logic.
+
+✅ errors — how to handle and display validation messages.
+
+✅ validation rules — required, pattern, length checks, etc.
+
+
+-------------------------------
+Example:
+#Setup with name, email and phone
+-------------------------------
+
+import { useForm } from "react-hook-form";
 
 function App(){
-  const [text, setText] = useState('Santanu')
-  const [range, setRange] = useState(10);
-  const [addNumber, setaddNumber] = useState(true);
+
+  const {register, handleSubmit, formState: {errors}} = useForm()
+  
+  const formSubmit = (data) =>{
+    console.log(data);
+  }
 
   return(
     <>
-     <Input
-      text = {text}
-      setText ={setText}
-      range={range} 
-      setRange={setRange}
-      addNumber={addNumber}
-      setaddNumber={setaddNumber}
-     />
+      <form onSubmit={handleSubmit(formSubmit)}>
+        <div>
+           <label>Name</label>
+          <input
+            {...register("name", {
+              required:'Name is required'
+            })}
+            placeholder="Enter Your Name"
+            type="text"
+          />
+          <div>{errors.name && <p>{errors.name.message}</p>}</div>
+        </div>
+        <div>
+          <label>Email</label>
+          <input
+            {...register("email", {
+              required:'Email is required',
+              pattern: { 
+                value: /\S+@\S+\.\S+/, 
+                message: "Invalid email" 
+              }
+            })}
+            placeholder="Enter Your Email"
+            type="emial"
+          />
+          <div>{errors.email && <p>{errors.email.message}</p>}</div>
+        </div>
+        <div>
+          <label>Phone Number</label>
+          <input
+            {...register("phone", {
+              required: "Phone number is required",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Phone number must be a number",
+              },
+              minLength: {
+                value: 10,
+                message: "Phone number must be 10 digits",
+              },
+              maxLength: {
+                value: 10,
+                message: "Phone number must be 10 digits",
+              },
+            })}
+            placeholder="Enter Your Phone Number"
+            type="text"
+          />
+          <div>{errors.phone && <p>{errors.phone.message}</p>}</div>
+        </div>
+        <div><button type="submit">Submit</button></div>
+      </form>
     </>
   )
 }
 
 export default App;
 
-----------
-Input.jsx
-----------
-function Input({text, setText, range, setRange, addNumber, setaddNumber}){
-  return(
-    <>
-      <div>
-        <input 
-        type="text" 
-        placeholder="Add your Name" 
-        value={text} 
-        onChange={(e) => {setText(e.target.value)}} />
-      </div>
-      <div>
-        <input 
-        type="range" 
-        min={4} 
-        max={50} 
-        value={range}
-        onChange={(e)=>{setRange(e.target.value)}}
-        />
-        <label>Your age is :{range}</label>
-      </div>
-      <div>
-      <input 
-      type="checkbox"
-      defaultChecked={addNumber}
-      onChange={()=>{setaddNumber((prev)=>!prev)}}
-      />
-      <label>Add Contact</label>
-      </div>
-    </>
-  )
-}
-export default Input;
+-------------------------------
 
 
-
-************* Revice + Study JavaScript + start from Video 10 *********************
