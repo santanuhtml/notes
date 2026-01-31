@@ -1009,11 +1009,12 @@ export default FromInput;
 10. React.memo() 
 ================================
 . When a parent component re-renders, its child components also re-render by default.
-  To prevent unnecessary child re-renders, use React.memo(). A memoized child component re-renders only when its props change.
+  To prevent unnecessary child re-renders, use React.memo().
+  A memoized child component re-renders only when its props change.
 
 . Implementation: wrap the child component with React.memo().
 
-. When passing a function as a prop to a memoized child component, use useCallback() to keep the function reference stable and avoid unnecessary re-renders.
+. When passing a function as a prop to a memoized child component, use useCallback() 
 
 --------------
 Example 1:
