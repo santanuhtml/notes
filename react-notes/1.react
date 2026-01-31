@@ -1008,69 +1008,15 @@ export default FromInput;
 ================================
 10. React.memo() 
 ================================
-. React.memo() is used to preventing unnecessary re-renders of a component
-  when its props haven't changed.
+. When a parent component re-renders, its child components also re-render by default.
+  To prevent unnecessary child re-renders, use React.memo(). A memoized child component re-renders only when its props change.
 
-. Just wrap the component with React.memo() to implement this
+. Implementation: wrap the child component with React.memo().
 
-. useCallback used to preventing unnecessary re-renders of a function.
+. When passing a function as a prop to a memoized child component, use useCallback() to keep the function reference stable and avoid unnecessary re-renders.
 
 --------------
 Example 1:
-If the props 'item' have not changed, React skips the render for the 'List' component.
---------------
-
-import React, { useState } from "react";
-
-// const List = ({item}) =>{
-//     console.log('Re-render List Component');
-//     return(
-//       <>
-//         <div>{item}</div>
-//       </>
-//     )
-// }
-
-const List = React.memo(
-  ({item}) =>{
-    console.log('Re-render List Component');
-    return(
-      <>
-        <div>{item}</div>
-      </>
-    )
-  }
-)
-
-function App(){
-
-  const [count, setCount] = useState(0);
-  const items = ["Apple", "Orange", "Banana"];
-  
-  const reCount = () =>{
-    setCount(count + 1);
-  }
-  return(
-    <>
-      <div>
-        {
-          items.map((item, index)=>(
-            <List key={index} item={item} />
-          ))
-        }
-        <br />
-        {count}
-        <br />
-        <button onClick={reCount}>Count</button>
-      </div>
-    </>
-  )
-}
-
-export default  App;
-
---------------
-Example 2:
 --------------
 App.jsx
 --------------
