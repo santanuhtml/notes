@@ -783,7 +783,7 @@ export default App;
 ================================
 8. react.lazy and suspense
 ================================
-. React lazy loading in load a component only when it’s needed (when the button is clicked). 
+. React lazy loading in DOWNLOAD a component when need to show (when the button is clicked). 
 . This can be achieved using React.lazy() in combination with Suspense.
 
 Syntax:
