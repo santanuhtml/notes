@@ -538,7 +538,7 @@ export default React.forwardRef(Input);
 ================================
 6. Props
 ================================
-> props use to pass value to Components.
+> Props are used to pass data from a parent component to a child component (top → down).
 
 > Passing Props
   . Let we have a component with name Card.jsx
